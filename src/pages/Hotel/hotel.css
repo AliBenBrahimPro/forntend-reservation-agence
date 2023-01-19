@@ -1,0 +1,15 @@
+.App__form {
+    max-width: 700px;
+    padding: 37px 37px;
+    margin: 37px auto;
+    box-shadow: 1px 30px 60px 8px rgb(70 72 228 / 7%);
+  }
+  .App__form .css-wb57ya-MuiFormControl-root-MuiTextField-root{
+    margin-bottom: 27px;
+  }
+  .clearfix{
+    clear:both;
+  }
+  .btns{
+    margin-top: 37px!important;
+  }
