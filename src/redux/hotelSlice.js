@@ -55,6 +55,17 @@ export const fetchHotels = createAsyncThunk(
          [deleteHotels.rejected]:(state)=>{
             state.status ="failed";
          },
+         //insert Hotels
+        [deleteHotels.fulfilled]:(state,action)=>{
+            state.data =action.payload;
+            state.status ="success";
+         },
+         [deleteHotels.pending]:(state)=>{
+            state.status ="loading";
+         },
+         [deleteHotels.rejected]:(state)=>{
+            state.status ="failed";
+         },
     }
 })
 
