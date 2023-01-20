@@ -1,13 +1,13 @@
-import React from 'react'
-import { Box, Button, TextField } from '@mui/material'
-import { Formik } from "formik";
+import React,{useEffect} from 'react'
+import { Box, Button, TextField,Alert,CircularProgress } from '@mui/material'
+import { Formik,Field ,useFormik} from "formik";
 import * as yup from 'yup';
 import { useMediaQuery,useTheme } from "@mui/material";
 import Header from "../../../components/Header";
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
-import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import './hotelForm.css'
 import Fab from '@mui/material/Fab';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -15,29 +15,39 @@ import { tokens } from "../../../theme";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { useDispatch } from 'react-redux';
-import { insertHotels } from '../../../redux/hotelSlice';
-
-const Hotelform = () => {
-const dispatch =useDispatch();
+import { useDispatch ,useSelector} from 'react-redux';
+import {getSingleHotels} from '../../../redux/hotelSlice';
+import moment from 'moment'
+import axios from 'axios';
+function EditHotel() {
+    const dispatch =useDispatch();
+    const {id} = useParams();
+     const {data} = useSelector(state=>state.hotels)
+     const hotels = useSelector(state=>state.hotels)
+console.log("selector",data)
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+    useEffect(()=>{
+dispatch(getSingleHotels(id))
+    },[])
+
     const handleFormSubmit =async (values) => {
       values.image_hotel= selectedImages;
-              dispatch(insertHotels(values)).then((data)=>{
-               if(data.type==="hotels/insertHotels/fulfilled" ){
-                Swal.fire(
-                          'Success',
-                          `${data.payload.nom_hotel} a ajouter avec succes`,
-                          'success'
-                        ) 
-               }else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                      })}
-              })
+      const response=  axios.put(`${process.env.REACT_APP_BASE_URL}/api/hotel/updatehotel/${id}`,values)
+      if(response.status ===200)
+      {
+          Swal.fire(
+              'Success',
+              "Hotel a ete modifie avec succes",
+              'success'
+            ) 
+      }else{
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
+      }
         // const response= await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,values)
         // if(response.status ===200)
         // {
@@ -87,19 +97,19 @@ const dispatch =useDispatch();
         prix_all_inclusive:"",
         commision:"",
         services_equipements:{
-        "climatisation":false,
-        "restaurant":false,
-        "centreAffaires":false,
-        "piscine":false,
-        "television":false,
-        "boutiqueCadeaux":false,
-        "change":false,
-        "bar":false,
-        "plage":false,
-        "cafe":false,
-        "ascenseur":false,
-        "tennis":false,
-        "animauxAutorises":false,},
+            "climatisation":false,
+            "restaurant":false,
+            "centreAffaires":false,
+            "piscine":false,
+            "television":false,
+            "boutiqueCadeaux":false,
+            "change":false,
+            "bar":false,
+            "plage":false,
+            "cafe":false,
+            "ascenseur":false,
+            "tennis":false,
+            "animauxAutorises":false,},
         date_debut:"",
         date_fin:"",
     };
@@ -125,18 +135,28 @@ const dispatch =useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    
     function deleteHandler(image) {
-      setSelectedImages(selectedImages.filter((e) => e !== image));
       URL.revokeObjectURL(image);
     }
-    
+    const {error} = useSelector(state=>state.hotels)
+    const {status} = useSelector(state=>state.hotels)
 
-    return (
-        <Box m="20px">
+  return (
+    <Box m="20px">
+        { error!==null ?  <Alert severity="error">{error}</Alert>
+       : 
+       
+       status ==="loading" || data.length>1 ? <Box style={{position: 'relative'}}>
+       <CircularProgress size={40}
+        left={-20}
+        top={10}
+        
+        style={{marginLeft: '50%'}} color="secondary" /></Box>
+       :hotels.data.length===0 ?  "there is no data found":
+       <Box> 
           <Header title="Ajouter hotel" subtitle="Créer nouveau hotel" />
     
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
+          <Formik  onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} >
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,setFieldValue}) => (
               <form onSubmit={handleSubmit}>
                 <Box
@@ -172,12 +192,12 @@ const dispatch =useDispatch();
       
 <Box sx={{ gridColumn: "span 4" }}>
 <div  className="images">
-        {selectedImages &&
-          selectedImages.map((image, index) => {
+        {data.image_hotel &&
+          data.image_hotel.map((image, index) => {
             return (
               <div key={image} className="image">
                 <img src={image} height="200" alt="upload" />
-                <button onClick={() => deleteHandler(image)}>
+                <button onClick={() =>setFieldValue(data.image_hotel.filter((e) => e !== image)) }>
                   delete image
                 </button>
                 
@@ -387,7 +407,7 @@ const dispatch =useDispatch();
                     label="Date debut"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.date_debut}
+                    value={moment(values.date_debut).format("YYYY-MM-DD")}
                     name="date_debut"
                     error={!!touched.date_debut && !!errors.date_debut}
                     helpertext={touched.date_debut && errors.date_debut}
@@ -400,9 +420,8 @@ const dispatch =useDispatch();
                     label="Date fin"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    
-                    value={values.date_fin}
-                    inputProps={{ min: values.date_debut}}
+                    value={moment(values.date_fin).format("YYYY-MM-DD")}
+                    inputProps={{ min: values.date_debut }}
                     name="date_fin"
                     error={!!touched.date_fin && !!errors.date_fin}
                     helpertext={touched.date_fin && errors.date_fin}
@@ -415,61 +434,62 @@ const dispatch =useDispatch();
             <Box                     sx={{ gridColumn: "span 4",justifyContent:'center' }}
  >
                   
-                  <FormGroup  row sx={{display: "grid",justifyContent:'center',
+            <FormGroup  row sx={{display: "grid",justifyContent:'center',
   gridTemplateColumns: "repeat(auto-fill, 186px)", gridGap: "10px"}} >
-      <FormControlLabel  control={<Checkbox  
-                    onChange={(e)=>setFieldValue("services_equipements.climatisation",e.target.checked)}
-                    value={values.services_equipements.climatisation} name="services_equipements.climatisation" color='default' />} label="Climatisation" />
-      <FormControlLabel control={<Checkbox 
-                     onChange={(e)=>setFieldValue("services_equipements.restaurant",e.target.checked)}
-                    value={values.services_equipements.restaurant} name="services_equipements"  color='default' />} label="Restaurant" />
-      <FormControlLabel control={<Checkbox 
-                     onChange={(e)=>setFieldValue("services_equipements.centreAffaires",e.target.checked)}
-                    value={values.services_equipements.centreAffaires} name="services_equipements"  color='default' />} label="Centre d'affaires" />
-      <FormControlLabel control={<Checkbox 
-                   onChange={(e)=>setFieldValue("services_equipements.piscine",e.target.checked)}
-                    value={values.services_equipements.piscine} name="services_equipements"  color='default' />} label="Piscine" />
-      <FormControlLabel control={<Checkbox 
-                     onChange={(e)=>setFieldValue("services_equipements.television",e.target.checked)}
-                    value={values.services_equipements.television} name="services_equipements"  color='default' />} label="Télévision" />
-      <FormControlLabel control={<Checkbox 
-                   onChange={(e)=>setFieldValue("services_equipements.boutiqueCadeaux",e.target.checked)}
-                    value={values.services_equipements.boutiqueCadeaux} name="services_equipements"  color='default' />} label="Boutique de cadeaux" />
-      <FormControlLabel control={<Checkbox 
-                   onChange={(e)=>setFieldValue("services_equipements.change",e.target.checked)}
-                    value={values.services_equipements.change} name="services_equipements"  color='default' />} label="Change" />
-      <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.bar",e.target.checked)}
-                    value={values.services_equipements.bar} name="services_equipements"  color='default' />} label="Bar" />
-      <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.plage",e.target.checked)}
-                    value={values.services_equipements.plage} name="services_equipements"   color='default' />} label="Plage" />
-      <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.cafe",e.target.checked)}
-                    value={values.services_equipements.cafe} name="services_equipements"  color='default' />} label="Café" />
-      <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.ascenseur",e.target.checked)}
-                    value={values.services_equipements.ascenseur} name="services_equipements"  color='default' />} label="Ascenseur" />
-      <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.tennis",e.target.checked)}
-                    value={values.services_equipements.tennis}  name="services_equipements"  color='default' />} label="Tennis" />
-      <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.animauxAutorises",e.target.checked)}
-                    value={values.services_equipements.animauxAutorises} name="services_equipements"  color='default' />} label="Animaux autorisés" />
+      <FormControlLabel  control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+          value={values.services_equipements.climatisation}          defaultChecked={values.services_equipements.climatisation ||false} name="services_equipements.climatisation" color='default' />} label="Climatisation" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.restaurant}         defaultChecked={values.services_equipements.restaurant} name="services_equipements"  color='default' />} label="Restaurant" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.centreAffaires}        defaultChecked={values.services_equipements.centreAffaires} name="services_equipements"  color='default' />} label="Centre d'affaires" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.piscine}        defaultChecked={values.services_equipements.piscine} name="services_equipements"  color='default' />} label="Piscine" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.television}       defaultChecked={values.services_equipements.television} name="services_equipements"  color='default' />} label="Télévision" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.boutiqueCadeaux}        defaultChecked={values.services_equipements.boutiqueCadeaux} name="services_equipements"  color='default' />} label="Boutique de cadeaux" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.change}      defaultChecked={values.services_equipements.change} name="services_equipements"  color='default' />} label="Change" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.bar}      defaultChecked={values.services_equipements.bar} name="services_equipements"  color='default' />} label="Bar" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.plage}      defaultChecked={values.services_equipements.plage} name="services_equipements"   color='default' />} label="Plage" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.cafe}        defaultChecked={values.services_equipements.cafe} name="services_equipements"  color='default' />} label="Café" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.ascenseur}       defaultChecked={values.services_equipements.ascenseur} name="services_equipements"  color='default' />} label="Ascenseur" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.tennis}      defaultChecked={values.services_equipements.tennis}  name="services_equipements"  color='default' />} label="Tennis" />
+      <FormControlLabel control={<Checkbox onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.services_equipements.animauxAutorises}    defaultChecked={values.services_equipements.animauxAutorises} name="services_equipements"  color='default' />} label="Animaux autorisés" />
     </FormGroup>
     </Box>
           
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Créer nauveau hotel
+                    Modifier hotel
                   </Button>
                 </Box>
               </form>
             )}
           </Formik>
+          </Box>}
         </Box>
-      );
+  )
 }
 
-export default Hotelform
+export default EditHotel

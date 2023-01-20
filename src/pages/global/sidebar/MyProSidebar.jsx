@@ -186,7 +186,28 @@ const MyProSidebar = () => {
             />
             <Item
               title="List des hotels"
-              to="/contacts"
+              to="/listHotel"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 20px 5px 20px" }}
+            >
+              Bus
+            </Typography>
+            <Item
+              title="Creer bus"
+              to="/busForm"
+              icon={<AddCircleIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List des bus"
+              to="/listbus"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -197,6 +218,7 @@ const MyProSidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 20px 5px 20px" }}
             >
+              
               Data
             </Typography>
             <Item

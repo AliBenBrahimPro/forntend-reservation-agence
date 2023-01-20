@@ -1,5 +1,5 @@
 import React, {  useState,useEffect } from "react";
-import { Box, useTheme } from "@mui/material";
+import { Box,Alert, CircularProgress, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar ,GridActionsCellItem} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,13 +8,19 @@ import axios from 'axios';
 import Rating from '@mui/material/Rating';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
-import {fetchHotels} from '../../redux/hotelSlice'
+import {fetchHotels,deleteHotels} from '../../redux/hotelSlice'
 import Header from "../../components/Header";
+import { useNavigate } from 'react-router-dom';
 
-const Contacts = () => {
+const ListHotel = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
     const hotels = useSelector(state=>state.hotels)
+    const {error} = useSelector(state=>state.hotels)
+    const {status} = useSelector(state=>state.hotels)
+    const {data} = useSelector(state=>state.hotels)
+    let navigate = useNavigate();
+
 const dispatch = useDispatch();
 
 useEffect(()=>{
@@ -24,7 +30,7 @@ useEffect(()=>{
 
     useEffect(()=>{
 
-     console.log('products : ', hotels)
+     console.log('hotels : ', hotels)
          },[hotels])
  
 //   const[data,setData]=useState([])
@@ -62,8 +68,7 @@ useEffect(()=>{
             <GridActionsCellItem
               icon={<EditIcon />}
               label="Edit"
-onClick={() =>{ 
-              }}
+onClick={() =>{navigate(`/hotelform/${params.id}`)}}
             />,
             <GridActionsCellItem
               icon={<DeleteIcon />}
@@ -80,24 +85,24 @@ onClick={() =>{
                   confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    axios.delete(`${process.env.REACT_APP_BASE_URL}/api/hotel/deletehotel/${params.id}`).then((response) => {
-                      if(response.status===200){
-                        Swal.fire(
-                          'Deleted!',
-                          'Your file has been deleted.',
-                          'success'
-                        )
-                      }
-                      else{
-                        Swal.fire({
-                          icon: 'error',
-                          title: 'Oops...',
-                          text:  "something wrong",
-                        })
-                      }
+                  //   axios.delete(`${process.env.REACT_APP_BASE_URL}/api/hotel/deletehotel/${params.id}`).then((response) => {
+                  //     if(response.status===200){
+                  //       Swal.fire(
+                  //         'Deleted!',
+                  //         'Your file has been deleted.',
+                  //         'success'
+                  //       )
+                  //     }
+                  //     else{
+                  //       Swal.fire({
+                  //         icon: 'error',
+                  //         title: 'Oops...',
+                  //         text:  "something wrong",
+                  //       })
+                  //     }
                      
-                   });
-                    
+                  //  });
+                    dispatch(deleteHotels(params.id))
                   }
                 })
                 
@@ -142,52 +147,68 @@ onClick={() =>{
     { field: "date_debut", headerName: "Date debut", width: 100 },
     { field: "date_fin", headerName: "Date fin", width: 100 },
   ];
+
   return (
+   
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="List des hotels" subtitle="Bienvenue a ton liste des hotels" />
-      </Box>
-      <Box
-        m="8px 0 0 0"
-        width="100%"
-        height="80vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
-          },
-        }}
-      >
-        <DataGrid
-          rows={hotels.data}
-          columns={columns}
-          components={{ Toolbar: GridToolbar }}
-        />
-      </Box>
+       { error!==null ?  <Alert severity="error">{error}</Alert>
+       : 
+       
+       status ==="loading"? <Box style={{position: 'relative'}}>
+       <CircularProgress size={40}
+        left={-20}
+        top={10}
+        
+        style={{marginLeft: '50%'}} color="secondary" /></Box>
+       :hotels.data.length===0? "there is no data found":
+       <Box> 
+       <Box display="flex" justifyContent="space-between" alignItems="center">
+ 
+
+ <Header title="List des hotels" subtitle="Bienvenue a ton liste des hotels" />
+</Box>
+<Box
+ m="8px 0 0 0"
+ width="100%"
+ height="80vh"
+ sx={{
+   "& .MuiDataGrid-root": {
+     border: "none",
+   },
+   "& .MuiDataGrid-cell": {
+     borderBottom: "none",
+   },
+   "& .name-column--cell": {
+     color: colors.greenAccent[300],
+   },
+   "& .MuiDataGrid-columnHeaders": {
+     backgroundColor: colors.blueAccent[700],
+     borderBottom: "none",
+   },
+   "& .MuiDataGrid-virtualScroller": {
+     backgroundColor: colors.primary[400],
+   },
+   "& .MuiDataGrid-footerContainer": {
+     borderTop: "none",
+     backgroundColor: colors.blueAccent[700],
+   },
+   "& .MuiCheckbox-root": {
+     color: `${colors.greenAccent[200]} !important`,
+   },
+   "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+     color: `${colors.grey[100]} !important`,
+   },
+ }}
+>
+ <DataGrid
+   rows={data}
+   columns={columns}
+   components={{ Toolbar: GridToolbar }}
+ />
+</Box></Box> }
+    
     </Box>
   );
 };
 
-export default Contacts;
+export default ListHotel;
