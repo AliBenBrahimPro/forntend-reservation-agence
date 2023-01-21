@@ -37,6 +37,7 @@ const [cafe,setcafe]=useState(false);
 const [ascenseur,setascenseur]=useState(false);
 const [tennis,settennis]=useState(false);
 const [animauxAutorises,setanimauxAutorises]=useState(false);
+const [image,setImage]=useState();
     const handleFormSubmit =async (values) => {
   
       const service={
@@ -54,12 +55,10 @@ const [animauxAutorises,setanimauxAutorises]=useState(false);
         "tennis":tennis,
         "animauxAutorises":animauxAutorises
       }
-     
-
       values.services_equipements= service
       const formData = new FormData();
-      for(const key of Object.keys(values.image_hotel)){
-        formData.append('image_hotel',values.image_hotel[key])
+      for(const key of Object.keys(image)){
+        formData.append('image_hotel',image[key])
       }
       formData.append('nom_hotel',values.nom_hotel)
       formData.append('numero_telephone',values.numero_telephone)
@@ -80,28 +79,29 @@ const [animauxAutorises,setanimauxAutorises]=useState(false);
       formData.append('date_fin',values.date_fin)
     
     console.log(formData)
-
-    await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,formData)
+const x=formData
+console.log(x)
+    // await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,formData)
       
-              // dispatch(insertHotels(formData)).then((data)=>{
-              //   console.log("problem",data)
-              //  if(data.type==="hotels/insertHotels/fulfilled" ){
-              //   Swal.fire(
-              //             'Success',
-              //             `${data.payload.nom_hotel} a ajouter avec succes`,
-              //             'success'
-              //           ) 
-              //  }else{
-              //       Swal.fire({
-              //           icon: 'error',
-              //           title: 'Oops...',
-              //           text: 'Something went wrong!',
-              //         })}
-              // })
+              dispatch(insertHotels(formData)).then((data)=>{
+                console.log("problem",data)
+               if(data.type==="hotels/insertHotels/fulfilled" ){
+                Swal.fire(
+                          'Success',
+                          `${data.payload.nom_hotel} a ajouter avec succes`,
+                          'success'
+                        ) 
+               }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                      })}
+              })
 
 
     };
- 
+ console.log(image);
     const [selectedImages, setSelectedImages] = React.useState([]);
     const [outputImage,setOutpuImage] = React.useState([]);
     const onSelectFile = (event) => {
@@ -196,7 +196,7 @@ const [animauxAutorises,setanimauxAutorises]=useState(false);
         <input
           type="file"
           name="image_hotel"
-          onChange={(e)=>setFieldValue(e.target.files)}
+          onChange={(e)=>setImage(e.target.files)}
            multiple       
           accept="image/png , image/jpeg, image/webp"
         />
