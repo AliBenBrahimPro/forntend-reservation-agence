@@ -212,6 +212,27 @@ const MyProSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 20px 5px 20px" }}
+            >
+              Evenement
+            </Typography>
+            <Item
+              title="Creer un evenement"
+              to="/eventForm"
+              icon={<AddCircleIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List des évenemnt"
+              to="/listevent"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
 
             <Typography
               variant="h6"

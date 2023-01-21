@@ -4,8 +4,7 @@ import { DataGrid, GridToolbar ,GridActionsCellItem} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import axios from 'axios';
-import Rating from '@mui/material/Rating';
+
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
 import {fetchBus,deleteBus} from '../../redux/busSlice'
@@ -83,6 +82,11 @@ function ListBus() {
       {
         field: "nb_place",
         headerName: "Nombre de place",
+        width: 250,
+      },
+      {
+        field: "nb_place_reserver",
+        headerName: "Nombre de place reserver",
         width: 250,
       },
       { field: "prix_place", headerName: "Prix de place", width: 100 },

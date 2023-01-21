@@ -1,32 +1,22 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
 import Header from "../../../components/Header";
-import { useDispatch ,useSelector} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
-import { insertBus,getSingleBus,editBus } from '../../../redux/busSlice';
-import { useParams } from 'react-router-dom';
-import moment from 'moment'
-
-function EditBus() {
+import { insertEvent } from '../../../redux/eventSlice';
+function EventForm() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const dispatch =useDispatch();
-  const {id} = useParams();
-  const {data} = useSelector(state=>state.bus)
-  const bus = useSelector(state=>state.bus)
-  useEffect(()=>{
-    dispatch(getSingleBus(id))
-        },[])  
   const handleFormSubmit = (values) => {
       console.log(values);
-      dispatch(editBus(values)).then((data)=>{
-        console.log("data",data)
-        if(data.type==="bus/editBus/fulfilled" ){
+      dispatch(insertEvent(values)).then((data)=>{
+        if(data.type==="event/insertEvent/fulfilled" ){
          Swal.fire(
                    'Success',
-                   `${data.payload.matricule} a ete modifie avec succes`,
+                   `${data.payload.nom_evenement} a ajouter avec succes`,
                    'success'
                  ) 
         }else{
@@ -37,22 +27,30 @@ function EditBus() {
                })}
        })
   };
-
+  const initialValues = {
+    nom_evenement: "",
+    description: "",
+    nb_place: "",
+    nb_place_reserver: 0,
+    prix_evenement: "",
+    date_debut: "",
+    date_fin:""
+  };
   const checkoutSchema = yup.object().shape({
-      matricule:yup.string().required("Required"),
-      reference:yup.string().required("Required"),
-      nb_place:yup.number().required("Required"),
-      nb_place_reserver:yup.number().required("Required"),
-      prix_place:yup.number().required("Required"),
-      date_debut:yup.date().required("Required"),
-      date_fin:yup.date().required("Required"),
-
+    nom_evenement:yup.string().required("Required"),
+    description:yup.string().required("Required"),
+    nb_place:yup.number().required("Required"),
+    nb_place_reserver:yup.number().required("Required"),
+    prix_evenement:yup.number().required("Required"),
+    date_debut:yup.date().required("Required"),
+    date_fin:yup.date().required("Required"),
   })
+
   return (
     <Box m="20px">
-    <Header title="Creer nouveau BUS" subtitle="Ajouter nouveau BUS" />
+    <Header title="CREER EVENEMENT" subtitle="Creer nouveau evenement" />
 
-    <Formik onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} validationSchema={checkoutSchema}>
+    <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
       {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
         <form onSubmit={handleSubmit}>
           <Box
@@ -67,26 +65,26 @@ function EditBus() {
               fullWidth
               variant="filled"
               type="text"
-              label="Matricule"
+              label="Nom evenement"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.matricule}
-              name="matricule"
-              error={!!touched.matricule && !!errors.matricule}
-              helperText={touched.matricule && errors.matricule}
+              value={values.nom_evenement}
+              name="nom_evenement"
+              error={!!touched.nom_evenement && !!errors.nom_evenement}
+              helperText={touched.nom_evenement && errors.nom_evenement}
               sx={{ gridColumn: "span 2" }}
             />
             <TextField
               fullWidth
               variant="filled"
               type="text"
-              label="Reference"
+              label="Déscription"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.reference}
-              name="reference"
-              error={!!touched.reference && !!errors.reference}
-              helperText={touched.reference && errors.reference}
+              value={values.description}
+              name="description"
+              error={!!touched.description && !!errors.description}
+              helperText={touched.description && errors.description}
               sx={{ gridColumn: "span 2" }}
             />
             <TextField
@@ -103,43 +101,43 @@ function EditBus() {
               sx={{ gridColumn: "span 4" }}
             />
             <TextField
-                    fullWidth
-                    variant="filled"
-                    type="number"
-                    label="Nombre de place reserver"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.nb_place_reserver}
-                    name="nb_place_reserver"
-                    error={!!touched.nb_place_reserver && !!errors.nb_place_reserver}
-                    helperText={touched.nb_place_reserver && errors.nb_place_reserver}
-                    sx={{ gridColumn: "span 4" }}
-                  />
-            <TextField
               fullWidth
               variant="filled"
               type="number"
-              label="Prix de place"
+              label="Nombre de place reserver"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.prix_place}
-              name="prix_place"
-              error={!!touched.prix_place && !!errors.prix_place}
-              helperText={touched.prix_place && errors.prix_place}
+              value={values.nb_place_reserver}
+              name="nb_place_reserver"
+              error={!!touched.nb_place_reserver && !!errors.nb_place_reserver}
+              helperText={touched.nb_place_reserver && errors.nb_place_reserver}
               sx={{ gridColumn: "span 4" }}
             />
             <TextField
               fullWidth
               variant="filled"
-              type="datetime-local"
-              label="Date début"
+              type="number"
+              label="Prix évenement"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={moment(values.date_debut).format("YYYY-MM-DD[T]HH:mm:ss")}
-              name="date_debut"
-              error={!!touched.date_debut && !!errors.date_debut}
-              helperText={touched.date_debut && errors.date_debut}
+              value={values.prix_evenement}
+              name="prix_evenement"
+              error={!!touched.prix_evenement && !!errors.prix_evenement}
+              helperText={touched.prix_evenement && errors.prix_evenement}
               sx={{ gridColumn: "span 4" }}
+            />
+            <TextField
+               fullWidth
+               variant="filled"
+               type="datetime-local"
+               label="Date début"
+               onBlur={handleBlur}
+               onChange={handleChange}
+               value={values.date_debut}
+               name="date_debut"
+               error={!!touched.date_debut && !!errors.date_debut}
+               helperText={touched.date_debut && errors.date_debut}
+               sx={{ gridColumn: "span 4" }}
             />
             <TextField
               fullWidth
@@ -148,7 +146,7 @@ function EditBus() {
               label="Date fin"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={moment(values.date_fin).format("YYYY-MM-DD[T]HH:mm:ss")}
+              value={values.date_fin}
               name="date_fin"
               inputProps={{ min: values.date_debut}}
               error={!!touched.date_fin && !!errors.date_fin}
@@ -158,7 +156,7 @@ function EditBus() {
           </Box>
           <Box display="flex" justifyContent="end" mt="20px">
             <Button type="submit" color="secondary" variant="contained">
-              Modifier bus
+              Créer nouveau évenement
             </Button>
           </Box>
         </form>
@@ -168,4 +166,4 @@ function EditBus() {
   )
 }
 
-export default EditBus
+export default EventForm

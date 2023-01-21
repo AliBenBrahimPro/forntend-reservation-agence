@@ -33,6 +33,7 @@ function BusForm() {
       matricule: "",
       reference: "",
       nb_place: "",
+      nb_place_reserver:0,
       prix_place: "",
       date_debut: "",
       date_fin: "",
@@ -41,6 +42,7 @@ function BusForm() {
         matricule:yup.string().required("Required"),
         reference:yup.string().required("Required"),
         nb_place:yup.number().required("Required"),
+        nb_place_reserver:yup.number().required("Required"),
         prix_place:yup.number().required("Required"),
         date_debut:yup.date().required("Required"),
         date_fin:yup.date().required("Required"),
@@ -98,6 +100,19 @@ function BusForm() {
                     name="nb_place"
                     error={!!touched.nb_place && !!errors.nb_place}
                     helperText={touched.nb_place && errors.nb_place}
+                    sx={{ gridColumn: "span 4" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="number"
+                    label="Nombre de place reserver"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.nb_place_reserver}
+                    name="nb_place_reserver"
+                    error={!!touched.nb_place_reserver && !!errors.nb_place_reserver}
+                    helperText={touched.nb_place_reserver && errors.nb_place_reserver}
                     sx={{ gridColumn: "span 4" }}
                   />
                   <TextField

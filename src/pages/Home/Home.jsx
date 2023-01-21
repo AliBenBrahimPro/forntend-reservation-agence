@@ -10,28 +10,28 @@ import scrollreveal from "scrollreveal";
 import './home.css'
 
 function Home() {
-    useEffect(() => {
-        const sr = scrollreveal({
-          origin: "top",
-          distance: "80px",
-          duration: 2000,
-          reset: true,
-        });
-        sr.reveal(
-          `
-            nav,
-            #hero,
-            #services,
-            #recommend,
-            #testimonials,
-            footer
-            `,
-          {
-            opacity: 0,
-            interval: 300,
-          }
-        );
-      }, []);
+    // useEffect(() => {
+    //     const sr = scrollreveal({
+    //       origin: "top",
+    //       distance: "80px",
+    //       duration: 2000,
+    //       reset: true,
+    //     });
+    //     sr.reveal(
+    //       `
+    //         nav,
+    //         #hero,
+    //         #services,
+    //         #recommend,
+    //         #testimonials,
+    //         footer
+    //         `,
+    //       {
+    //         opacity: 0,
+    //         interval: 300,
+    //       }
+    //     );
+    //   }, []);
   return (
     <div className="homehtml">
     <div className="homecontainer">

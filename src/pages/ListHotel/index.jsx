@@ -123,6 +123,12 @@ onClick={() =>{navigate(`/hotelform/${params.id}`)}}
       width: 250,
     },
     {
+      field: "numero_telephone",
+      headerName: "Numero telephone",
+      width: 250,
+    },
+    
+    {
       field: "nb_etoile",
       headerName: "Nombre des étoiles",
       width: 200,

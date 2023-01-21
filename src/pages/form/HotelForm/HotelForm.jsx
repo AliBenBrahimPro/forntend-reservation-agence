@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
@@ -7,7 +7,7 @@ import Header from "../../../components/Header";
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
-import axios from 'axios';
+import {useDropzone} from 'react-dropzone';
 import './hotelForm.css'
 import Fab from '@mui/material/Fab';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -17,60 +17,115 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useDispatch } from 'react-redux';
 import { insertHotels } from '../../../redux/hotelSlice';
+import Dropzone from "react-dropzone";
+import axios from 'axios';
 
 const Hotelform = () => {
 const dispatch =useDispatch();
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+const [climatisation,setClimatisation]=useState(false);
+const [restaurant,setrestaurant]=useState(false);
+const [centreAffaires,setcentreAffaires]=useState(false);
+const [piscine,setpiscine]=useState(false);
+const [television,settelevision]=useState(false);
+const [boutiqueCadeaux,setboutiqueCadeaux]=useState(false);
+const [change,setchange]=useState(false);
+const [bar,setbar]=useState(false);
+const [plage,setplage]=useState(false);
+const [cafe,setcafe]=useState(false);
+const [ascenseur,setascenseur]=useState(false);
+const [tennis,settennis]=useState(false);
+const [animauxAutorises,setanimauxAutorises]=useState(false);
     const handleFormSubmit =async (values) => {
-      values.image_hotel= selectedImages;
-              dispatch(insertHotels(values)).then((data)=>{
-               if(data.type==="hotels/insertHotels/fulfilled" ){
-                Swal.fire(
-                          'Success',
-                          `${data.payload.nom_hotel} a ajouter avec succes`,
-                          'success'
-                        ) 
-               }else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                      })}
-              })
-        // const response= await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,values)
-        // if(response.status ===200)
-        // {
-        //     Swal.fire(
-        //         'Success',
-        //         "Hotel a ajouter avec succes",
-        //         'success'
-        //       ) 
-        // }else{
-        //     Swal.fire({
-        //         icon: 'error',
-        //         title: 'Oops...',
-        //         text: 'Something went wrong!',
-        //       })
-        // }
+  
+      const service={
+        "climatisation":climatisation,
+        "restaurant":restaurant,
+        "centreAffaires":centreAffaires,
+        "piscine":piscine,
+        "television":television,
+        "boutiqueCadeaux":boutiqueCadeaux,
+        "change":change,
+        "bar":bar,
+        "plage":plage,
+        "cafe":cafe,
+        "ascenseur":ascenseur,
+        "tennis":tennis,
+        "animauxAutorises":animauxAutorises
+      }
+     
+
+      values.services_equipements= service
+      const formData = new FormData();
+      for(const key of Object.keys(values.image_hotel)){
+        formData.append('image_hotel',values.image_hotel[key])
+      }
+      formData.append('nom_hotel',values.nom_hotel)
+      formData.append('numero_telephone',values.numero_telephone)
+      formData.append('e_mail',values.e_mail)
+      formData.append('adresse',values.adresse)
+      formData.append('nb_etoile',values.nb_etoile)
+      formData.append('prix_chambre_double',values.prix_chambre_double)
+
+      formData.append('prix_chambre_single',values.prix_chambre_single)
+      formData.append('prix_chambre_triple',values.prix_chambre_triple)
+      formData.append('prix_chambre_quadruple',values.prix_chambre_quadruple)
+      formData.append('prix_demi_pension',values.prix_demi_pension)
+      formData.append('prix_pension_complete',values.prix_pension_complete)
+      formData.append('prix_all_inclusive',values.prix_all_inclusive)
+      formData.append('commision',values.commision)
+      formData.append('services_equipements',service)
+      formData.append('date_debut',values.date_debut)
+      formData.append('date_fin',values.date_fin)
+    
+    console.log(formData)
+
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,formData)
+      
+              // dispatch(insertHotels(formData)).then((data)=>{
+              //   console.log("problem",data)
+              //  if(data.type==="hotels/insertHotels/fulfilled" ){
+              //   Swal.fire(
+              //             'Success',
+              //             `${data.payload.nom_hotel} a ajouter avec succes`,
+              //             'success'
+              //           ) 
+              //  }else{
+              //       Swal.fire({
+              //           icon: 'error',
+              //           title: 'Oops...',
+              //           text: 'Something went wrong!',
+              //         })}
+              // })
+
 
     };
+ 
     const [selectedImages, setSelectedImages] = React.useState([]);
-
+    const [outputImage,setOutpuImage] = React.useState([]);
     const onSelectFile = (event) => {
+
+
+      // const formData = new FormData();
+      // formData.append('image_hotel',selectedFiles[key])
       const selectedFiles = event.target.files;
+      // for(const key of Object.keys(selectedFiles)){
+      //   formData.append('image_hotel',selectedFiles[key])
+      //   outputImage.push(selectedFiles[key])
+        
+      // }
       const selectedFilesArray = Array.from(selectedFiles);
   
       const imagesArray = selectedFilesArray.map((file) => {
         return URL.createObjectURL(file);
       });
-  
       setSelectedImages((previousImages) => previousImages.concat(imagesArray));
-      
       console.log(selectedImages)
       // FOR BUG IN CHROME
       event.target.value = "";
     };
+    
     const initialValues = {
         image_hotel:[],
         nom_hotel: "",
@@ -86,25 +141,12 @@ const dispatch =useDispatch();
         prix_pension_complete:"",
         prix_all_inclusive:"",
         commision:"",
-        services_equipements:{
-        "climatisation":false,
-        "restaurant":false,
-        "centreAffaires":false,
-        "piscine":false,
-        "television":false,
-        "boutiqueCadeaux":false,
-        "change":false,
-        "bar":false,
-        "plage":false,
-        "cafe":false,
-        "ascenseur":false,
-        "tennis":false,
-        "animauxAutorises":false,},
+        services_equipements:"",
         date_debut:"",
         date_fin:"",
     };
     const checkoutSchema = yup.object().shape({
-        // image_hotel: yup.mixed().required('File is required'),
+     
         nom_hotel:yup.string().required("Required"),
         adresse:yup.string().required("Required"),
         e_mail:yup.string().email("Invalid email!").required("Required"),
@@ -130,7 +172,7 @@ const dispatch =useDispatch();
       setSelectedImages(selectedImages.filter((e) => e !== image));
       URL.revokeObjectURL(image);
     }
-    
+
 
     return (
         <Box m="20px">
@@ -149,44 +191,36 @@ const dispatch =useDispatch();
                 >
                   <Box  sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Ajouter des photos</Typography>
-          
-            </Box>
-                  
-                  <Box  sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
-             <input
-              style={{display: "none" }}
-              onBlur={handleBlur}
-              onChange={onSelectFile}
-              name="image_hotel"
-              accept="image/*"
-              id="contained-button-file"
-              multiple
-              type="file"
-            />
-            <label htmlFor="contained-button-file">
-              <Fab component="span" >
-                <AddPhotoAlternateIcon />
-              </Fab>
-            </label>
-            </Box>
-      
-<Box sx={{ gridColumn: "span 4" }}>
-<div  className="images">
+      <label>
+     
+        <input
+          type="file"
+          name="image_hotel"
+          onChange={(e)=>setFieldValue(e.target.files)}
+           multiple       
+          accept="image/png , image/jpeg, image/webp"
+        />
+      </label>
+<div className="images">
         {selectedImages &&
-          selectedImages.map((image, index) => {
+          selectedImages.map((image) => {
             return (
               <div key={image} className="image">
                 <img src={image} height="200" alt="upload" />
-                <button onClick={() => deleteHandler(image)}>
+                <button onClick={deleteHandler}>
                   delete image
                 </button>
-                
+             
               </div>
             );
           })}
       </div>
-      </Box>
-           
+          
+            </Box>
+
+          
+
+
             
             <Box  sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Infos géneral</Typography>
@@ -418,43 +452,43 @@ const dispatch =useDispatch();
                   <FormGroup  row sx={{display: "grid",justifyContent:'center',
   gridTemplateColumns: "repeat(auto-fill, 186px)", gridGap: "10px"}} >
       <FormControlLabel  control={<Checkbox  
-                    onChange={(e)=>setFieldValue("services_equipements.climatisation",e.target.checked)}
+                    onChange={(e)=>setClimatisation(e.target.checked)}
                     value={values.services_equipements.climatisation} name="services_equipements.climatisation" color='default' />} label="Climatisation" />
       <FormControlLabel control={<Checkbox 
-                     onChange={(e)=>setFieldValue("services_equipements.restaurant",e.target.checked)}
+                     onChange={(e)=>setrestaurant(e.target.checked)}
                     value={values.services_equipements.restaurant} name="services_equipements"  color='default' />} label="Restaurant" />
       <FormControlLabel control={<Checkbox 
-                     onChange={(e)=>setFieldValue("services_equipements.centreAffaires",e.target.checked)}
+                     onChange={(e)=>setcentreAffaires(e.target.checked)}
                     value={values.services_equipements.centreAffaires} name="services_equipements"  color='default' />} label="Centre d'affaires" />
       <FormControlLabel control={<Checkbox 
-                   onChange={(e)=>setFieldValue("services_equipements.piscine",e.target.checked)}
+                   onChange={(e)=>setpiscine(e.target.checked)}
                     value={values.services_equipements.piscine} name="services_equipements"  color='default' />} label="Piscine" />
       <FormControlLabel control={<Checkbox 
-                     onChange={(e)=>setFieldValue("services_equipements.television",e.target.checked)}
+                     onChange={(e)=>settelevision(e.target.checked)}
                     value={values.services_equipements.television} name="services_equipements"  color='default' />} label="Télévision" />
       <FormControlLabel control={<Checkbox 
-                   onChange={(e)=>setFieldValue("services_equipements.boutiqueCadeaux",e.target.checked)}
+                   onChange={(e)=>setboutiqueCadeaux(e.target.checked)}
                     value={values.services_equipements.boutiqueCadeaux} name="services_equipements"  color='default' />} label="Boutique de cadeaux" />
       <FormControlLabel control={<Checkbox 
-                   onChange={(e)=>setFieldValue("services_equipements.change",e.target.checked)}
+                   onChange={(e)=>setchange(e.target.checked)}
                     value={values.services_equipements.change} name="services_equipements"  color='default' />} label="Change" />
       <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.bar",e.target.checked)}
+                    onChange={(e)=>setbar(e.target.checked)}
                     value={values.services_equipements.bar} name="services_equipements"  color='default' />} label="Bar" />
       <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.plage",e.target.checked)}
+                    onChange={(e)=>setplage(e.target.checked)}
                     value={values.services_equipements.plage} name="services_equipements"   color='default' />} label="Plage" />
       <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.cafe",e.target.checked)}
+                    onChange={(e)=>setcafe(e.target.checked)}
                     value={values.services_equipements.cafe} name="services_equipements"  color='default' />} label="Café" />
       <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.ascenseur",e.target.checked)}
+                    onChange={(e)=>setascenseur(e.target.checked)}
                     value={values.services_equipements.ascenseur} name="services_equipements"  color='default' />} label="Ascenseur" />
       <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.tennis",e.target.checked)}
+                    onChange={(e)=>settennis(e.target.checked)}
                     value={values.services_equipements.tennis}  name="services_equipements"  color='default' />} label="Tennis" />
       <FormControlLabel control={<Checkbox 
-                    onChange={(e)=>setFieldValue("services_equipements.animauxAutorises",e.target.checked)}
+                    onChange={(e)=>setanimauxAutorises(e.target.checked)}
                     value={values.services_equipements.animauxAutorises} name="services_equipements"  color='default' />} label="Animaux autorisés" />
     </FormGroup>
     </Box>

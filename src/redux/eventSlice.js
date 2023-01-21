@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-export const fetchBus = createAsyncThunk(
-    'bus/fetchBus',
+export const fetchEvent = createAsyncThunk(
+    'event/fetchEvent',
     async (_,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/bus/getallbus`)
+          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/evenement/getallevenement`)
       const data = await res.json()
       return data}
       catch(error){
@@ -15,16 +15,16 @@ export const fetchBus = createAsyncThunk(
       }
     }
   )
-  export const insertBus = createAsyncThunk(
-   'bus/insertBus',
-   async (busData,thunkAPI) => {
+  export const insertEvent = createAsyncThunk(
+   'event/insertEvent',
+   async (eventData,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
 
        try{
-         const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/bus/addbus`, 
+         const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/evenement/addevenement`, 
          {
             method: 'POST', 
-            body: JSON.stringify (busData),
+            body: JSON.stringify (eventData),
             headers: {
             'Content-type': 'application/json; charset=UTF-8',
             },
@@ -37,12 +37,12 @@ export const fetchBus = createAsyncThunk(
    }
    }
  )
-  export const deleteBus = createAsyncThunk(
-    'bus/deleteBus',
+  export const deleteEvent = createAsyncThunk(
+    'event/deleteEvent',
     async (id,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-   await fetch(`${process.env.REACT_APP_BASE_URL}/api/bus/deletebus/${id}`, {
+   await fetch(`${process.env.REACT_APP_BASE_URL}/api/evenement/deleteevenement/${id}`, {
          method: 'DELETE',
          headers: {
          'Content-type': 'application/json; charset=UTF-8',
@@ -56,12 +56,12 @@ export const fetchBus = createAsyncThunk(
          );
 
 
-         export const getSingleBus = createAsyncThunk(
-          'bus/getSingleBus',
+         export const getSingleEvent = createAsyncThunk(
+          'event/getSingleEvent',
           async (id,thunkAPI) => {
             const {rejectWithValue} = thunkAPI;
               try{
-                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/bus/getonebus/${id}`)
+                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/evenement/getoneevenement/${id}`)
             const data = await res.json()
             return data}
             catch(error){
@@ -72,18 +72,18 @@ export const fetchBus = createAsyncThunk(
 
 
 
-               export const editBus = createAsyncThunk(
-                'bus/editBus',
+               export const editEvent = createAsyncThunk(
+                'event/editEvent',
                 async (todo, { rejectWithValue }) => {
                   try {
-                    const { id, matricule, reference, nb_place,nb_place_reserver, prix_place, date_debut,date_fin } = todo;
+                    const { id, nom_evenement, description, nb_place,nb_place_reserver, prix_evenement, date_debut,date_fin } = todo;
               
-                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/bus/updatebus/${id}`, {
-                      matricule,
-                      reference,
+                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/evenement/updateevenement/${id}`, {
+                        nom_evenement,
+                        description,
                       nb_place,
                       nb_place_reserver,
-                      prix_place,
+                      prix_evenement,
                       date_debut,
                       date_fin
                     });
@@ -100,8 +100,8 @@ export const fetchBus = createAsyncThunk(
 
 
          
-  export const busSlice = createSlice({
-    name:'bus',
+  export const eventSlice = createSlice({
+    name:'Event',
     initialState:{
         data:[],
         status:null,
@@ -112,72 +112,72 @@ export const fetchBus = createAsyncThunk(
     },
     extraReducers:{
         // show hotels
-        [fetchBus.fulfilled]:(state,action)=>{
+        [fetchEvent.fulfilled]:(state,action)=>{
            state.data =action.payload;
            state.status ="success";
        state.error =null;
         },
-        [fetchBus.pending]:(state)=>{
+        [fetchEvent.pending]:(state)=>{
            state.status ="loading";
            state.error =null;
 
         },
-        [fetchBus.rejected]:(state,action)=>{
+        [fetchEvent.rejected]:(state,action)=>{
        
            state.status ="failed";
            state.error=action.payload;
          },
          // insert books
-         [insertBus.fulfilled]:(state,action)=>{
+         [insertEvent.fulfilled]:(state,action)=>{
             state.data.push(action.payload);
             state.status ="success";
         state.error =null;
          },
-         [insertBus.pending]:(state)=>{
+         [insertEvent.pending]:(state)=>{
             state.status ="loading";
             state.error =null;
 
          },
-         [insertBus.rejected]:(state,action)=>{
+         [insertEvent.rejected]:(state,action)=>{
         
             state.status ="failed";
             state.error=action.payload;
           },
           // delete hotel
-          [deleteBus.fulfilled]:(state,action)=>{
+          [deleteEvent.fulfilled]:(state,action)=>{
             state.status ="success";
         state.error =null;
         state.data =state.data.filter((el)=> el.id !==action.payload)
          },
-         [deleteBus.pending]:(state)=>{
+         [deleteEvent.pending]:(state)=>{
             state.status ="loading";
             state.error =null;
 
          },
-         [deleteBus.rejected]:(state,action)=>{
+         [deleteEvent.rejected]:(state,action)=>{
         
             state.status ="failed";
             state.error=action.payload;
           },
           //single hotel
-          [getSingleBus.fulfilled]:(state,action)=>{
+          [getSingleEvent.fulfilled]:(state,action)=>{
             state.data = action.payload;
             state.status ="success";
         state.error =null;
          },
-         [getSingleBus.pending]:(state)=>{
+         [getSingleEvent.pending]:(state)=>{
           state.status ="loading";
           state.error =null;
 
          },
-         [getSingleBus.rejected]:(state,action)=>{
+         [getSingleEvent.rejected]:(state,action)=>{
         
           state.status ="failed";
           state.error=action.payload;
           },
           //edit hotel
           
-          [editBus.fulfilled]: (state, action) => {
+          [editEvent.fulfilled]: (state, action) => {
            
             return {
               ...state,
@@ -185,13 +185,13 @@ export const fetchBus = createAsyncThunk(
              
             };
           },
-          [editBus.pending]: (state, action) => {
+          [editEvent.pending]: (state, action) => {
             return {
               ...state,
               status:"loading"
             };
           },
-          [editBus.rejected]: (state, action) => {
+          [editEvent.rejected]: (state, action) => {
             return {
               ...state,
               status:"rejected",
@@ -203,4 +203,4 @@ export const fetchBus = createAsyncThunk(
     }
 })
 
-export default busSlice.reducer
+export default eventSlice.reducer

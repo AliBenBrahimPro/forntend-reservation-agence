@@ -24,6 +24,9 @@ import ListHotel from "./pages/ListHotel";
 import BusForm from "./pages/form/BusForm/BusForm";
 import EditBus from "./pages/form/BusForm/EditBus";
 import ListBus from "./pages/ListBus/ListBus";
+import EventForm from "./pages/form/EventForm/EventForm";
+import EditEvent from "./pages/form/EventForm/EditEvent";
+import ListEvent from "./pages/ListEvenment/ListEvent";
 
 function RouteApp() {
   const [theme, colorMode] = useMode();
@@ -43,9 +46,11 @@ function RouteApp() {
                 <Route path="/hotelform/:id" element={<EditHotel />} />
                 <Route path="/busForm" element={<BusForm />} />
                 <Route path="/busForm/:id" element={<EditBus />} />
-
+                <Route path="/eventForm" element={<EventForm />} />
+                <Route path="/eventForm/:id" element={<EditEvent />} />
                 <Route path="/listHotel" element={<ListHotel />} />
                 <Route path="/listbus" element={<ListBus />} />
+                <Route path="/listevent" element={<ListEvent />} />
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/bar" element={<Bar />} />
