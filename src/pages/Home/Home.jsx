@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Footer from "./Footer";
-import Hero from "./Hero";
-import Navbar from "./Navbar";
+import HeroImage from "./HeroSection";
+import NavBar from "./NavBarRes";
 import Recommend from "./Recommend";
 import ScrollToTop from "./ScrollToTop";
 import Services from "./Services";
@@ -37,8 +37,7 @@ function Home() {
     <div className="homecontainer">
     <div className="homebody">
       <ScrollToTop />
-      <Navbar />
-      <Hero />
+      <HeroImage />
       <Services />
       <Recommend />
       <Testimonials />

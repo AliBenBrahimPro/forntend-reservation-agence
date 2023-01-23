@@ -10,14 +10,18 @@
   }
   
   .homebody {
-    margin: 1rem 2rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
   }
-  .navhome {
-  padding: 5px 20px;
+  #services{
+    padding: 1rem 2rem;
+
   }
+  .content{
+   position: fixed;
+  }
+
   
   
   ::-webkit-scrollbar {
