@@ -10,26 +10,42 @@ import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
 import { insertEvent } from '../../redux/eventSlice';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import axios from 'axios';
 
 function EventForm() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const dispatch =useDispatch();
   const handleFormSubmit = (values) => {
       console.log(values);
-      dispatch(insertEvent(values)).then((data)=>{
-        if(data.type==="event/insertEvent/fulfilled" ){
-         Swal.fire(
-                   'Success',
-                   `${data.payload.nom_evenement} a ajouter avec succes`,
-                   'success'
-                 ) 
-        }else{
-             Swal.fire({
-                 icon: 'error',
-                 title: 'Oops...',
-                 text: 'Something went wrong!',
-               })}
-       })
+      const formData = new FormData();
+      for(const key of Object.keys(values.image_evenement)){
+           formData.append('image_evenement',values.image_evenement[key])
+         }
+         formData.append('nom_evenement',values.nom_evenement)
+         formData.append('numero_telephone',values.numero_telephone)
+         formData.append('description',values.description)
+         formData.append('nb_place',values.nb_place)
+         formData.append('nb_place_reserver',values.nb_place_reserver)
+         formData.append('prix_evenement',values.prix_evenement)
+         formData.append('date_debut',values.date_debut)
+         formData.append('date_fin',values.date_fin)
+const res= axios.post(`${process.env.REACT_APP_BASE_URL}/api/evenement/addevenement`,formData);
+
+console.log(res)
+      // dispatch(insertEvent(values)).then((data)=>{
+      //   if(data.type==="event/insertEvent/fulfilled" ){
+      //    Swal.fire(
+      //              'Success',
+      //              `${data.payload.nom_evenement} a ajouter avec succes`,
+      //              'success'
+      //            ) 
+      //   }else{
+      //        Swal.fire({
+      //            icon: 'error',
+      //            title: 'Oops...',
+      //            text: 'Something went wrong!',
+      //          })}
+      //  })
   };
   const initialValues = {
     image_evenement:"",
