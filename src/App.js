@@ -27,7 +27,11 @@ import EventForm from "./pages/Event/EventForm";
 import EditEvent from "./pages/Event/EditEvent";
 import ListEvent from "./pages/Event/ListEvent";
 import ReservationBus from "./pages/Reservation/ReservationBus";
+<<<<<<< HEAD
 import ReservationEvnt from "./pages/Reservation/ReservationEvnt";
+=======
+import ReservationClient from "./pages/Reservation/ReservationClient";
+>>>>>>> 31c637ce82ae8fe7eb471c3c04c29754c6eff47a
 
 function RouteApp() {
   const [theme, colorMode] = useMode();
@@ -50,7 +54,6 @@ function RouteApp() {
                 <Route path="/eventForm" element={<EventForm />} />
                 <Route path="/eventForm/:id" element={<EditEvent />} />
                 <Route path="/listHotel" element={<ListHotel />} />
-                
                 <Route path="/listbus" element={<ListBus />} />
                 <Route path="/listevent" element={<ListEvent />} />
                 <Route path="/invoices" element={<Invoices />} />
@@ -86,6 +89,7 @@ const App = () => {
     <Route path="/test" element={<VirtualizedList/>}/>
     <Route path="/reservationbus/:id" element={<ReservationBus />} />
     <Route path="/reservationevenement/:id" element={<ReservationEvnt />} />
+    <Route path="/client" element={<ReservationClient />} />
     <Route path="/*" element={ <RouteApp />} />
 </Routes>
             </main>
