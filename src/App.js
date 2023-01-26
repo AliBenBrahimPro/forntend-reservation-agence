@@ -49,7 +49,7 @@ function RouteApp() {
                 <Route path="/eventForm" element={<EventForm />} />
                 <Route path="/eventForm/:id" element={<EditEvent />} />
                 <Route path="/listHotel" element={<ListHotel />} />
-                <Route path="/reservationbus" element={<ReservationBus />} />
+                
                 <Route path="/listbus" element={<ListBus />} />
                 <Route path="/listevent" element={<ListEvent />} />
                 <Route path="/invoices" element={<Invoices />} />
@@ -83,6 +83,7 @@ const App = () => {
     <Route path="/login" element={<Login/>}/>
     <Route path="/agence" element={<Agence/>}/>
     <Route path="/test" element={<VirtualizedList/>}/>
+    <Route path="/reservationbus/:id" element={<ReservationBus />} />
     <Route path="/*" element={ <RouteApp />} />
               </Routes>
             </main>

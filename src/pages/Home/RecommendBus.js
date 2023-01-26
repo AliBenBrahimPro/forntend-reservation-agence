@@ -18,6 +18,9 @@ export default function RecommendBus() {
   const {status} = useSelector(state=>state.bus)
   const {data} = useSelector(state=>state.bus)
   let navigate = useNavigate();
+  const handleClick = (values) => {
+    navigate(`/reservationbus/${values.id}`)
+};
 
 const dispatch = useDispatch();
   useEffect(()=>{
@@ -70,7 +73,7 @@ const dispatch = useDispatch();
               </div>
               <div className="distance">
                 <p>Arrivée <span> {moment(destination.date_fin).format('YYYY-MM-DD')} à <span>{moment(destination.date_fin).format('hh:mm')}</span></span></p>
-                <Button variant="contained">Voir l'offre</Button>
+                <Button onClick={e=>handleClick(destination)} variant="contained">Réserver</Button>
               </div>
             </div>
           );
