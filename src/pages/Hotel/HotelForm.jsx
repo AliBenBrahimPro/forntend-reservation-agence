@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, FormControl, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery,useTheme } from "@mui/material";
@@ -57,49 +57,51 @@ const [image,setImage]=useState();
       }
       values.services_equipements= service
 
-      // const formData = new FormData();
-      // for(const key of Object.keys(image)){
-      //   formData.append('image_hotel',image[key])
-      // }
-      // formData.append('nom_hotel',values.nom_hotel)
-      // formData.append('numero_telephone',values.numero_telephone)
-      // formData.append('e_mail',values.e_mail)
-      // formData.append('adresse',values.adresse)
-      // formData.append('nb_etoile',values.nb_etoile)
-      // formData.append('prix_chambre_double',values.prix_chambre_double)
+      const formData = new FormData();
+      for(const key of Object.keys(image)){
+        formData.append('image_hotel',image[key])
+      }
+      formData.append('nom_hotel',values.nom_hotel)
+      formData.append('numero_telephone',values.numero_telephone)
+      formData.append('e_mail',values.e_mail)
+      formData.append('adresse',values.adresse)
+      formData.append('nb_etoile',values.nb_etoile)
+      formData.append('prix_chambre_double',values.prix_chambre_double)
 
-      // formData.append('prix_chambre_single',values.prix_chambre_single)
-      // formData.append('prix_chambre_triple',values.prix_chambre_triple)
-      // formData.append('prix_chambre_quadruple',values.prix_chambre_quadruple)
-      // formData.append('prix_demi_pension',values.prix_demi_pension)
-      // formData.append('prix_pension_complete',values.prix_pension_complete)
-      // formData.append('prix_all_inclusive',values.prix_all_inclusive)
-      // formData.append('commision',values.commision)
-      // formData.append('services_equipements',values.services_equipements)
-      // formData.append('date_debut',values.date_debut)
-      // formData.append('date_fin',values.date_fin)
+      formData.append('frais_chambre_single',values.frais_chambre_single)
+      formData.append('porcentage_chambre_triple',values.porcentage_chambre_triple)
+      formData.append('porcentage_chambre_quadruple',values.porcentage_chambre_quadruple)
+      formData.append('prix_demi_pension',values.prix_demi_pension)
+      formData.append('prix_pension_complete',values.prix_pension_complete)
+      formData.append('prix_all_inclusive',values.prix_all_inclusive)
+      formData.append('prix_all_inclusive_soft',values.prix_all_inclusive_soft)
+      formData.append('enfant_gratuit',values.enfant_gratuit)
+
+      formData.append('commision',values.commision)
+      formData.append('services_equipements',JSON.stringify(service))
+      formData.append('date_debut',values.date_debut)
+      formData.append('date_fin',values.date_fin)
     
-    console.log(service)
-    console.log(values)
-// const x=formData
-// console.log(x)
-    // await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,formData)
+    console.log(JSON.stringify(service))
+const x=formData
+console.log(x)
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,formData)
       
-              dispatch(insertHotels(values)).then((data)=>{
-                console.log("problem",data)
-               if(data.type==="hotels/insertHotels/fulfilled" ){
-                Swal.fire(
-                          'Success',
-                          `${data.payload.nom_hotel} a ajouter avec succes`,
-                          'success'
-                        ) 
-               }else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Something went wrong!',
-                      })}
-              })
+              // dispatch(insertHotels(values)).then((data)=>{
+              //   console.log("problem",data)
+              //  if(data.type==="hotels/insertHotels/fulfilled" ){
+              //   Swal.fire(
+              //             'Success',
+              //             `${data.payload.nom_hotel} a ajouter avec succes`,
+              //             'success'
+              //           ) 
+              //  }else{
+              //       Swal.fire({
+              //           icon: 'error',
+              //           title: 'Oops...',
+              //           text: 'Something went wrong!',
+              //         })}
+              // })
 
 
     };
@@ -135,14 +137,16 @@ const [image,setImage]=useState();
         adresse:"",
         nb_etoile:0,
         prix_chambre_double:"",
-        prix_chambre_single:"",
-        prix_chambre_triple:"",
-        prix_chambre_quadruple:"",
+        frais_chambre_single:"",
+        porcentage_chambre_triple:"",
+        porcentage_chambre_quadruple:"",
         prix_demi_pension:"",
         prix_pension_complete:"",
         prix_all_inclusive:"",
+        prix_all_inclusive_soft:"",
+        enfant_gratuit:1,
         commision:"",
-        services_equipements:[],
+        services_equipements:"",
         date_debut:"",
         date_fin:"",
     };
@@ -154,13 +158,15 @@ const [image,setImage]=useState();
         numero_telephone:yup.string().matches(phoneRegExp, "phone number is not valid!").required("Required"),
         nb_etoile:yup.number().required("Required"),
         prix_chambre_double:yup.number().required("Required"),
-        prix_chambre_single:yup.number().required("Required"),
-        prix_chambre_triple:yup.number().required("Required"),
-        prix_chambre_quadruple:yup.number().required("Required"),
+        frais_chambre_single:yup.number().required("Required"),
+        porcentage_chambre_triple:yup.number().required("Required"),
+        porcentage_chambre_quadruple:yup.number().required("Required"),
         prix_demi_pension:yup.number().required("Required"),
         prix_pension_complete:yup.number().required("Required"),
         prix_all_inclusive:yup.number().required("Required"),
         commision:yup.number().required("Required"),
+        prix_all_inclusive_soft:yup.number().required("Required"),
+        // enfant_gratuit:yup.number().required("Required"),
         // services_equipements:yup.bool(),
         date_debut:yup.date().required("Required"),
         date_fin:yup.date().required("Required"),
@@ -317,10 +323,10 @@ const [image,setImage]=useState();
                     label="Prix chambre single"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.prix_chambre_single}
-                    name="prix_chambre_single"
-                    error={!!touched.prix_chambre_single && !!errors.prix_chambre_single}
-                    helpertext={touched.prix_chambre_single && errors.prix_chambre_single}
+                    value={values.frais_chambre_single}
+                    name="frais_chambre_single"
+                    error={!!touched.frais_chambre_single && !!errors.frais_chambre_single}
+                    helpertext={touched.frais_chambre_single && errors.frais_chambre_single}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -341,26 +347,26 @@ const [image,setImage]=useState();
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Prix chambre triple"
+                    label="Pourcentage chambre triple"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.prix_chambre_triple}
-                    name="prix_chambre_triple"
-                    error={!!touched.prix_chambre_triple && !!errors.prix_chambre_triple}
-                    helpertext={touched.prix_chambre_triple && errors.prix_chambre_triple}
+                    value={values.porcentage_chambre_triple}
+                    name="porcentage_chambre_triple"
+                    error={!!touched.porcentage_chambre_triple && !!errors.porcentage_chambre_triple}
+                    helpertext={touched.porcentage_chambre_triple && errors.porcentage_chambre_triple}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Prix chambre quadruple"
+                    label="Pourcentage chambre quadruple"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.prix_chambre_quadruple}
-                    name="prix_chambre_quadruple"
-                    error={!!touched.prix_chambre_quadruple && !!errors.prix_chambre_quadruple}
-                    helpertext={touched.prix_chambre_quadruple && errors.prix_chambre_quadruple}
+                    value={values.porcentage_chambre_quadruple}
+                    name="porcentage_chambre_quadruple"
+                    error={!!touched.porcentage_chambre_quadruple && !!errors.porcentage_chambre_quadruple}
+                    helpertext={touched.porcentage_chambre_quadruple && errors.porcentage_chambre_quadruple}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -406,6 +412,19 @@ const [image,setImage]=useState();
                     fullwidth
                     variant="filled"
                     type="text"
+                    label="Prix all inclusive soft"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.prix_all_inclusive_soft}
+                    name="prix_all_inclusive_soft"
+                    error={!!touched.prix_all_inclusive_soft && !!errors.prix_all_inclusive_soft}
+                    helpertext={touched.prix_all_inclusive_soft && errors.prix_all_inclusive_soft}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
                     label="Commision"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -413,8 +432,9 @@ const [image,setImage]=useState();
                     name="commision"
                     error={!!touched.commision && !!errors.commision}
                     helpertext={touched.commision && errors.commision}
-                    sx={{ gridColumn: "span 2" }}
+                    sx={{ gridColumn: "span 4" }}
                   />
+              
                           <TextField
                     fullwidth
                     variant="filled"
@@ -443,6 +463,18 @@ const [image,setImage]=useState();
                     helpertext={touched.date_fin && errors.date_fin}
                     sx={{ gridColumn: "span 2" }}
                   />
+       <FormControl>
+  <FormLabel id="demo-radio-buttons-group-label">Enfant Gratuit</FormLabel>
+  <RadioGroup
+    aria-labelledby="demo-radio-buttons-group-label"
+    defaultValue={1}
+    name="enfant_gratuit"
+    onChange={handleChange}
+  >
+    <FormControlLabel value={1} control={<Radio  color='default' />} label="Oui" />
+    <FormControlLabel value={0} control={<Radio  color='default' />} label="Non" />
+  </RadioGroup>
+</FormControl>
                    <Box margin={1} sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Services & équipements</Typography>
           
