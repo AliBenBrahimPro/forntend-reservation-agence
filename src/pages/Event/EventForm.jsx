@@ -18,9 +18,7 @@ function EventForm() {
   const handleFormSubmit = (values) => {
       console.log(values);
       const formData = new FormData();
-      for(const key of Object.keys(values.image_evenement)){
-           formData.append('image_evenement',values.image_evenement[key])
-         }
+         formData.append('image_evenement',values.image_evenement)
          formData.append('nom_evenement',values.nom_evenement)
          formData.append('numero_telephone',values.numero_telephone)
          formData.append('description',values.description)
