@@ -2,7 +2,6 @@ import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { MyProSidebarProvider } from "./pages/global/sidebar/sidebarContext";
-import Hotel from "./pages/Hotel/index"
 import Topbar from "./pages/global/Topbar";
 import Agence from "./pages/Agence/index"
 import Login from "./pages/login/index"
@@ -17,16 +16,16 @@ import Line from "./pages/line";
 import Pie from "./pages/pie";
 import FAQ from "./pages/faq";
 import Geography from "./pages/geography";
-import Hotelform from "./pages/form/HotelForm/HotelForm";
+import Hotelform from "./pages/Hotel/HotelForm";
 import VirtualizedList from "./pages/test";
-import EditHotel from "./pages/form/HotelForm/EditHotel";
-import ListHotel from "./pages/ListHotel";
-import BusForm from "./pages/form/BusForm/BusForm";
-import EditBus from "./pages/form/BusForm/EditBus";
-import ListBus from "./pages/ListBus/ListBus";
-import EventForm from "./pages/form/EventForm/EventForm";
-import EditEvent from "./pages/form/EventForm/EditEvent";
-import ListEvent from "./pages/ListEvenment/ListEvent";
+import EditHotel from "./pages/Hotel/EditHotel";
+import ListHotel from "./pages/Hotel/ListHotel";
+import BusForm from "./pages/Bus/BusForm";
+import EditBus from "./pages//Bus/EditBus";
+import ListBus from "./pages/Bus/ListBus";
+import EventForm from "./pages/Event/EventForm";
+import EditEvent from "./pages/Event/EditEvent";
+import ListEvent from "./pages/Event/ListEvent";
 
 function RouteApp() {
   const [theme, colorMode] = useMode();
@@ -81,7 +80,6 @@ const App = () => {
 <Route path="/home" element={<Home/>}/>
     <Route path="/login" element={<Login/>}/>
     <Route path="/agence" element={<Agence/>}/>
-    <Route path="/hotel" element={<Hotel/>}/>
     <Route path="/test" element={<VirtualizedList/>}/>
     <Route path="/*" element={ <RouteApp />} />
               </Routes>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import HeroImage from "./HeroSection";
 import NavBar from "./NavBarRes";
@@ -8,6 +8,9 @@ import Services from "./Services";
 import Testimonials from "./Testimonials";
 import scrollreveal from "scrollreveal";
 import './home.css'
+import RecommendEvent from "./RecommendEvent";
+import RecommendBus from "./RecommendBus";
+import axios from "axios";
 
 function Home() {
     // useEffect(() => {
@@ -32,6 +35,8 @@ function Home() {
     //       }
     //     );
     //   }, []);
+
+    
   return (
     <div className="homehtml">
     <div className="homecontainer">
@@ -39,7 +44,9 @@ function Home() {
       <ScrollToTop />
       <HeroImage />
       <Services />
+      <RecommendBus />
       <Recommend />
+      <RecommendEvent />
       <Testimonials />
       <Footer />
     </div>

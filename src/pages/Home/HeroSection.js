@@ -1,6 +1,8 @@
 import React from 'react';
 import './home.css'
 import styled from "styled-components";
+import { Card } from '@mui/material';
+import { Box } from '@mui/system';
 
 export default function HeroImage() {
   return (
@@ -16,23 +18,45 @@ export default function HeroImage() {
               <h4 className='mb-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
             natus, enim ipsam magnam odit deserunt itaque? Minima earum velit
             tenetur!</h4>
-            <Section>
-            <div className="search" >
+              <Card sx={{ display: 'flex',backgroundColor: "#ffffffce",padding:" 0.5rem",borderRadius: "0.5rem" }}>
+          <Box sx={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        padding: '0 1.5rem'}}>
+            <label style={{fontSize:' 1.1rem',
+          color: '#03045e'}} htmlFor="">Where you want to go</label>
+            <input style={{ backgroundColor: 'transparent',
+          border: 'none',
+          textAlign: 'center',
+          color: 'black' }} type="text" placeholder="Search Your location" />
+          </Box>
           <div className="container">
-            <label htmlFor="">Where you want to go</label>
-            <input type="text" placeholder="Search Your location" />
+            <label style={{fontSize:' 1.1rem',
+          color: '#03045e'}} htmlFor="">Check-in</label>
+            <input style={{ backgroundColor: 'transparent',
+          border: 'none',
+          textAlign: 'center',
+          color: 'black', paddingLeft:"3rem" }}type="date" />
           </div>
           <div className="container">
-            <label htmlFor="">Check-in</label>
-            <input type="date" />
+            <label style={{fontSize:' 1.1rem',
+          color: '#03045e'}} htmlFor="">Check-out</label>
+            <input style={{ backgroundColor: 'transparent',
+          border: 'none',
+          textAlign: 'center',
+          color: 'black', paddingLeft:"3rem" }} type="date" />
           </div>
-          <div className="container">
-            <label htmlFor="">Check-out</label>
-            <input type="date" />
-          </div>
-          <button>Explore Now</button>
-        </div>
-        </Section>
+          <button style={{padding: "1rem",
+        cursor: 'pointer',
+        borderRadius: '0.3rem',
+        border: 'none',
+        color: 'white',
+        backgroundColor: '#4361ee',
+        fontSize: '1.1rem',
+        textTransform: 'uppercase',
+        transition: "0.3s ease-in-out"}}>Explore Now</button>
+        </Card>
             </div>
           </div>
         </div>

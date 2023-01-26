@@ -3,10 +3,10 @@ import { Box, Button, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
-import Header from "../../../components/Header";
+import Header from "../../components/Header";
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
-import { insertBus } from '../../../redux/busSlice';
+import { insertBus } from '../../redux/busSlice';
 
 function BusForm() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -14,6 +14,7 @@ function BusForm() {
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
     const handleFormSubmit = (values) => {
         console.log(values);
+       
         dispatch(insertBus(values)).then((data)=>{
           if(data.type==="bus/insertBus/fulfilled" ){
            Swal.fire(
@@ -31,7 +32,9 @@ function BusForm() {
     };
     const initialValues = {
       matricule: "",
-      reference: "",
+      reference: Math.floor(Math.random() * (999999 - 1 + 1)) + 1,
+      point_depart:"",
+      point_arrive:"",
       nb_place: "",
       nb_place_reserver:0,
       prix_place: "",
@@ -40,7 +43,9 @@ function BusForm() {
     };
     const checkoutSchema = yup.object().shape({
         matricule:yup.string().required("Required"),
-        reference:yup.string().required("Required"),
+        reference:yup.number().required("Required"),
+        point_depart:yup.string().required("Required"),
+        point_arrive:yup.string().required("Required"),
         nb_place:yup.number().required("Required"),
         nb_place_reserver:yup.number().required("Required"),
         prix_place:yup.number().required("Required"),
@@ -77,6 +82,7 @@ function BusForm() {
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
+                  disabled
                     fullWidth
                     variant="filled"
                     type="text"
@@ -87,6 +93,32 @@ function BusForm() {
                     name="reference"
                     error={!!touched.reference && !!errors.reference}
                     helperText={touched.reference && errors.reference}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                   <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Point départ"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.point_depart}
+                    name="point_depart"
+                    error={!!touched.point_depart && !!errors.point_depart}
+                    helperText={touched.point_depart && errors.point_depart}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                   <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Point arrive"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.point_arrive}
+                    name="point_arrive"
+                    error={!!touched.point_arrive && !!errors.point_arrive}
+                    helperText={touched.point_arrive && errors.point_arrive}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField

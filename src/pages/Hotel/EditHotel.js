@@ -3,7 +3,7 @@ import { Box, Button, TextField,Alert,CircularProgress } from '@mui/material'
 import { Formik,Field ,useFormik} from "formik";
 import * as yup from 'yup';
 import { useMediaQuery,useTheme } from "@mui/material";
-import Header from "../../../components/Header";
+import Header from "../../components/Header";
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
@@ -11,12 +11,12 @@ import { useParams } from 'react-router-dom';
 import './hotelForm.css'
 import Fab from '@mui/material/Fab';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { tokens } from "../../../theme";
+import { tokens } from "../../theme";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useDispatch ,useSelector} from 'react-redux';
-import {getSingleHotels} from '../../../redux/hotelSlice';
+import {getSingleHotels} from '../../redux/hotelSlice';
 import moment from 'moment'
 import axios from 'axios';
 function EditHotel() {
@@ -438,43 +438,43 @@ dispatch(getSingleHotels(id))
   gridTemplateColumns: "repeat(auto-fill, 186px)", gridGap: "10px"}} >
       <FormControlLabel  control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-          value={values.services_equipements.climatisation}          defaultChecked={values.services_equipements.climatisation ||false} name="services_equipements.climatisation" color='default' />} label="Climatisation" />
+                    defaultChecked={values.services_equipements } name="services_equipements" color='default' />} label="Climatisation" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.restaurant}         defaultChecked={values.services_equipements.restaurant} name="services_equipements"  color='default' />} label="Restaurant" />
+                             defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Restaurant" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.centreAffaires}        defaultChecked={values.services_equipements.centreAffaires} name="services_equipements"  color='default' />} label="Centre d'affaires" />
+                          defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Centre d'affaires" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.piscine}        defaultChecked={values.services_equipements.piscine} name="services_equipements"  color='default' />} label="Piscine" />
+                            defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Piscine" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.television}       defaultChecked={values.services_equipements.television} name="services_equipements"  color='default' />} label="Télévision" />
+                       defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Télévision" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.boutiqueCadeaux}        defaultChecked={values.services_equipements.boutiqueCadeaux} name="services_equipements"  color='default' />} label="Boutique de cadeaux" />
+                        defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Boutique de cadeaux" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.change}      defaultChecked={values.services_equipements.change} name="services_equipements"  color='default' />} label="Change" />
+                       defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Change" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.bar}      defaultChecked={values.services_equipements.bar} name="services_equipements"  color='default' />} label="Bar" />
+                         defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Bar" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.plage}      defaultChecked={values.services_equipements.plage} name="services_equipements"   color='default' />} label="Plage" />
+                        defaultChecked={values.services_equipements} name="services_equipements"   color='default' />} label="Plage" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.cafe}        defaultChecked={values.services_equipements.cafe} name="services_equipements"  color='default' />} label="Café" />
+                         defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Café" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.ascenseur}       defaultChecked={values.services_equipements.ascenseur} name="services_equipements"  color='default' />} label="Ascenseur" />
+                          defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Ascenseur" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.tennis}      defaultChecked={values.services_equipements.tennis}  name="services_equipements"  color='default' />} label="Tennis" />
+                         defaultChecked={values.services_equipements}  name="services_equipements"  color='default' />} label="Tennis" />
       <FormControlLabel control={<Checkbox onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.services_equipements.animauxAutorises}    defaultChecked={values.services_equipements.animauxAutorises} name="services_equipements"  color='default' />} label="Animaux autorisés" />
+                       defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Animaux autorisés" />
     </FormGroup>
     </Box>
           

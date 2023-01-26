@@ -3,10 +3,10 @@ import { Box, Button, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
-import Header from "../../../components/Header";
+import Header from "../../components/Header";
 import { useDispatch ,useSelector} from 'react-redux';
 import Swal from 'sweetalert2'
-import { insertBus,getSingleBus,editBus } from '../../../redux/busSlice';
+import { insertBus,getSingleBus,editBus } from '../../redux/busSlice';
 import { useParams } from 'react-router-dom';
 import moment from 'moment'
 
@@ -77,18 +77,45 @@ function EditBus() {
               sx={{ gridColumn: "span 2" }}
             />
             <TextField
-              fullWidth
-              variant="filled"
-              type="text"
-              label="Reference"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.reference}
-              name="reference"
-              error={!!touched.reference && !!errors.reference}
-              helperText={touched.reference && errors.reference}
-              sx={{ gridColumn: "span 2" }}
-            />
+                  disabled
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Reference"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.reference}
+                    name="reference"
+                    error={!!touched.reference && !!errors.reference}
+                    helperText={touched.reference && errors.reference}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                   <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Point départ"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.point_depart}
+                    name="point_depart"
+                    error={!!touched.point_depart && !!errors.point_depart}
+                    helperText={touched.point_depart && errors.point_depart}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                   <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Point arrive"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.point_arrive}
+                    name="point_arrive"
+                    error={!!touched.point_arrive && !!errors.point_arrive}
+                    helperText={touched.point_arrive && errors.point_arrive}
+                    sx={{ gridColumn: "span 2" }}
+                  />
             <TextField
               fullWidth
               variant="filled"

@@ -2,32 +2,33 @@ import React, { useState,useEffect } from "react";
 import styled from "styled-components";
 import { Box,Alert, CircularProgress, useTheme } from "@mui/material";
 
-import info1 from "../../assets/hotel.jpg";
+import info1 from "../../assets/CarthageLand.jpg";
 import info2 from "../../assets/ali.png";
 import info3 from "../../assets/ali.png";
 import { useDispatch,useSelector } from 'react-redux';
-import {fetchHotels,deleteHotels} from '../../redux/hotelSlice'
+import {fetchEvent} from '../../redux/eventSlice'
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
-import { Button, Rating } from "@mui/material";
+import { Button } from "@mui/material";
 import moment from 'moment'
 
-export default function Recommend() {
-  const hotels = useSelector(state=>state.hotels)
-  const {error} = useSelector(state=>state.hotels)
-  const {status} = useSelector(state=>state.hotels)
-  const {data} = useSelector(state=>state.hotels)
+export default function RecommendEvent() {
+  const event = useSelector(state=>state.event)
+  const {error} = useSelector(state=>state.event)
+  const {status} = useSelector(state=>state.event)
+  const {data} = useSelector(state=>state.event)
   let navigate = useNavigate();
 
 const dispatch = useDispatch();
   useEffect(()=>{
-    dispatch(fetchHotels())
+    dispatch(fetchEvent())
    
        },[dispatch])
    
        useEffect(()=>{
    
-            },[hotels])
+        console.log('event : ', event)
+            },[event])
 
   const packages = [
     "The Weekend Break",
@@ -38,9 +39,11 @@ const dispatch = useDispatch();
 
   const [active, setActive] = useState(1);
   return (
+    
     <Section id="recommend">
+        
       <div className="title">
-        <h2>Recommended Hotel</h2>
+        <h2>Recommended Event</h2>
       </div>
       { error!==null ?  <Alert severity="error">{error}</Alert>
     : 
@@ -51,25 +54,20 @@ const dispatch = useDispatch();
      top={10}
      
      style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :hotels.data.length===0? <Box display='flex' justifyContent='center'> "there is no data found"</Box>:
-   
+    :event.data.length===0? <Box display='flex' justifyContent='center'> "there is no data found"</Box>:
       <div className="destinations">
         {data.map((destination) => {
           return (
             <div className="destination">
               <img src={info1} alt="" />
-              <h3>{destination.nom_hotel}</h3>
-              <p>{destination.adresse}</p>
+              <h3>{destination.nom_evenement}</h3>
+              <p>{destination.description}</p>
               <div className="info">
                 <div className="services">
-                <Rating
-          size="large"
-        defaultValue={destination.nb_etoile}
-        readOnly
-        />
+              <p>Place disponible : <span>{destination.nb_place}</span></p>
 
                 </div>
-                <h4>A partir de {destination.prix_chambre_double} DT</h4>
+                <h4>A partir de {destination.prix_evenement} DT</h4>
               </div>
               <div className="distance">
                 <p>de <span> {moment(destination.date_debut).format('YYYY-MM-DD')} à <span>{moment(destination.date_fin).format('YYYY-MM-DD')}</span></span></p>
@@ -92,10 +90,20 @@ const Section = styled.section`
     display: flex;
     justify-content: center;
     margin: 2rem 0;
-
+    ul {
+      display: flex;
+      list-style-type: none;
+      width: max-content;
+      li {
+        padding: 1rem 2rem;
+        border-bottom: 0.1rem solid black;
+      }
+      .active {
+        border-bottom: 0.5rem solid #8338ec;
+      }
+    }
   }
   .destinations {
-    padding: 2rem 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;

@@ -73,21 +73,22 @@ function ListBus() {
               />,
             ]
           
-  
        
         
       },
-      { field: "matricule", headerName: "Matricule", width: 100 },
-      { field: "reference", headerName: "Reference", width: 200 },
+      { field: "matricule", headerName: "Matricule", width: 150 },
+      { field: "reference", headerName: "Reference", width: 150 },
+      { field: "point_depart", headerName: "Point départ", width: 200 },
+      { field: "point_arrive", headerName: "Point arrive", width: 200 },
       {
         field: "nb_place",
         headerName: "Nombre de place",
-        width: 250,
+        width: 100,
       },
       {
         field: "nb_place_reserver",
         headerName: "Nombre de place reserver",
-        width: 250,
+        width: 100,
       },
       { field: "prix_place", headerName: "Prix de place", width: 100 },
       { field: "date_debut", headerName: "date debut", width: 100 },

@@ -2,33 +2,35 @@ import React, { useState,useEffect } from "react";
 import styled from "styled-components";
 import { Box,Alert, CircularProgress, useTheme } from "@mui/material";
 
-import info1 from "../../assets/hotel.jpg";
+import info1 from "../../assets/bus.jpg";
 import info2 from "../../assets/ali.png";
 import info3 from "../../assets/ali.png";
 import { useDispatch,useSelector } from 'react-redux';
-import {fetchHotels,deleteHotels} from '../../redux/hotelSlice'
+import {fetchBus} from '../../redux/busSlice'
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
 import { Button, Rating } from "@mui/material";
 import moment from 'moment'
 
-export default function Recommend() {
-  const hotels = useSelector(state=>state.hotels)
-  const {error} = useSelector(state=>state.hotels)
-  const {status} = useSelector(state=>state.hotels)
-  const {data} = useSelector(state=>state.hotels)
+export default function RecommendBus() {
+  const bus = useSelector(state=>state.bus)
+  const {error} = useSelector(state=>state.bus)
+  const {status} = useSelector(state=>state.bus)
+  const {data} = useSelector(state=>state.bus)
   let navigate = useNavigate();
 
 const dispatch = useDispatch();
   useEffect(()=>{
-    dispatch(fetchHotels())
+    dispatch(fetchBus())
    
        },[dispatch])
    
        useEffect(()=>{
    
-            },[hotels])
+        console.log('bus : ', bus)
+            },[bus])
 
+ console.log(data)
   const packages = [
     "The Weekend Break",
     "The Package Holiday",
@@ -36,11 +38,10 @@ const dispatch = useDispatch();
     "Long Term Slow Travel",
   ];
 
-  const [active, setActive] = useState(1);
   return (
     <Section id="recommend">
       <div className="title">
-        <h2>Recommended Hotel</h2>
+        <h2>Recommended Bus</h2>
       </div>
       { error!==null ?  <Alert severity="error">{error}</Alert>
     : 
@@ -51,28 +52,24 @@ const dispatch = useDispatch();
      top={10}
      
      style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :hotels.data.length===0? <Box display='flex' justifyContent='center'> "there is no data found"</Box>:
-   
+    :bus.data.length===0? <Box display='flex' justifyContent='center'> "there is no data found"</Box>:
       <div className="destinations">
         {data.map((destination) => {
           return (
             <div className="destination">
               <img src={info1} alt="" />
-              <h3>{destination.nom_hotel}</h3>
-              <p>{destination.adresse}</p>
+              <h3>{destination.point_depart} à {destination.point_arrive}</h3>
+              <p>Place disponible :<span> {destination.nb_place}</span></p>
               <div className="info">
                 <div className="services">
-                <Rating
-          size="large"
-        defaultValue={destination.nb_etoile}
-        readOnly
-        />
+              
+                <p>Départ <span> {moment(destination.date_debut).format('YYYY-MM-DD')} à <span>{moment(destination.date_debut).format('hh:mm')}</span></span></p>
 
                 </div>
-                <h4>A partir de {destination.prix_chambre_double} DT</h4>
+                <h4>A partir de {destination.prix_place} DT</h4>
               </div>
               <div className="distance">
-                <p>de <span> {moment(destination.date_debut).format('YYYY-MM-DD')} à <span>{moment(destination.date_fin).format('YYYY-MM-DD')}</span></span></p>
+                <p>Arrivée <span> {moment(destination.date_fin).format('YYYY-MM-DD')} à <span>{moment(destination.date_fin).format('hh:mm')}</span></span></p>
                 <Button variant="contained">Voir l'offre</Button>
               </div>
             </div>
@@ -92,10 +89,21 @@ const Section = styled.section`
     display: flex;
     justify-content: center;
     margin: 2rem 0;
-
+    
+    ul {
+      display: flex;
+      list-style-type: none;
+      width: max-content;
+      li {
+        padding: 1rem 2rem;
+        border-bottom: 0.1rem solid black;
+      }
+      .active {
+        border-bottom: 0.5rem solid #8338ec;
+      }
+    }
   }
   .destinations {
-    padding: 2rem 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
@@ -108,6 +116,9 @@ const Section = styled.section`
       background-color: #8338ec14;
       border-radius: 1rem;
       transition: 0.3s ease-in-out;
+      span{
+        font-weight: 600;
+      }
       &:hover {
         transform: translateX(0.4rem) translateY(-1rem);
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -121,6 +132,9 @@ const Section = styled.section`
         .services {
           display: flex;
           gap: 0.3rem;
+          span{
+            font-weight: 600;
+          }
           img {
             border-radius: 1rem;
             background-color: #4d2ddb84;

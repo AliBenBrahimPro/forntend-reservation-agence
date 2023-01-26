@@ -20,24 +20,25 @@ export const fetchHotels = createAsyncThunk(
       const {rejectWithValue} = thunkAPI;
 
        try{
-        //  const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`, 
-        //  {
-        //     method: 'POST', 
-        //     body: JSON.stringify (hotelData),
-        //     headers: {
-        //     'Content-type': 'application/json; charset=UTF-8',
-        //     },
+         const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`, 
+         {
+            method: 'POST', 
+            body: JSON.stringify (hotelData),
+            headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            },
 
-        //  } );
-        let data
-        await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,hotelData).then(response => data=response.data)
-      // const data =await res.json();
+         } );
+        
+      const data =await res.json();
         return data
       }catch(error){
       return rejectWithValue(error.message);
    }
    }
  )
+
+
   export const deleteHotels = createAsyncThunk(
     'hotels/deleteHotels',
     async (id,thunkAPI) => {

@@ -1,31 +1,26 @@
-import React,{useEffect} from 'react'
+import React,{useState} from 'react'
 import { Box, Button, TextField } from '@mui/material'
+import Fab from '@mui/material/Fab';
+
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
-import Header from "../../../components/Header";
-import { useDispatch ,useSelector} from 'react-redux';
+import Header from "../../components/Header";
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
-import { getSingleEvent,editEvent } from '../../../redux/eventSlice';
-import { useParams } from 'react-router-dom';
-import moment from 'moment'
-function EditEvent() {
+import { insertEvent } from '../../redux/eventSlice';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+
+function EventForm() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const dispatch =useDispatch();
-  const {id} = useParams();
-  const {data} = useSelector(state=>state.event)
-  console.log(data)
-  useEffect(()=>{
-    dispatch(getSingleEvent(id))
-        },[])  
   const handleFormSubmit = (values) => {
       console.log(values);
-      dispatch(editEvent(values)).then((data)=>{
-        console.log("data",data)
-        if(data.type==="event/editEvent/fulfilled" ){
+      dispatch(insertEvent(values)).then((data)=>{
+        if(data.type==="event/insertEvent/fulfilled" ){
          Swal.fire(
                    'Success',
-                   `${data.payload.nom_evenement} a ete modifie avec succes`,
+                   `${data.payload.nom_evenement} a ajouter avec succes`,
                    'success'
                  ) 
         }else{
@@ -36,8 +31,18 @@ function EditEvent() {
                })}
        })
   };
-
+  const initialValues = {
+    image_evenement:"",
+    nom_evenement: "",
+    description: "",
+    nb_place: "",
+    nb_place_reserver: 0,
+    prix_evenement: "",
+    date_debut: "",
+    date_fin:""
+  };
   const checkoutSchema = yup.object().shape({
+    image_evenement:yup.mixed().required("Required"),
     nom_evenement:yup.string().required("Required"),
     description:yup.string().required("Required"),
     nb_place:yup.number().required("Required"),
@@ -49,10 +54,10 @@ function EditEvent() {
 
   return (
     <Box m="20px">
-    <Header title="MODIFIER EVENEMENT" subtitle="Modifier evenement" />
+    <Header title="CREER EVENEMENT" subtitle="Creer nouveau evenement" />
 
-    <Formik onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} validationSchema={checkoutSchema}>
-      {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
+    <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
+      {({ values, errors, touched,setFieldValue, handleBlur, handleChange, handleSubmit,}) => (
         <form onSubmit={handleSubmit}>
           <Box
             display="grid"
@@ -62,6 +67,23 @@ function EditEvent() {
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
             }}
           >
+             <Box  sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
+             <input
+              style={{display: "none" }}
+              onBlur={handleBlur}
+              onChange={e=>setFieldValue("image_evenement",e.target.files[0])}
+              name="image_evenement"
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+            />
+            <label htmlFor="contained-button-file">
+              <Fab component="span" >
+                <AddPhotoAlternateIcon />
+              </Fab>
+            </label>
+            </Box>
             <TextField
               fullWidth
               variant="filled"
@@ -127,18 +149,18 @@ function EditEvent() {
               helperText={touched.prix_evenement && errors.prix_evenement}
               sx={{ gridColumn: "span 4" }}
             />
-          <TextField
-              fullWidth
-              variant="filled"
-              type="datetime-local"
-              label="Date début"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={moment(values.date_debut).format("YYYY-MM-DD[T]HH:mm:ss")}
-              name="date_debut"
-              error={!!touched.date_debut && !!errors.date_debut}
-              helperText={touched.date_debut && errors.date_debut}
-              sx={{ gridColumn: "span 4" }}
+            <TextField
+               fullWidth
+               variant="filled"
+               type="datetime-local"
+               label="Date début"
+               onBlur={handleBlur}
+               onChange={handleChange}
+               value={values.date_debut}
+               name="date_debut"
+               error={!!touched.date_debut && !!errors.date_debut}
+               helperText={touched.date_debut && errors.date_debut}
+               sx={{ gridColumn: "span 4" }}
             />
             <TextField
               fullWidth
@@ -147,7 +169,7 @@ function EditEvent() {
               label="Date fin"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={moment(values.date_fin).format("YYYY-MM-DD[T]HH:mm:ss")}
+              value={values.date_fin}
               name="date_fin"
               inputProps={{ min: values.date_debut}}
               error={!!touched.date_fin && !!errors.date_fin}
@@ -157,7 +179,7 @@ function EditEvent() {
           </Box>
           <Box display="flex" justifyContent="end" mt="20px">
             <Button type="submit" color="secondary" variant="contained">
-              Modifier évenement
+              Créer nouveau évenement
             </Button>
           </Box>
         </form>
@@ -167,4 +189,4 @@ function EditEvent() {
   )
 }
 
-export default EditEvent
+export default EventForm

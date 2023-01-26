@@ -1,22 +1,31 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
-import Header from "../../../components/Header";
-import { useDispatch } from 'react-redux';
+import Header from "../../components/Header";
+import { useDispatch ,useSelector} from 'react-redux';
 import Swal from 'sweetalert2'
-import { insertEvent } from '../../../redux/eventSlice';
-function EventForm() {
+import { getSingleEvent,editEvent } from '../../redux/eventSlice';
+import { useParams } from 'react-router-dom';
+import moment from 'moment'
+function EditEvent() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const dispatch =useDispatch();
+  const {id} = useParams();
+  const {data} = useSelector(state=>state.event)
+  console.log(data)
+  useEffect(()=>{
+    dispatch(getSingleEvent(id))
+        },[])  
   const handleFormSubmit = (values) => {
       console.log(values);
-      dispatch(insertEvent(values)).then((data)=>{
-        if(data.type==="event/insertEvent/fulfilled" ){
+      dispatch(editEvent(values)).then((data)=>{
+        console.log("data",data)
+        if(data.type==="event/editEvent/fulfilled" ){
          Swal.fire(
                    'Success',
-                   `${data.payload.nom_evenement} a ajouter avec succes`,
+                   `${data.payload.nom_evenement} a ete modifie avec succes`,
                    'success'
                  ) 
         }else{
@@ -27,15 +36,7 @@ function EventForm() {
                })}
        })
   };
-  const initialValues = {
-    nom_evenement: "",
-    description: "",
-    nb_place: "",
-    nb_place_reserver: 0,
-    prix_evenement: "",
-    date_debut: "",
-    date_fin:""
-  };
+
   const checkoutSchema = yup.object().shape({
     nom_evenement:yup.string().required("Required"),
     description:yup.string().required("Required"),
@@ -48,9 +49,9 @@ function EventForm() {
 
   return (
     <Box m="20px">
-    <Header title="CREER EVENEMENT" subtitle="Creer nouveau evenement" />
+    <Header title="MODIFIER EVENEMENT" subtitle="Modifier evenement" />
 
-    <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
+    <Formik onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} validationSchema={checkoutSchema}>
       {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
         <form onSubmit={handleSubmit}>
           <Box
@@ -126,18 +127,18 @@ function EventForm() {
               helperText={touched.prix_evenement && errors.prix_evenement}
               sx={{ gridColumn: "span 4" }}
             />
-            <TextField
-               fullWidth
-               variant="filled"
-               type="datetime-local"
-               label="Date début"
-               onBlur={handleBlur}
-               onChange={handleChange}
-               value={values.date_debut}
-               name="date_debut"
-               error={!!touched.date_debut && !!errors.date_debut}
-               helperText={touched.date_debut && errors.date_debut}
-               sx={{ gridColumn: "span 4" }}
+          <TextField
+              fullWidth
+              variant="filled"
+              type="datetime-local"
+              label="Date début"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={moment(values.date_debut).format("YYYY-MM-DD[T]HH:mm:ss")}
+              name="date_debut"
+              error={!!touched.date_debut && !!errors.date_debut}
+              helperText={touched.date_debut && errors.date_debut}
+              sx={{ gridColumn: "span 4" }}
             />
             <TextField
               fullWidth
@@ -146,7 +147,7 @@ function EventForm() {
               label="Date fin"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.date_fin}
+              value={moment(values.date_fin).format("YYYY-MM-DD[T]HH:mm:ss")}
               name="date_fin"
               inputProps={{ min: values.date_debut}}
               error={!!touched.date_fin && !!errors.date_fin}
@@ -156,7 +157,7 @@ function EventForm() {
           </Box>
           <Box display="flex" justifyContent="end" mt="20px">
             <Button type="submit" color="secondary" variant="contained">
-              Créer nouveau évenement
+              Modifier évenement
             </Button>
           </Box>
         </form>
@@ -166,4 +167,4 @@ function EventForm() {
   )
 }
 
-export default EventForm
+export default EditEvent
