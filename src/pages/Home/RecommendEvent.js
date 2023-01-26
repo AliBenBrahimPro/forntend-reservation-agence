@@ -18,7 +18,9 @@ export default function RecommendEvent() {
   const {status} = useSelector(state=>state.event)
   const {data} = useSelector(state=>state.event)
   let navigate = useNavigate();
-
+  const handleClick = (values) => {
+     navigate(`/reservationevenement/${values.id}`)
+};
 const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(fetchEvent())
@@ -38,6 +40,7 @@ const dispatch = useDispatch();
   ];
 
   const [active, setActive] = useState(1);
+
   return (
     
     <Section id="recommend">
@@ -59,19 +62,19 @@ const dispatch = useDispatch();
         {data.map((destination) => {
           return (
             <div className="destination">
-              <img src={info1} alt="" />
+              <img src={`${process.env.REACT_APP_BASE_URL}/${String(destination.image_evenement).substring(1,String(destination.image_evenement).length-1)}`} alt="image_evenement" />
               <h3>{destination.nom_evenement}</h3>
               <p>{destination.description}</p>
               <div className="info">
                 <div className="services">
-              <p>Place disponible : <span>{destination.nb_place}</span></p>
+              <p>Place disponible : <span>{destination.nb_place-destination.nb_place_reserver}</span></p>
 
                 </div>
                 <h4>A partir de {destination.prix_evenement} DT</h4>
               </div>
               <div className="distance">
                 <p>de <span> {moment(destination.date_debut).format('YYYY-MM-DD')} à <span>{moment(destination.date_fin).format('YYYY-MM-DD')}</span></span></p>
-                <Button variant="contained">Voir l'offre</Button>
+                <Button variant="contained" onClick={(e)=>handleClick(destination)}>Réserver</Button>
               </div>
             </div>
           );

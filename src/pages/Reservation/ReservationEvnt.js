@@ -7,28 +7,28 @@ import Header from "../../components/Header";
 import { useDispatch ,useSelector} from 'react-redux';
 import Swal from 'sweetalert2'
 import moment from 'moment'
-import { getSingleBus,editBus } from '../../redux/busSlice';
+import { getSingleEvent } from '../../redux/eventSlice';
 import { useParams } from 'react-router-dom';
-import { insertReservationBus } from '../../redux/reservationbusSlice';
+import { reservationeventSlice,insertReservationEvent } from '../../redux/reservationevenementSlice';
 import axios from 'axios';
-function ReservationBus() {
+function ReservationEvnt() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const {id} = useParams();
-    const {data} = useSelector(state=>state.bus)
-    const {nb_place}= useSelector(state=>state.bus.data)
+    const {data} = useSelector(state=>state.event)
+    const {nb_place}= useSelector(state=>state.event.data)
     useEffect(()=>{
-      dispatch(getSingleBus(id))
+      dispatch(getSingleEvent(id))
           },[])  
-          console.log(data.matricule)
+          console.log(data)
     const handleFormSubmit = (values) => {
          console.log(values);
-         values.monatnt_total=data.prix_place*values.nb_place
-        dispatch(insertReservationBus(values)).then((Data)=>{
-            if(Data.type==="reservationbus/insertReservationBus/fulfilled" ){
+         values.monatnt_total=data.prix_evenement*values.nb_place
+        dispatch(insertReservationEvent(values)).then((Data)=>{
+            if(Data.type==="reservationevent/insertReservationevent/fulfilled" ){
              Swal.fire(
                        'Success',
-                       `${data.matricule} a ajouter avec succes`,
+                       `${data.nom_evenement} a ajouter avec succes`,
                        'success'
                      ) 
             }else{
@@ -54,12 +54,12 @@ function ReservationBus() {
       monatnt_total:"",
       date_debut:data.date_debut,
       date_fin:data.date_fin,
-      busId:id,
+      evenementId:id,
       userId:1,
     }
   return (
     <Box m="20px">
-    <Header title="Reservervation Bus" subtitle="Reservervation des places sur le bus" />
+    <Header title="Reservervation Evenement" subtitle="Reservervation des places sur le Evenement" />
 
     <Formik onSubmit={handleFormSubmit} initialValues={initialdata} enableReinitialize={true} validationSchema={checkoutSchema}>
       {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
@@ -102,7 +102,7 @@ function ReservationBus() {
               label="Prix unitaire"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={data.prix_place}
+              value={data.prix_evenement}
               name="prix_place"
              disabled
               sx={{ gridColumn: "span 2" }}
@@ -114,7 +114,7 @@ function ReservationBus() {
               label="Monatnt total"
               disabled
               
-              value={data.prix_place*values.nb_place}
+              value={data.prix_evenement*values.nb_place}
               name="monatnt_total"
               error={!!touched.monatnt_total && !!errors.monatnt_total}
               helperText={touched.monatnt_total && errors.monatnt_total}
@@ -162,4 +162,4 @@ function ReservationBus() {
   )
 }
 
-export default ReservationBus
+export default ReservationEvnt
