@@ -20,31 +20,24 @@ function ReservationBus() {
     useEffect(()=>{
       dispatch(getSingleBus(id))
           },[])  
+          console.log(data.matricule)
     const handleFormSubmit = (values) => {
-        console.log(values);
-
-        const formData = new FormData();
-           formData.append('id',1)
-           formData.append('nb_place',values.nb_place)
-           formData.append('monatnt_total',500)
-           formData.append('date_debut',values.date_debut)
-           formData.append('date_fin',values.date_fin)
-           const res= axios.post(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/addreservationbus`,formData);
-console.log(res)
-        // dispatch(insertReservationBus(values)).then((data)=>{
-        //     if(data.type==="reservationbus/insertReservationBus/fulfilled" ){
-        //      Swal.fire(
-        //                'Success',
-        //                `${data.payload.matricule} a ajouter avec succes`,
-        //                'success'
-        //              ) 
-        //     }else{
-        //          Swal.fire({
-        //              icon: 'error',
-        //              title: 'Oops...',
-        //              text: 'Something went wrong!',
-        //            })}
-        //    })
+         console.log(values);
+         values.monatnt_total=data.prix_place*values.nb_place
+        dispatch(insertReservationBus(values)).then((data)=>{
+            if(data.type==="reservationbus/insertReservationBus/fulfilled" ){
+             Swal.fire(
+                       'Success',
+                       `${data.payload.matricule} a ajouter avec succes`,
+                       'success'
+                     ) 
+            }else{
+                 Swal.fire({
+                     icon: 'error',
+                     title: 'Oops...',
+                     text: 'Something went wrong!',
+                   })}
+           })
     };
   
 
@@ -56,11 +49,19 @@ console.log(res)
         // date_fin:yup.string().required("Required"),
 
     })
+   let initialdata={
+      nb_place:"",
+      monatnt_total:"",
+      date_debut:data.date_debut,
+      date_fin:data.date_fin,
+      busId:id,
+      userId:1,
+    }
   return (
     <Box m="20px">
     <Header title="Reservervation Bus" subtitle="Reservervation des places sur le bus" />
 
-    <Formik onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} validationSchema={checkoutSchema}>
+    <Formik onSubmit={handleFormSubmit} initialValues={initialdata} enableReinitialize={true} validationSchema={checkoutSchema}>
       {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
         <form onSubmit={handleSubmit}>
           <Box
@@ -79,10 +80,10 @@ console.log(res)
               label="Nombre de place à reserver"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.nb_place_res}
+              value={values.nb_place}
               name="nb_place"
-              error={!!touched.nb_place_res && !!errors.nb_place_res}
-              helperText={touched.nb_place_res && errors.nb_place_res}
+              error={!!touched.nb_place && !!errors.nb_place}
+              helperText={touched.nb_place && errors.nb_place}
               sx={{ gridColumn: "span 2" }}
             />
              <TextField
@@ -91,7 +92,7 @@ console.log(res)
               variant="filled"
               type="text"
               label="Nombre de place disponible"
-              value={nb_place}
+              value={nb_place-data.nb_place_reserver}
               sx={{ gridColumn: "span 2" }}
             />
             <TextField
@@ -101,7 +102,7 @@ console.log(res)
               label="Prix unitaire"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.prix_place}
+              value={data.prix_place}
               name="prix_place"
              disabled
               sx={{ gridColumn: "span 2" }}
@@ -113,7 +114,7 @@ console.log(res)
               label="Monatnt total"
               disabled
               
-              value={values.prix_place*values.nb_place}
+              value={data.prix_place*values.nb_place}
               name="monatnt_total"
               error={!!touched.monatnt_total && !!errors.monatnt_total}
               helperText={touched.monatnt_total && errors.monatnt_total}
@@ -127,7 +128,7 @@ console.log(res)
               label="Date début"
              
               onChange={handleChange}
-              value={moment(values.date_debut).format("YYYY-MM-DD[T]HH:mm")}
+              value={moment(data.date_debut).format("YYYY-MM-DD[T]HH:mm")}
               name="date_debut"
               error={!!touched.date_debut && !!errors.date_debut}
               helperText={touched.date_debut && errors.date_debut}
@@ -141,7 +142,7 @@ console.log(res)
               label="Date fin"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={moment(values.date_fin).format("YYYY-MM-DD[T]HH:mm")}
+              value={moment(data.date_fin).format("YYYY-MM-DD[T]HH:mm")}
               name="date_fin"
               inputProps={{ min: values.date_debut}}
               error={!!touched.date_fin && !!errors.date_fin}

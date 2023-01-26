@@ -62,7 +62,7 @@ const dispatch = useDispatch();
             <div className="destination">
               <img src={info1} alt="" />
               <h3>{destination.point_depart} à {destination.point_arrive}</h3>
-              <p>Place disponible :<span> {destination.nb_place}</span></p>
+              <p>Place disponible :<span> {destination.nb_place-destination.nb_place_reserver}</span></p>
               <div className="info">
                 <div className="services">
               
