@@ -84,7 +84,7 @@ const App = () => {
     <Route path="/agence" element={<Agence/>}/>
     <Route path="/test" element={<VirtualizedList/>}/>
     <Route path="/reservationbus/:id" element={<ReservationBus />} />
-    <Route path="/client" element={<ReservationClient />} />
+    <Route path="/client/:id" element={<ReservationClient />} />
 
     <Route path="/*" element={ <RouteApp />} />
               </Routes>

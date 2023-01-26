@@ -7,20 +7,51 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Formik } from "formik";
 import * as yup from 'yup';
-import { TextField, useMediaQuery } from "@mui/material";
+import { TextField, useMediaQuery,Alert,CircularProgress } from "@mui/material";
 import Header from "../../components/Header";
-// const stepsed = ['Select campaign settings', 'Create an ad group', 'Create an ad',"4"];
+import { useParams } from 'react-router-dom';
+import {  fetchReservationBus } from '../../redux/reservationbusSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function ReservationClient({number}) {
+const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad',"4"];
+
+export default function ReservationClient() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  const [stepsed, setstepseded] = React.useState([]);
-useEffect(() => {
-  for(const i=0 ;i<7;i++){
-    stepsed.push("Client"+i+1)
-  }
-}, [])
+  const [test, setTest] = React.useState([]);
+  const [nbr, setNbr] = React.useState();
 
+  const dispatch =useDispatch();
+  const {id} = useParams();
+  const {data} = useSelector(state=>state.reservationbus)
+  const reservationbus = useSelector(state=>state.reservationbus)
+  const {error} = useSelector(state=>state.reservationbus)
+  const {status} = useSelector(state=>state.reservationbus)
+  console.log("data",data)
+
+
+        useEffect(()=>{
+            dispatch(fetchReservationBus())
+           
+           
+           
+               },[dispatch])
+           
+               useEffect(()=>{
+           
+                console.log('reservationbus : ', reservationbus)
+                const test2 =[];
+               data.map(e=>e.id==id?setNbr(e.nb_place):setNbr(null));
+                if(nbr != null){
+                    for(let i= 0;i<nbr;i++){
+                        test2.push(`client ${i+1}`);
+                        console.log(test2)
+                            }
+                         setTest(test2)
+                }
+                    },[reservationbus])
+
+console.log(test)
   const isStepOptional = (step) => {
     return step ;
   };
@@ -90,16 +121,25 @@ useEffect(() => {
 
   })
   return (
+    <Box>
+
+    { error!==null ?  <Alert severity="error">{error}</Alert>
+    : 
+    
+    status ==="loading"? <Box style={{position: 'relative'}}>
+    <CircularProgress size={40}
+     left={-20}
+     top={10}
+     
+     style={{marginLeft: '50%'}} color="secondary" /></Box>
+    :reservationbus.data.length===0? "there is no data found":
     <Box sx={{ width: '100%' }}>
-      <Stepper sx={{color:"yellow"}} color='yellow' activeStep={activeStep}>
-        {stepsed.map((label, index) => {
+        
+      {test.length===0? "no data found": <Stepper sx={{color:"yellow"}} color='yellow' activeStep={activeStep}>
+        {test.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          if (isStepOptional(index==2)) {
-            labelProps.optional = (
-              <Typography color="secondary" variant="caption">Optional</Typography>
-            );
-          }
+  
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
@@ -109,11 +149,11 @@ useEffect(() => {
             </Step>
           );
         })}
-      </Stepper>
-      {activeStep === stepsed.length ? (
+      </Stepper>}
+      {activeStep === steps.length ? (
         <React.Fragment >
           <Typography  sx={{ mt: 2, mb: 1 }}>
-            All stepsed completed - you&apos;re finished
+            All steps completed - you&apos;re finished
           </Typography>
           <Box  sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
@@ -245,7 +285,7 @@ useEffect(() => {
             )}
 
             <Button type='submit' color="secondary" onClick={handleNext}>
-              {activeStep === stepsed.length - 1 ? 'Finish' : 'Next'}
+              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
           </Box>
               </form>
@@ -255,6 +295,7 @@ useEffect(() => {
           
         </React.Fragment>
       )}
+    </Box>}
     </Box>
   );
 }

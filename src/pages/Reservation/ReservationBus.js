@@ -8,8 +8,9 @@ import { useDispatch ,useSelector} from 'react-redux';
 import Swal from 'sweetalert2'
 import moment from 'moment'
 import { getSingleBus,editBus } from '../../redux/busSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { insertReservationBus } from '../../redux/reservationbusSlice';
+
 import axios from 'axios';
 function ReservationBus() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -17,6 +18,8 @@ function ReservationBus() {
     const {id} = useParams();
     const {data} = useSelector(state=>state.bus)
     const {nb_place}= useSelector(state=>state.bus.data)
+    let navigate = useNavigate();
+
     useEffect(()=>{
       dispatch(getSingleBus(id))
           },[])  
@@ -25,12 +28,16 @@ function ReservationBus() {
          console.log(values);
          values.monatnt_total=data.prix_place*values.nb_place
         dispatch(insertReservationBus(values)).then((data)=>{
+          
             if(data.type==="reservationbus/insertReservationBus/fulfilled" ){
+             
              Swal.fire(
                        'Success',
-                       `${data.payload.matricule} a ajouter avec succes`,
+                       `réservation a affecter avec succes`,
                        'success'
                      ) 
+                     
+                   navigate(`/client/${data.payload.id}`) 
             }else{
                  Swal.fire({
                      icon: 'error',
