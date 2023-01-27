@@ -30,16 +30,8 @@ const dispatch = useDispatch();
    
        useEffect(()=>{
    
-        console.log('bus : ', bus)
             },[bus])
-
- console.log(data)
-  const packages = [
-    "The Weekend Break",
-    "The Package Holiday",
-    "The Group Tour",
-    "Long Term Slow Travel",
-  ];
+console.log('where is the problem',bus.data)
 
   return (
     <Section id="recommend">
@@ -49,7 +41,7 @@ const dispatch = useDispatch();
       { error!==null ?  <Alert severity="error">{error}</Alert>
     : 
     
-    status ==="loading"? <Box style={{position: 'relative'}}>
+    status ==="loading" ? <Box style={{position: 'relative'}}>
     <CircularProgress size={40}
      left={-20}
      top={10}
@@ -57,7 +49,7 @@ const dispatch = useDispatch();
      style={{marginLeft: '50%'}} color="secondary" /></Box>
     :bus.data.length===0? <Box display='flex' justifyContent='center'> "there is no data found"</Box>:
       <div className="destinations">
-        {data.map((destination) => {
+        {Array.from(data).map((destination) => {
           return (
             <div className="destination">
               <img src={info1} alt="" />

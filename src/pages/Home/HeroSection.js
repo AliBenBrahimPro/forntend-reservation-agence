@@ -18,7 +18,7 @@ export default function HeroImage() {
               <h4 className='mb-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
             natus, enim ipsam magnam odit deserunt itaque? Minima earum velit
             tenetur!</h4>
-              <Card sx={{ display: 'flex',backgroundColor: "#ffffffce",padding:" 0.5rem",borderRadius: "0.5rem" }}>
+              <Card sx={{ backgroundColor: "#ffffffce",padding:" 0.5rem",borderRadius: "0.5rem" }}>
           <Box sx={{display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

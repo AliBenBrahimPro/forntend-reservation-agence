@@ -62,7 +62,7 @@ const dispatch = useDispatch();
         {data.map((destination) => {
           return (
             <div className="destination">
-              <img src={`${process.env.REACT_APP_BASE_URL}/${String(destination.image_evenement).substring(1,String(destination.image_evenement).length-1)}`} alt="image_evenement" />
+              <img src={`${process.env.REACT_APP_BASE_URL}/${destination.image_evenement}`} width="580px" height="326px" alt="image_evenement" />
               <h3>{destination.nom_evenement}</h3>
               <p>{destination.description}</p>
               <div className="info">

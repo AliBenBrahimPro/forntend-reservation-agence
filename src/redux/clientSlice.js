@@ -9,7 +9,8 @@ export const fetchClient = createAsyncThunk(
         try{
           const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/client/getallclient`)
       const data = await res.json()
-      return data}
+      return data
+    }
       catch(error){
         return rejectWithValue(error.message);
       }
@@ -69,33 +70,52 @@ export const fetchClient = createAsyncThunk(
             }
           }
                );
+               export const getSinglebymailClient = createAsyncThunk(
+                'client/getSinglebymailClient',
+                async (todo,thunkAPI) => {
+                  const { e_mail } = todo;
+
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/client/getclientbyemail/`,
+                      {
+                        e_mail
+                      })
+
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+                     );
 
 
 
-            //    export const editClient = createAsyncThunk(
-            //     'client/editClient',
-            //     async (todo, { rejectWithValue }) => {
-            //       try {
-            //         const { id, matricule, reference, nb_place,nb_place_reserver, prix_place, date_debut,date_fin } = todo;
+              //  export const editClient = createAsyncThunk(
+              //   'client/editClient',
+              //   async (todo, { rejectWithValue }) => {
+              //     try {
+              //       const { id, matricule, reference, nb_place,nb_place_reserver, prix_place, date_debut,date_fin } = todo;
               
-            //         const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/client/updateclient/${id}`, {
-            //           matricule,
-            //           reference,
-            //           nb_place,
-            //           nb_place_reserver,
-            //           prix_place,
-            //           date_debut,
-            //           date_fin
-            //         });
-            //         console.log("response edit",response)
-            //         return response.data;
+              //       const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/client/updateclient/${id}`, {
+              //         matricule,
+              //         reference,
+              //         nb_place,
+              //         nb_place_reserver,
+              //         prix_place,
+              //         date_debut,
+              //         date_fin
+              //       });
+              //       console.log("response edit",response)
+              //       return response.data;
                     
-            //       } catch (error) {
-            //         console.log(error);
-            //         return rejectWithValue(error.message);
-            //       }
-            //     }
-            //   );
+              //     } catch (error) {
+              //       console.log(error);
+              //       return rejectWithValue(error.message);
+              //     }
+              //   }
+              // );
                
 
 
@@ -177,27 +197,27 @@ export const fetchClient = createAsyncThunk(
           },
           //edit hotel
           
-        //   [editClient.fulfilled]: (state, action) => {
+          [getSinglebymailClient.fulfilled]: (state, action) => {
            
-        //     return {
-        //       ...state,
-        //       data: action.payload,
+            return {
+              ...state,
+              data: action.payload,
              
-        //     };
-        //   },
-        //   [editClient.pending]: (state, action) => {
-        //     return {
-        //       ...state,
-        //       status:"loading"
-        //     };
-        //   },
-        //   [editClient.rejected]: (state, action) => {
-        //     return {
-        //       ...state,
-        //       status:"rejected",
-        //       error:action.payload
-        //     };
-        //   },
+            };
+          },
+          [getSinglebymailClient.pending]: (state, action) => {
+            return {
+              ...state,
+              status:"loading"
+            };
+          },
+          [getSinglebymailClient.rejected]: (state, action) => {
+            return {
+              ...state,
+              status:"rejected",
+              error:action.payload
+            };
+          },
           
        
     }

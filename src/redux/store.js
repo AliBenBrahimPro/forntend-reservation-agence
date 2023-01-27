@@ -1,5 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit'
 import busSlice from './busSlice'
+import clientSlice from './clientSlice'
 import eventSlice from './eventSlice'
 import hotelSlice from './hotelSlice'
 import reservationbusSlice from './reservationbusSlice'
@@ -8,6 +9,7 @@ export const store = configureStore({
         hotels:hotelSlice,
         bus:busSlice,
         event:eventSlice,
-        reservationbus:reservationbusSlice
+        reservationbus:reservationbusSlice,
+        client:clientSlice
     },
 })

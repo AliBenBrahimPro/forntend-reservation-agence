@@ -13,12 +13,13 @@ import {
   Checkbox,
 } from '@mui/material';
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
 
 const Agence = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => navigate('/home');
   console.log(errors);
-
+let navigate =useNavigate()
   return (
     <div className="App__form">
       <h1> Material UI with React Hook Form - Validation with Error Messages </h1>

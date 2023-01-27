@@ -7,11 +7,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Formik } from "formik";
 import * as yup from 'yup';
-import { TextField, useMediaQuery,Alert,CircularProgress } from "@mui/material";
+import { TextField, useMediaQuery,Alert,CircularProgress, Autocomplete } from "@mui/material";
 import Header from "../../components/Header";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {  fetchReservationBus } from '../../redux/reservationbusSlice';
-import {  insertClient } from '../../redux/clientSlice';
+import {  insertClient,fetchClient,getSinglebymailClient } from '../../redux/clientSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
@@ -23,26 +23,35 @@ export default function ReservationClient() {
   const [test, setTest] = React.useState([]);
   const [nbr, setNbr] = React.useState();
   const [prixBus, setPrixBus] = React.useState();
+  const [mail, setMail] = React.useState();
   const dispatch =useDispatch();
   const {id} = useParams();
   const {data} = useSelector(state=>state.reservationbus)
   const reservationbus = useSelector(state=>state.reservationbus)
+  const client = useSelector(state=>state.client)
   const {error} = useSelector(state=>state.reservationbus)
   const {status} = useSelector(state=>state.reservationbus)
-  console.log("data",data)
+  let navigate = useNavigate();
 
+  useEffect(()=>{
+    dispatch(fetchClient())
+   
+       },[dispatch])
+   
+       useEffect(()=>{
+   
+        
+            },[client])
 
         useEffect(()=>{
             dispatch(fetchReservationBus())
            
-           
+          
            
                },[dispatch])
            
                useEffect(()=>{
-           
-                console.log('reservationbus : ', reservationbus)
-                const test2 =[];
+                           const test2 =[];
                data.map(e=>e.id==id?setNbr(e.nb_place):setNbr(null));
                data.map(e=>e.id==id?setPrixBus(e.monatnt_total):setPrixBus(null));
                 if(nbr != null){
@@ -52,12 +61,8 @@ export default function ReservationClient() {
                             }
                          setTest(test2)
                 }
-                    },[reservationbus])
+                    },[reservationbus,client])
 
-console.log(test)
-  const isStepOptional = (step) => {
-    return step ;
-  };
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -74,18 +79,10 @@ console.log(test)
     setSkipped(newSkipped);
   };
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+ 
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-  const handleFormSubmit = (values) => {
-      console.log(values);
-      
+  const handleFormSubmit = (values) => {      
       dispatch(insertClient(values)).then((data)=>{
         if(data.type==="client/insertClient/fulfilled" ){
          Swal.fire(
@@ -128,6 +125,7 @@ console.log(test)
     //   reservationEvenementId:yup.number().required("Required"),
 
   })
+  console.log('i am here',client)
   return (
     <Box>
 
@@ -158,14 +156,14 @@ console.log(test)
           );
         })}
       </Stepper>}
-      {activeStep === steps.length ? (
+      {activeStep === test.length ? (
         <React.Fragment >
           <Typography  sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+            la résevation est compler
           </Typography>
           <Box  sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
-            <Button color="secondary" onClick={handleReset}>Reset</Button>
+            <Button color="secondary" onClick={(e)=>navigate('/home')}> retourner a la page home</Button>
           </Box>
         </React.Fragment>
       ) : (
@@ -184,6 +182,14 @@ console.log(test)
                     "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                   }}
                 >
+                <Autocomplete
+                 fullWidth
+                 disablePortal
+                 id="combo-box-demo"
+                 options={client.data.map(e=>e.e_mail)}
+                 sx={{ width: 300 , gridColumn: "span 4"}}
+                 renderInput={(params) => <TextField   {...params} label="Email" />}
+                 />
                   <TextField
                     fullWidth
                     variant="filled"
@@ -236,19 +242,7 @@ console.log(test)
                     helperText={touched.date_naissance && errors.date_naissance}
                     sx={{ gridColumn: "span 4" }}
                   />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Montant hotel"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.montant_hotel}
-                    name="montant_hotel"
-                    error={!!touched.montant_hotel && !!errors.montant_hotel}
-                    helperText={touched.montant_hotel && errors.montant_hotel}
-                    sx={{ gridColumn: "span 4" }}
-                  />
+               
                   <TextField
                     fullWidth
                     variant="filled"
@@ -262,19 +256,7 @@ console.log(test)
                     helperText={touched.montant_bus && errors.montant_bus}
                     sx={{ gridColumn: "span 4" }}
                   />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Montant evenement"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.montant_evenement}
-                    name="montant_evenement"
-                    error={!!touched.montant_evenement && !!errors.montant_evenement}
-                    helperText={touched.montant_evenement && errors.montant_evenement}
-                    sx={{ gridColumn: "span 4" }}
-                  />
+           
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
           
