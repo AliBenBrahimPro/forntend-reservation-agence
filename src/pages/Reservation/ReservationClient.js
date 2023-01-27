@@ -11,7 +11,9 @@ import { TextField, useMediaQuery,Alert,CircularProgress } from "@mui/material";
 import Header from "../../components/Header";
 import { useParams } from 'react-router-dom';
 import {  fetchReservationBus } from '../../redux/reservationbusSlice';
+import {  insertClient } from '../../redux/clientSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad',"4"];
 
@@ -20,7 +22,7 @@ export default function ReservationClient() {
   const [skipped, setSkipped] = React.useState(new Set());
   const [test, setTest] = React.useState([]);
   const [nbr, setNbr] = React.useState();
-
+  const [prixBus, setPrixBus] = React.useState();
   const dispatch =useDispatch();
   const {id} = useParams();
   const {data} = useSelector(state=>state.reservationbus)
@@ -42,6 +44,7 @@ export default function ReservationClient() {
                 console.log('reservationbus : ', reservationbus)
                 const test2 =[];
                data.map(e=>e.id==id?setNbr(e.nb_place):setNbr(null));
+               data.map(e=>e.id==id?setPrixBus(e.monatnt_total):setPrixBus(null));
                 if(nbr != null){
                     for(let i= 0;i<nbr;i++){
                         test2.push(`client ${i+1}`);
@@ -75,21 +78,6 @@ console.log(test)
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
   const handleReset = () => {
     setActiveStep(0);
   };
@@ -97,17 +85,37 @@ console.log(test)
   const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
   const handleFormSubmit = (values) => {
       console.log(values);
+      
+      dispatch(insertClient(values)).then((data)=>{
+        if(data.type==="client/insertClient/fulfilled" ){
+         Swal.fire(
+                   'Success',
+                   `${data.payload.full_name} a ajouter avec succes`,
+                   'success'
+                 ) 
+                 values.full_name="";
+                 values.date_naissance=""
+                 values.e_mail= ""
+                 values.numero_telephone="";
+                 handleNext()
+        }else{
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Oops...',
+                 text: 'Something went wrong!',
+               })}
+       })
   };
   const initialValues = {
       full_name: "",
       date_naissance:"",
       e_mail: "",
       numero_telephone: "",
-      montant_hotel: "",
-      montant_bus: "",
-      montant_evenement: "",
-      reservationBusId: "",
-      reservationEvenementId:""
+      montant_hotel: 0,
+      montant_bus: prixBus/nbr,
+      montant_evenement: 0,
+      reservationBusId: id,
+      reservationEvenementId:null
   };
   const checkoutSchema = yup.object().shape({
       full_name:yup.string().required("Required"),
@@ -117,7 +125,7 @@ console.log(test)
       montant_hotel:yup.number().required("Required"),
       montant_bus:yup.number().required("Required"),
       montant_evenement:yup.number().required("Required"),
-      reservationEvenementId:yup.number().required("Required"),
+    //   reservationEvenementId:yup.number().required("Required"),
 
   })
   return (
@@ -269,22 +277,11 @@ console.log(test)
                   />
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Button
-              color="secondary"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
+          
             <Box sx={{ flex: '1 1 auto' }} />
-            {isStepOptional(activeStep) && (
-              <Button color="secondary" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )}
+          
 
-            <Button type='submit' color="secondary" onClick={handleNext}>
+            <Button type='submit' color="secondary" >
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
           </Box>
