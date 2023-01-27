@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-export const fetchReservationBus = createAsyncThunk(
-    'reservationbus/fetchReservationBus',
+export const fetchReservationEvent = createAsyncThunk(
+    'reservationevent/fetchReservationevent',
     async (_,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/getallreservationbus`)
+          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_evenement/getallreservationevenement`)
       const data = await res.json()
       return data}
       catch(error){
@@ -15,13 +15,13 @@ export const fetchReservationBus = createAsyncThunk(
       }
     }
   )
-  export const insertReservationBus = createAsyncThunk(
-   'reservationbus/insertReservationBus',
+  export const insertReservationEvent = createAsyncThunk(
+   'reservationevent/insertReservationevent',
    async (busData,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
 
        try{
-         const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/addreservationbus`, 
+         const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_evenement/postreservationevenement`, 
          {
             method: 'POST', 
             body: JSON.stringify (busData),
@@ -37,12 +37,12 @@ export const fetchReservationBus = createAsyncThunk(
    }
    }
  )
-  export const deleteReservationBus = createAsyncThunk(
-    'reservationbus/deleteReservationBus',
+  export const deleteReservationEvent = createAsyncThunk(
+    'reservationevent/deleteReservationevent',
     async (id,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-   await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/deletereservationbus/${id}`, {
+   await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_evenement/deletereservationevenement/${id}`, {
          method: 'DELETE',
          headers: {
          'Content-type': 'application/json; charset=UTF-8',
@@ -56,12 +56,12 @@ export const fetchReservationBus = createAsyncThunk(
          );
 
 
-         export const getSingleReservationBus = createAsyncThunk(
-          'reservationbus/getSingleReservationBus',
+         export const getSingleReservationEvent = createAsyncThunk(
+          'reservationevent/getSingleReservationevent',
           async (id,thunkAPI) => {
             const {rejectWithValue} = thunkAPI;
               try{
-                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/getreservationbusbybus/${id}`)
+                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_evenement/getallreservationevenementbyevenement/${id}`)
             const data = await res.json()
             return data}
             catch(error){
@@ -72,19 +72,16 @@ export const fetchReservationBus = createAsyncThunk(
 
 
 
-               export const editReservationBus = createAsyncThunk(
-                'reservationbus/editReservationBus',
+               export const editReservationEvent = createAsyncThunk(
+                'reservationevent/editReservationevent',
                 async (todo, { rejectWithValue }) => {
                   try {
                     const { id, nb_place, monatnt_total, date_debut,date_fin } = todo;
-              
-                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/updatereservationbus/${id}`, {
+                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/reservation_evenement/updatereservationevenement/${id}`, {
                         nb_place,
                         monatnt_total,
-                 
-                     
-                      date_debut,
-                      date_fin
+                        date_debut,
+                        date_fin
                     });
                     
                     return response.data;
@@ -99,8 +96,8 @@ export const fetchReservationBus = createAsyncThunk(
 
 
          
-  export const reservationbusSlice = createSlice({
-    name:'reservationbus',
+  export const reservationeventSlice = createSlice({
+    name:'reservationevent',
     initialState:{
         data:[],
         status:null,
@@ -111,72 +108,72 @@ export const fetchReservationBus = createAsyncThunk(
     },
     extraReducers:{
         // show hotels
-        [fetchReservationBus.fulfilled]:(state,action)=>{
+        [fetchReservationEvent.fulfilled]:(state,action)=>{
            state.data =action.payload;
            state.status ="success";
        state.error =null;
         },
-        [fetchReservationBus.pending]:(state)=>{
+        [fetchReservationEvent.pending]:(state)=>{
            state.status ="loading";
            state.error =null;
 
         },
-        [fetchReservationBus.rejected]:(state,action)=>{
+        [fetchReservationEvent.rejected]:(state,action)=>{
        
            state.status ="failed";
            state.error=action.payload;
          },
          // insert books
-         [insertReservationBus.fulfilled]:(state,action)=>{
+         [insertReservationEvent.fulfilled]:(state,action)=>{
             state.data.push(action.payload);
             state.status ="success";
-            state.error =null;
+        state.error =null;
          },
-         [insertReservationBus.pending]:(state)=>{
+         [insertReservationEvent.pending]:(state)=>{
             state.status ="loading";
             state.error =null;
 
          },
-         [insertReservationBus.rejected]:(state,action)=>{
+         [insertReservationEvent.rejected]:(state,action)=>{
         
             state.status ="failed";
             state.error=action.payload;
           },
           // delete hotel
-          [deleteReservationBus.fulfilled]:(state,action)=>{
+          [deleteReservationEvent.fulfilled]:(state,action)=>{
             state.status ="success";
         state.error =null;
         state.data =state.data.filter((el)=> el.id !==action.payload)
          },
-         [deleteReservationBus.pending]:(state)=>{
+         [deleteReservationEvent.pending]:(state)=>{
             state.status ="loading";
             state.error =null;
 
          },
-         [deleteReservationBus.rejected]:(state,action)=>{
+         [deleteReservationEvent.rejected]:(state,action)=>{
         
             state.status ="failed";
             state.error=action.payload;
           },
           //single hotel
-          [getSingleReservationBus.fulfilled]:(state,action)=>{
+          [getSingleReservationEvent.fulfilled]:(state,action)=>{
             state.data = action.payload;
             state.status ="success";
         state.error =null;
          },
-         [getSingleReservationBus.pending]:(state)=>{
+         [getSingleReservationEvent.pending]:(state)=>{
           state.status ="loading";
           state.error =null;
 
          },
-         [getSingleReservationBus.rejected]:(state,action)=>{
+         [getSingleReservationEvent.rejected]:(state,action)=>{
         
           state.status ="failed";
           state.error=action.payload;
           },
           //edit hotel
           
-          [editReservationBus.fulfilled]: (state, action) => {
+          [editReservationEvent.fulfilled]: (state, action) => {
            
             return {
               ...state,
@@ -184,13 +181,13 @@ export const fetchReservationBus = createAsyncThunk(
              
             };
           },
-          [editReservationBus.pending]: (state, action) => {
+          [editReservationEvent.pending]: (state, action) => {
             return {
               ...state,
               status:"loading"
             };
           },
-          [editReservationBus.rejected]: (state, action) => {
+          [editReservationEvent.rejected]: (state, action) => {
             return {
               ...state,
               status:"rejected",
@@ -202,4 +199,4 @@ export const fetchReservationBus = createAsyncThunk(
     }
 })
 
-export default reservationbusSlice.reducer
+export default reservationeventSlice.reducer

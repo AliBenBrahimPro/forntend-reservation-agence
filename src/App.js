@@ -27,6 +27,7 @@ import EventForm from "./pages/Event/EventForm";
 import EditEvent from "./pages/Event/EditEvent";
 import ListEvent from "./pages/Event/ListEvent";
 import ReservationBus from "./pages/Reservation/ReservationBus";
+import ReservationEvnt from "./pages/Reservation/ReservationEvnt";
 import ReservationClient from "./pages/Reservation/ReservationClient";
 
 function RouteApp() {
@@ -85,9 +86,9 @@ const App = () => {
     <Route path="/test" element={<VirtualizedList/>}/>
     <Route path="/reservationbus/:id" element={<ReservationBus />} />
     <Route path="/client/:id" element={<ReservationClient />} />
-
+    <Route path="/reservationevenement/:id" element={<ReservationEvnt />} />
     <Route path="/*" element={ <RouteApp />} />
-              </Routes>
+</Routes>
             </main>
           </div>
     </ColorModeContext.Provider>

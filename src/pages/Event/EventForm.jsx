@@ -89,7 +89,6 @@ console.log(res)
               name="image_evenement"
               accept="image/*"
               id="contained-button-file"
-              multiple
               type="file"
             />
             <label htmlFor="contained-button-file">

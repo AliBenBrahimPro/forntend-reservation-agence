@@ -136,7 +136,7 @@ console.log(x)
         numero_telephone:"",
         adresse:"",
         nb_etoile:0,
-        prix_chambre_double:"",
+        // prix_chambre_double:"",
         frais_chambre_single:"",
         porcentage_chambre_triple:"",
         porcentage_chambre_quadruple:"",
@@ -157,7 +157,7 @@ console.log(x)
         e_mail:yup.string().email("Invalid email!").required("Required"),
         numero_telephone:yup.string().matches(phoneRegExp, "phone number is not valid!").required("Required"),
         nb_etoile:yup.number().required("Required"),
-        prix_chambre_double:yup.number().required("Required"),
+        // prix_chambre_double:yup.number().required("Required"),
         frais_chambre_single:yup.number().required("Required"),
         porcentage_chambre_triple:yup.number().required("Required"),
         porcentage_chambre_quadruple:yup.number().required("Required"),
@@ -333,20 +333,6 @@ console.log(x)
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Prix chambre double"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.prix_chambre_double}
-                    name="prix_chambre_double"
-                    error={!!touched.prix_chambre_double && !!errors.prix_chambre_double}
-                    helpertext={touched.prix_chambre_double && errors.prix_chambre_double}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-               
-                  <TextField
-                    fullwidth
-                    variant="filled"
-                    type="text"
                     label="Pourcentage chambre triple"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -432,7 +418,7 @@ console.log(x)
                     name="commision"
                     error={!!touched.commision && !!errors.commision}
                     helpertext={touched.commision && errors.commision}
-                    sx={{ gridColumn: "span 4" }}
+                    sx={{ gridColumn: "span 2" }}
                   />
               
                           <TextField
