@@ -27,23 +27,18 @@ function EventForm() {
          formData.append('prix_evenement',values.prix_evenement)
          formData.append('date_debut',values.date_debut)
          formData.append('date_fin',values.date_fin)
-const res= axios.post(`${process.env.REACT_APP_BASE_URL}/api/evenement/addevenement`,formData);
+const res= axios.post(`${process.env.REACT_APP_BASE_URL}/api/evenement/addevenement`,formData)
+.then((res)=> res.status===200? Swal.fire(
+  'Success',
+  `${res.data.nom_evenement} a ajouter avec succes`,
+  'success'
+) :  Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Something went wrong!',
+}))
 
-console.log(res)
-      // dispatch(insertEvent(values)).then((data)=>{
-      //   if(data.type==="event/insertEvent/fulfilled" ){
-      //    Swal.fire(
-      //              'Success',
-      //              `${data.payload.nom_evenement} a ajouter avec succes`,
-      //              'success'
-      //            ) 
-      //   }else{
-      //        Swal.fire({
-      //            icon: 'error',
-      //            title: 'Oops...',
-      //            text: 'Something went wrong!',
-      //          })}
-      //  })
+
   };
   const initialValues = {
     image_evenement:"",

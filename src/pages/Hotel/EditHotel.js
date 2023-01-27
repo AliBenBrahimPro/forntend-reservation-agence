@@ -81,38 +81,7 @@ dispatch(getSingleHotels(id))
       // FOR BUG IN CHROME
       event.target.value = "";
     };
-    const initialValues = {
-        image_hotel:[],
-        nom_hotel: "",
-        e_mail:"",
-        numero_telephone:"",
-        adresse:"",
-        nb_etoile:0,
-        prix_chambre_double:"",
-        prix_chambre_single:"",
-        prix_chambre_triple:"",
-        prix_chambre_quadruple:"",
-        prix_demi_pension:"",
-        prix_pension_complete:"",
-        prix_all_inclusive:"",
-        commision:"",
-        services_equipements:{
-            "climatisation":false,
-            "restaurant":false,
-            "centreAffaires":false,
-            "piscine":false,
-            "television":false,
-            "boutiqueCadeaux":false,
-            "change":false,
-            "bar":false,
-            "plage":false,
-            "cafe":false,
-            "ascenseur":false,
-            "tennis":false,
-            "animauxAutorises":false,},
-        date_debut:"",
-        date_fin:"",
-    };
+
     const checkoutSchema = yup.object().shape({
         // image_hotel: yup.mixed().required('File is required'),
         nom_hotel:yup.string().required("Required"),

@@ -144,7 +144,7 @@ onClick={() =>{navigate(`/hotelform/${params.id}`)}}
         );
       },
     },
-    { field: "prix_chambre_single", headerName: "Prix chambre single", width: 100 },
+    { field: "frais_chambre_single", headerName: "frais_chambre_single", width: 100 },
     { field: "services_equipements", headerName: "Service", width: 100 },
     { field: "prix_chambre_triple", headerName: "Prix chambre triple", width: 100 },
     { field: "prix_demi_pension", headerName: "Prix demi pension", width: 100 },

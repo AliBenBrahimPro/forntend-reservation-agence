@@ -85,23 +85,23 @@ const [image,setImage]=useState();
     console.log(JSON.stringify(service))
 const x=formData
 console.log(x)
-    await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,formData)
+  const res =  await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,formData)
+  console.log(res)
       
-              // dispatch(insertHotels(values)).then((data)=>{
-              //   console.log("problem",data)
-              //  if(data.type==="hotels/insertHotels/fulfilled" ){
-              //   Swal.fire(
-              //             'Success',
-              //             `${data.payload.nom_hotel} a ajouter avec succes`,
-              //             'success'
-              //           ) 
-              //  }else{
-              //       Swal.fire({
-              //           icon: 'error',
-              //           title: 'Oops...',
-              //           text: 'Something went wrong!',
-              //         })}
-              // })
+          
+               if(res.status===200 ){
+                Swal.fire(
+                          'Success',
+                          `${res.data.nom_hotel} a ajouter avec succes`,
+                          'success'
+                        ) 
+               }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                      })}
+              
 
 
     };
