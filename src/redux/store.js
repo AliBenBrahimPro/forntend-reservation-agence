@@ -6,6 +6,7 @@ import eventSlice from './eventSlice'
 import hotelSlice from './hotelSlice'
 import programmeSlice  from './programmeSlice'
 import reservationbusSlice from './reservationbusSlice'
+import userSlice from './userSlice'
 export const store = configureStore({
     reducer:{
         hotels:hotelSlice,
@@ -15,6 +16,7 @@ export const store = configureStore({
         client:clientSlice,
         avion:avionSlice,
         programme:programmeSlice,
+        user:userSlice
 
     },
 })

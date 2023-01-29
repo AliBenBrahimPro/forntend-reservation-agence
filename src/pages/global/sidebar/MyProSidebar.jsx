@@ -275,7 +275,27 @@ const MyProSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-
+ <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 20px 5px 20px" }}
+            >
+              Agence
+            </Typography>
+            <Item
+              title="Ajouter une agence"
+              to="/userForm"
+              icon={<AddCircleIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List des agence"
+              to="/listuser"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Typography
               variant="h6"
               color={colors.grey[300]}

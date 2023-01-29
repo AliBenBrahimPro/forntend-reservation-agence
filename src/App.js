@@ -35,6 +35,7 @@ import EditAvion from "./pages/Avion/EditAvion";
 import ProgrammeForm from "./pages/Programme/FormProg";
 import ListProgramme from "./pages/Programme/ListProg";
 import EditProgramme from "./pages/Programme/EditProg";
+import UserForm from "./pages/User/UserForm";
 
 function RouteApp() {
   const [theme, colorMode] = useMode();
@@ -71,6 +72,7 @@ function RouteApp() {
                 <Route path="/programmeForm/:id" element={<EditProgramme />} />
                 <Route path="/listprogramme" element={<ListProgramme />} />
                 
+                <Route path="/userForm" element={<UserForm />} />
                 
                 
                 <Route path="/invoices" element={<Invoices />} />
