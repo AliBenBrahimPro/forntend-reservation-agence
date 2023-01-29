@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 
-export const fetchBus = createAsyncThunk(
-    'bus/fetchBus',
+export const fetchProgramme = createAsyncThunk(
+    'programme/fetchProgramme',
     async (_,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/bus/getallbus`)
+          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/programme/getallprogramme`)
       const data = await res.json()
       return data}
       catch(error){
@@ -15,16 +14,16 @@ export const fetchBus = createAsyncThunk(
       }
     }
   )
-  export const insertBus = createAsyncThunk(
-   'bus/insertBus',
-   async (busData,thunkAPI) => {
+  export const insertProgramme = createAsyncThunk(
+   'programme/insertProgramme',
+   async (programmeData,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
 
        try{
-         const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/bus/addbus`, 
+         const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/programme/addprogramme`, 
          {
             method: 'POST', 
-            body: JSON.stringify (busData),
+            body: JSON.stringify (programmeData),
             headers: {
             'Content-type': 'application/json; charset=UTF-8',
             },
@@ -37,12 +36,12 @@ export const fetchBus = createAsyncThunk(
    }
    }
  )
-  export const deleteBus = createAsyncThunk(
-    'bus/deleteBus',
+  export const deleteProgramme = createAsyncThunk(
+    'programme/deleteProgramme',
     async (id,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-   await fetch(`${process.env.REACT_APP_BASE_URL}/api/bus/deletebus/${id}`, {
+   await fetch(`${process.env.REACT_APP_BASE_URL}/api/programme/deleteprogramme/${id}`, {
          method: 'DELETE',
          headers: {
          'Content-type': 'application/json; charset=UTF-8',
@@ -56,12 +55,12 @@ export const fetchBus = createAsyncThunk(
          );
 
 
-         export const getSingleBus = createAsyncThunk(
-          'bus/getSingleBus',
+         export const getSingleProgramme = createAsyncThunk(
+          'programme/getSingleProgramme',
           async (id,thunkAPI) => {
             const {rejectWithValue} = thunkAPI;
               try{
-                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/bus/getonebus/${id}`)
+                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/programme/getoneprogramme/${id}`)
             const data = await res.json()
             return data}
             catch(error){
@@ -72,21 +71,14 @@ export const fetchBus = createAsyncThunk(
 
 
 
-               export const editBus = createAsyncThunk(
-                'bus/editBus',
+               export const editProgramme = createAsyncThunk(
+                'programme/editProgramme',
                 async (todo, { rejectWithValue }) => {
                   try {
-                    const { id, matricule,desc, reference, nb_place,nb_place_reserver, prix_place, date_debut,date_fin } = todo;
+                    const { id, nom_programme,date_debut, date_fin, hotelId,busId, avionId, evenementId } = todo;
               
-                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/bus/updatebus/${id}`, {
-                      matricule,
-                      reference,
-                      desc,
-                      nb_place,
-                      nb_place_reserver,
-                      prix_place,
-                      date_debut,
-                      date_fin
+                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/programme/updateprogramme/${id}`, {
+                        nom_programme,date_debut, date_fin, hotelId,busId, avionId, evenementId 
                     });
                     console.log("response edit",response)
                     return response.data;
@@ -101,10 +93,11 @@ export const fetchBus = createAsyncThunk(
 
 
          
-  export const busSlice = createSlice({
-    name:'bus',
+  export const programmeSlice = createSlice({
+    name:'programme',
     initialState:{
         data:[],
+        getAllData:[],
         status:null,
         error:null,
     },
@@ -113,72 +106,72 @@ export const fetchBus = createAsyncThunk(
     },
     extraReducers:{
         // show hotels
-        [fetchBus.fulfilled]:(state,action)=>{
-           state.data =action.payload;
+        [fetchProgramme.fulfilled]:(state,action)=>{
+           state.getAllData =action.payload;
            state.status ="success";
        state.error =null;
         },
-        [fetchBus.pending]:(state)=>{
+        [fetchProgramme.pending]:(state)=>{
            state.status ="loading";
            state.error =null;
 
         },
-        [fetchBus.rejected]:(state,action)=>{
+        [fetchProgramme.rejected]:(state,action)=>{
        
            state.status ="failed";
            state.error=action.payload;
          },
          // insert books
-         [insertBus.fulfilled]:(state,action)=>{
+         [insertProgramme.fulfilled]:(state,action)=>{
             state.data.push(action.payload);
             state.status ="success";
         state.error =null;
          },
-         [insertBus.pending]:(state)=>{
+         [insertProgramme.pending]:(state)=>{
             state.status ="loading";
             state.error =null;
 
          },
-         [insertBus.rejected]:(state,action)=>{
+         [insertProgramme.rejected]:(state,action)=>{
         
             state.status ="failed";
             state.error=action.payload;
           },
           // delete hotel
-          [deleteBus.fulfilled]:(state,action)=>{
+          [deleteProgramme.fulfilled]:(state,action)=>{
             state.status ="success";
         state.error =null;
-        state.data =state.data.filter((el)=> el.id !==action.payload)
+        state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
          },
-         [deleteBus.pending]:(state)=>{
+         [deleteProgramme.pending]:(state)=>{
             state.status ="loading";
             state.error =null;
 
          },
-         [deleteBus.rejected]:(state,action)=>{
+         [deleteProgramme.rejected]:(state,action)=>{
         
             state.status ="failed";
             state.error=action.payload;
           },
           //single hotel
-          [getSingleBus.fulfilled]:(state,action)=>{
+          [getSingleProgramme.fulfilled]:(state,action)=>{
             state.data = action.payload;
             state.status ="success";
         state.error =null;
          },
-         [getSingleBus.pending]:(state)=>{
+         [getSingleProgramme.pending]:(state)=>{
           state.status ="loading";
           state.error =null;
 
          },
-         [getSingleBus.rejected]:(state,action)=>{
+         [getSingleProgramme.rejected]:(state,action)=>{
         
           state.status ="failed";
           state.error=action.payload;
           },
           //edit hotel
           
-          [editBus.fulfilled]: (state, action) => {
+          [editProgramme.fulfilled]: (state, action) => {
            
             return {
               ...state,
@@ -186,13 +179,13 @@ export const fetchBus = createAsyncThunk(
              
             };
           },
-          [editBus.pending]: (state, action) => {
+          [editProgramme.pending]: (state, action) => {
             return {
               ...state,
               status:"loading"
             };
           },
-          [editBus.rejected]: (state, action) => {
+          [editProgramme.rejected]: (state, action) => {
             return {
               ...state,
               status:"rejected",
@@ -204,4 +197,4 @@ export const fetchBus = createAsyncThunk(
     }
 })
 
-export default busSlice.reducer
+export default programmeSlice.reducer

@@ -1,5 +1,5 @@
-import React,{useEffect} from 'react'
-import { Box, Button, TextField,Alert,CircularProgress } from '@mui/material'
+import React,{useEffect, useState} from 'react'
+import { Box, Button, FormControl, FormLabel, Radio, RadioGroup,Alert,CircularProgress, TextField } from '@mui/material'
 import { Formik,Field ,useFormik} from "formik";
 import * as yup from 'yup';
 import { useMediaQuery,useTheme } from "@mui/material";
@@ -24,6 +24,20 @@ function EditHotel() {
     const {id} = useParams();
      const {data} = useSelector(state=>state.hotels)
      const hotels = useSelector(state=>state.hotels)
+     const [climatisation,setClimatisation]=useState(false);
+const [restaurant,setrestaurant]=useState(false);
+const [centreAffaires,setcentreAffaires]=useState(false);
+const [piscine,setpiscine]=useState(false);
+const [television,settelevision]=useState(false);
+const [boutiqueCadeaux,setboutiqueCadeaux]=useState(false);
+const [change,setchange]=useState(false);
+const [bar,setbar]=useState(false);
+const [plage,setplage]=useState(false);
+const [cafe,setcafe]=useState(false);
+const [ascenseur,setascenseur]=useState(false);
+const [tennis,settennis]=useState(false);
+const [animauxAutorises,setanimauxAutorises]=useState(false);
+const [image,setImage]=useState();
 console.log("selector",data)
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -83,24 +97,27 @@ dispatch(getSingleHotels(id))
     };
 
     const checkoutSchema = yup.object().shape({
-        // image_hotel: yup.mixed().required('File is required'),
-        nom_hotel:yup.string().required("Required"),
-        adresse:yup.string().required("Required"),
-        e_mail:yup.string().email("Invalid email!").required("Required"),
-        numero_telephone:yup.string().matches(phoneRegExp, "phone number is not valid!").required("Required"),
-        nb_etoile:yup.number().required("Required"),
-        prix_chambre_double:yup.number().required("Required"),
-        prix_chambre_single:yup.number().required("Required"),
-        prix_chambre_triple:yup.number().required("Required"),
-        prix_chambre_quadruple:yup.number().required("Required"),
-        prix_demi_pension:yup.number().required("Required"),
-        prix_pension_complete:yup.number().required("Required"),
-        prix_all_inclusive:yup.number().required("Required"),
-        commision:yup.number().required("Required"),
-        // services_equipements:yup.bool(),
-        date_debut:yup.date().required("Required"),
-        date_fin:yup.date().required("Required"),
-    })
+     
+      nom_hotel:yup.string().required("Required"),
+      adresse:yup.string().required("Required"),
+      e_mail:yup.string().email("Invalid email!").required("Required"),
+      numero_telephone:yup.string().matches(phoneRegExp, "phone number is not valid!").required("Required"),
+      nb_etoile:yup.number().required("Required"),
+      // prix_chambre_double:yup.number().required("Required"),
+      frais_chambre_single:yup.number().required("Required"),
+      porcentage_chambre_triple:yup.number().required("Required"),
+      porcentage_chambre_quadruple:yup.number().required("Required"),
+      prix_demi_pension:yup.number().required("Required"),
+      prix_pension_complete:yup.number().required("Required"),
+      prix_all_inclusive:yup.number().required("Required"),
+      commision:yup.number().required("Required"),
+      prix_all_inclusive_soft:yup.number().required("Required"),
+      capacite:yup.number().required("Required"),
+  // enfant_gratuit:yup.number().required("Required"),
+      // services_equipements:yup.bool(),
+      date_debut:yup.date().required("Required"),
+      date_fin:yup.date().required("Required"),
+  })
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
@@ -125,7 +142,7 @@ dispatch(getSingleHotels(id))
        <Box> 
           <Header title="Ajouter hotel" subtitle="Créer nouveau hotel" />
     
-          <Formik  onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} >
+          <Formik  onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} validationSchema={checkoutSchema} >
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,setFieldValue}) => (
               <form onSubmit={handleSubmit}>
                 <Box
@@ -138,14 +155,12 @@ dispatch(getSingleHotels(id))
                 >
                   <Box  sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Ajouter des photos</Typography>
-          
-            </Box>
-                  
+
                   <Box  sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
              <input
               style={{display: "none" }}
               onBlur={handleBlur}
-              onChange={onSelectFile}
+              onChange={(e)=>setImage(e.target.files)}
               name="image_hotel"
               accept="image/*"
               id="contained-button-file"
@@ -158,24 +173,28 @@ dispatch(getSingleHotels(id))
               </Fab>
             </label>
             </Box>
-      
-<Box sx={{ gridColumn: "span 4" }}>
-<div  className="images">
-        {data.image_hotel &&
-          data.image_hotel.map((image, index) => {
+
+  
+<div className="images">
+        {selectedImages &&
+          selectedImages.map((image) => {
             return (
               <div key={image} className="image">
                 <img src={image} height="200" alt="upload" />
-                <button onClick={() =>setFieldValue(data.image_hotel.filter((e) => e !== image)) }>
+                <button onClick={deleteHandler}>
                   delete image
                 </button>
-                
+             
               </div>
             );
           })}
       </div>
-      </Box>
-           
+          
+            </Box>
+
+          
+
+
             
             <Box  sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Infos géneral</Typography>
@@ -271,50 +290,36 @@ dispatch(getSingleHotels(id))
                     label="Prix chambre single"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.prix_chambre_single}
-                    name="prix_chambre_single"
-                    error={!!touched.prix_chambre_single && !!errors.prix_chambre_single}
-                    helpertext={touched.prix_chambre_single && errors.prix_chambre_single}
+                    value={values.frais_chambre_single}
+                    name="frais_chambre_single"
+                    error={!!touched.frais_chambre_single && !!errors.frais_chambre_single}
+                    helpertext={touched.frais_chambre_single && errors.frais_chambre_single}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Prix chambre double"
+                    label="Pourcentage chambre triple"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.prix_chambre_double}
-                    name="prix_chambre_double"
-                    error={!!touched.prix_chambre_double && !!errors.prix_chambre_double}
-                    helpertext={touched.prix_chambre_double && errors.prix_chambre_double}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-               
-                  <TextField
-                    fullwidth
-                    variant="filled"
-                    type="text"
-                    label="Prix chambre triple"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.prix_chambre_triple}
-                    name="prix_chambre_triple"
-                    error={!!touched.prix_chambre_triple && !!errors.prix_chambre_triple}
-                    helpertext={touched.prix_chambre_triple && errors.prix_chambre_triple}
+                    value={values.porcentage_chambre_triple}
+                    name="porcentage_chambre_triple"
+                    error={!!touched.porcentage_chambre_triple && !!errors.porcentage_chambre_triple}
+                    helpertext={touched.porcentage_chambre_triple && errors.porcentage_chambre_triple}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Prix chambre quadruple"
+                    label="Pourcentage chambre quadruple"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.prix_chambre_quadruple}
-                    name="prix_chambre_quadruple"
-                    error={!!touched.prix_chambre_quadruple && !!errors.prix_chambre_quadruple}
-                    helpertext={touched.prix_chambre_quadruple && errors.prix_chambre_quadruple}
+                    value={values.porcentage_chambre_quadruple}
+                    name="porcentage_chambre_quadruple"
+                    error={!!touched.porcentage_chambre_quadruple && !!errors.porcentage_chambre_quadruple}
+                    helpertext={touched.porcentage_chambre_quadruple && errors.porcentage_chambre_quadruple}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -360,6 +365,19 @@ dispatch(getSingleHotels(id))
                     fullwidth
                     variant="filled"
                     type="text"
+                    label="Prix all inclusive soft"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.prix_all_inclusive_soft}
+                    name="prix_all_inclusive_soft"
+                    error={!!touched.prix_all_inclusive_soft && !!errors.prix_all_inclusive_soft}
+                    helpertext={touched.prix_all_inclusive_soft && errors.prix_all_inclusive_soft}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
                     label="Commision"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -369,33 +387,59 @@ dispatch(getSingleHotels(id))
                     helpertext={touched.commision && errors.commision}
                     sx={{ gridColumn: "span 2" }}
                   />
-                          <TextField
-                    fullwidth
-                    variant="filled"
-                    type="date"
-                    label="Date debut"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={moment(values.date_debut).format("YYYY-MM-DD")}
-                    name="date_debut"
-                    error={!!touched.date_debut && !!errors.date_debut}
-                    helpertext={touched.date_debut && errors.date_debut}
-                    sx={{ gridColumn: "span 2" }}
-                  />
                   <TextField
                     fullwidth
                     variant="filled"
-                    type="date"
-                    label="Date fin"
+                    type="text"
+                    label="Capacité"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={moment(values.date_fin).format("YYYY-MM-DD")}
-                    inputProps={{ min: values.date_debut }}
-                    name="date_fin"
-                    error={!!touched.date_fin && !!errors.date_fin}
-                    helpertext={touched.date_fin && errors.date_fin}
-                    sx={{ gridColumn: "span 2" }}
+                    value={values.capacite}
+                    name="capacite"
+                    error={!!touched.capacite && !!errors.capacite}
+                    helpertext={touched.capacite && errors.capacite}
+                    sx={{ gridColumn: "span 4" }}
                   />
+              
+              <TextField
+              fullWidth
+              variant="filled"
+              type="datetime-local"
+              label="Date début"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={moment(values.date_debut).format("YYYY-MM-DD[T]HH:mm:ss")}
+              name="date_debut"
+              error={!!touched.date_debut && !!errors.date_debut}
+              helperText={touched.date_debut && errors.date_debut}
+              sx={{ gridColumn: "span 4" }}
+            />
+            <TextField
+              fullWidth
+              variant="filled"
+              type="datetime-local"
+              label="Date fin"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={moment(values.date_fin).format("YYYY-MM-DD[T]HH:mm:ss")}
+              name="date_fin"
+              inputProps={{ min: values.date_debut}}
+              error={!!touched.date_fin && !!errors.date_fin}
+              helperText={touched.date_fin && errors.date_fin}
+              sx={{ gridColumn: "span 4" }}
+            />
+       <FormControl>
+  <FormLabel id="demo-radio-buttons-group-label">Enfant Gratuit -2 ans (bébé)</FormLabel>
+  <RadioGroup
+    aria-labelledby="demo-radio-buttons-group-label"
+    defaultValue={1}
+    name="enfant_gratuit"
+    onChange={handleChange}
+  >
+    <FormControlLabel value={1} control={<Radio  color='default' />} label="Oui" />
+    <FormControlLabel value={0} control={<Radio  color='default' />} label="Non" />
+  </RadioGroup>
+</FormControl>
                    <Box margin={1} sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Services & équipements</Typography>
           
@@ -403,47 +447,47 @@ dispatch(getSingleHotels(id))
             <Box                     sx={{ gridColumn: "span 4",justifyContent:'center' }}
  >
                   
-            <FormGroup  row sx={{display: "grid",justifyContent:'center',
+                  <FormGroup  row sx={{display: "grid",justifyContent:'center',
   gridTemplateColumns: "repeat(auto-fill, 186px)", gridGap: "10px"}} >
-      <FormControlLabel  control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                    defaultChecked={values.services_equipements } name="services_equipements" color='default' />} label="Climatisation" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                             defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Restaurant" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                          defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Centre d'affaires" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                            defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Piscine" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                       defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Télévision" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                        defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Boutique de cadeaux" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                       defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Change" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                         defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Bar" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                        defaultChecked={values.services_equipements} name="services_equipements"   color='default' />} label="Plage" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                         defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Café" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                          defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Ascenseur" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                         defaultChecked={values.services_equipements}  name="services_equipements"  color='default' />} label="Tennis" />
-      <FormControlLabel control={<Checkbox onBlur={handleBlur}
-                    onChange={handleChange}
-                       defaultChecked={values.services_equipements} name="services_equipements"  color='default' />} label="Animaux autorisés" />
+      <FormControlLabel  control={<Checkbox  value={values.services_equipements.climatisation}
+                    onChange={(e)=>setClimatisation(e.target.checked)}
+                     name="services_equipements" color='default' />} label="Climatisation" />
+      <FormControlLabel control={<Checkbox 
+                     onChange={(e)=>setrestaurant(e.target.checked)}value={values.services_equipements.restaurant}
+                     name="services_equipements"  color='default' />} label="Restaurant" />
+      <FormControlLabel control={<Checkbox 
+                     onChange={(e)=>setcentreAffaires(e.target.checked)}
+                     name="services_equipements"  color='default' />} label="Centre d'affaires" />
+      <FormControlLabel control={<Checkbox 
+                   onChange={(e)=>setpiscine(e.target.checked)}
+                    name="services_equipements"  color='default' />} label="Piscine" />
+      <FormControlLabel control={<Checkbox 
+                     onChange={(e)=>settelevision(e.target.checked)}
+                     name="services_equipements"  color='default' />} label="Télévision" />
+      <FormControlLabel control={<Checkbox 
+                   onChange={(e)=>setboutiqueCadeaux(e.target.checked)}
+                    name="services_equipements"  color='default' />} label="Boutique de cadeaux" />
+      <FormControlLabel control={<Checkbox 
+                   onChange={(e)=>setchange(e.target.checked)}
+                     name="services_equipements"  color='default' />} label="Change" />
+      <FormControlLabel control={<Checkbox 
+                    onChange={(e)=>setbar(e.target.checked)}
+                     name="services_equipements"  color='default' />} label="Bar" />
+      <FormControlLabel control={<Checkbox 
+                    onChange={(e)=>setplage(e.target.checked)}
+                     name="services_equipements"   color='default' />} label="Plage" />
+      <FormControlLabel control={<Checkbox 
+                    onChange={(e)=>setcafe(e.target.checked)}value={values.services_equipements.cafe}
+                     name="services_equipements"  color='default' />} label="Café" />
+      <FormControlLabel control={<Checkbox 
+                    onChange={(e)=>setascenseur(e.target.checked)}
+                     name="services_equipements"  color='default' />} label="Ascenseur" />
+      <FormControlLabel control={<Checkbox 
+                    onChange={(e)=>settennis(e.target.checked)}
+                      name="services_equipements"  color='default' />} label="Tennis" />
+      <FormControlLabel control={<Checkbox 
+                    onChange={(e)=>setanimauxAutorises(e.target.checked)}
+                    name="services_equipements"  color='default' />} label="Animaux autorisés" />
     </FormGroup>
     </Box>
           

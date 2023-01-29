@@ -6,20 +6,20 @@ import { useMediaQuery } from "@mui/material";
 import Header from "../../components/Header";
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2'
-import { insertBus } from '../../redux/busSlice';
+import { insertAvion } from '../../redux/avionSlice';
 
-function BusForm() {
+function FormAvion() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
     const handleFormSubmit = (values) => {
         console.log(values);
        
-        dispatch(insertBus(values)).then((data)=>{
-          if(data.type==="bus/insertBus/fulfilled" ){
+        dispatch(insertAvion(values)).then((data)=>{
+          if(data.type==="avion/insertAvion/fulfilled" ){
            Swal.fire(
                      'Success',
-                     `${data.payload.matricule} a ajouter avec succes`,
+                     `${data.payload.nom_avion} a ajouter avec succes`,
                      'success'
                    ) 
           }else{
@@ -31,27 +31,31 @@ function BusForm() {
          })
     };
     const initialValues = {
-      matricule: "",
+        nom_avion: "",
+        prix_place_simple: "",
       reference: Math.floor(Math.random() * (999999 - 1 + 1)) + 1,
-      point_depart:"",
       point_arrive:"",
+      point_depart:"",
+      
       nb_place: "",
-      desc: "",
-      nb_place_reserver:0,
-      prix_place: "",
       date_debut: "",
       date_fin: "",
+      prix_place_speciale:'',
+      nb_place_reserver:0,
+      
+     
     };
     const checkoutSchema = yup.object().shape({
-        matricule:yup.string().required("Required"),
+        nom_avion:yup.string().required("Required"),
         reference:yup.number().required("Required"),
         point_depart:yup.string().required("Required"),
         point_arrive:yup.string().required("Required"),
         nb_place:yup.number().required("Required"),
         nb_place_reserver:yup.number().required("Required"),
-        prix_place:yup.number().required("Required"),
+        prix_place_simple:yup.number().required("Required"),
         date_debut:yup.date().required("Required"),
         date_fin:yup.date().required("Required"),
+        prix_place_speciale:yup.number().required("Required"),
 
     })
     return (
@@ -73,13 +77,13 @@ function BusForm() {
                     fullWidth
                     variant="filled"
                     type="text"
-                    label="Matricule"
+                    label="Nom d'avion"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.matricule}
-                    name="matricule"
-                    error={!!touched.matricule && !!errors.matricule}
-                    helperText={touched.matricule && errors.matricule}
+                    value={values.nom_avion}
+                    name="nom_avion"
+                    error={!!touched.nom_avion && !!errors.nom_avion}
+                    helperText={touched.nom_avion && errors.nom_avion}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -126,13 +130,26 @@ function BusForm() {
                     fullWidth
                     variant="filled"
                     type="text"
-                    label="Déscription"
+                    label="Prix place simple"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.desc}
-                    name="desc"
-                    error={!!touched.desc && !!errors.desc}
-                    helperText={touched.desc && errors.desc}
+                    value={values.prix_place_simple}
+                    name="prix_place_simple"
+                    error={!!touched.prix_place_simple && !!errors.prix_place_simple}
+                    helperText={touched.prix_place_simple && errors.prix_place_simple}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                   <TextField
+                    fullWidth
+                    variant="filled"
+                    type="number"
+                    label="Prix de place speciale"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.prix_place_speciale}
+                    name="prix_place_speciale"
+                    error={!!touched.prix_place_speciale && !!errors.prix_place_speciale}
+                    helperText={touched.prix_place_speciale && errors.prix_place_speciale}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -159,21 +176,9 @@ function BusForm() {
                     name="nb_place_reserver"
                     error={!!touched.nb_place_reserver && !!errors.nb_place_reserver}
                     helperText={touched.nb_place_reserver && errors.nb_place_reserver}
-                    sx={{ gridColumn: "span 4" }}
+                    sx={{ gridColumn: "span 2" }}
                   />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="number"
-                    label="Prix de place"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.prix_place}
-                    name="prix_place"
-                    error={!!touched.prix_place && !!errors.prix_place}
-                    helperText={touched.prix_place && errors.prix_place}
-                    sx={{ gridColumn: "span 4" }}
-                  />
+                 
                   <TextField
                     fullWidth
                     variant="filled"
@@ -187,7 +192,7 @@ function BusForm() {
                     helperText={touched.date_debut && errors.date_debut}
                     sx={{ gridColumn: "span 4" }}
                   />
-                  <TextField
+                   <TextField
                     fullWidth
                     variant="filled"
                     type="datetime-local"
@@ -196,15 +201,15 @@ function BusForm() {
                     onChange={handleChange}
                     value={values.date_fin}
                     name="date_fin"
-                    inputProps={{ min: values.date_debut}}
                     error={!!touched.date_fin && !!errors.date_fin}
                     helperText={touched.date_fin && errors.date_fin}
                     sx={{ gridColumn: "span 4" }}
                   />
+         
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Ajouter nouveau bus
+                    Ajouter nouveau avion
                   </Button>
                 </Box>
               </form>
@@ -214,4 +219,4 @@ function BusForm() {
       );
 }
 
-export default BusForm
+export default FormAvion

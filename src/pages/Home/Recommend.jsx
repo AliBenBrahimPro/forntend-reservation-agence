@@ -69,7 +69,7 @@ const dispatch = useDispatch();
         />
 
                 </div>
-                <h4>A partir de {destination.prix_chambre_double} DT</h4>
+                <h4>A partir de {destination.prix_demi_pension} DT</h4>
               </div>
               <div className="distance">
                 <p>de <span> {moment(destination.date_debut).format('YYYY-MM-DD')} à <span>{moment(destination.date_fin).format('YYYY-MM-DD')}</span></span></p>

@@ -217,6 +217,27 @@ const MyProSidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 20px 5px 20px" }}
             >
+              Avion
+            </Typography>
+            <Item
+              title="Creer avion"
+              to="/avionForm"
+              icon={<AddCircleIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List des avions"
+              to="/listavion"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 20px 5px 20px" }}
+            >
               Evenement
             </Typography>
             <Item
@@ -229,6 +250,27 @@ const MyProSidebar = () => {
             <Item
               title="List des évenemnt"
               to="/listevent"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 20px 5px 20px" }}
+            >
+              Programme
+            </Typography>
+            <Item
+              title="Creer un programme"
+              to="/programmeForm"
+              icon={<AddCircleIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List des programmes"
+              to="/listprogramme"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}

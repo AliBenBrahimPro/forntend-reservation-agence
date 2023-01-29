@@ -67,7 +67,6 @@ const [image,setImage]=useState();
       formData.append('adresse',values.adresse)
       formData.append('nb_etoile',values.nb_etoile)
       formData.append('prix_chambre_double',values.prix_chambre_double)
-
       formData.append('frais_chambre_single',values.frais_chambre_single)
       formData.append('porcentage_chambre_triple',values.porcentage_chambre_triple)
       formData.append('porcentage_chambre_quadruple',values.porcentage_chambre_quadruple)
@@ -76,7 +75,7 @@ const [image,setImage]=useState();
       formData.append('prix_all_inclusive',values.prix_all_inclusive)
       formData.append('prix_all_inclusive_soft',values.prix_all_inclusive_soft)
       formData.append('enfant_gratuit',values.enfant_gratuit)
-
+      formData.append('capacite',values.capacite)
       formData.append('commision',values.commision)
       formData.append('services_equipements',JSON.stringify(service))
       formData.append('date_debut',values.date_debut)
@@ -136,6 +135,7 @@ console.log(x)
         numero_telephone:"",
         adresse:"",
         nb_etoile:0,
+        capacite:"",
         // prix_chambre_double:"",
         frais_chambre_single:"",
         porcentage_chambre_triple:"",
@@ -166,7 +166,8 @@ console.log(x)
         prix_all_inclusive:yup.number().required("Required"),
         commision:yup.number().required("Required"),
         prix_all_inclusive_soft:yup.number().required("Required"),
-        // enfant_gratuit:yup.number().required("Required"),
+        capacite:yup.number().required("Required"),
+    // enfant_gratuit:yup.number().required("Required"),
         // services_equipements:yup.bool(),
         date_debut:yup.date().required("Required"),
         date_fin:yup.date().required("Required"),
@@ -198,16 +199,26 @@ console.log(x)
                 >
                   <Box  sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Ajouter des photos</Typography>
-      <label>
-     
-        <input
-          type="file"
-          name="image_hotel"
-          onChange={(e)=>setImage(e.target.files)}
-           multiple       
-          accept="image/png , image/jpeg, image/webp"
-        />
-      </label>
+
+                  <Box  sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
+             <input
+              style={{display: "none" }}
+              onBlur={handleBlur}
+              onChange={(e)=>setImage(e.target.files)}
+              name="image_hotel"
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+            />
+            <label htmlFor="contained-button-file">
+              <Fab component="span" >
+                <AddPhotoAlternateIcon />
+              </Fab>
+            </label>
+            </Box>
+
+  
 <div className="images">
         {selectedImages &&
           selectedImages.map((image) => {
@@ -420,6 +431,19 @@ console.log(x)
                     helpertext={touched.commision && errors.commision}
                     sx={{ gridColumn: "span 2" }}
                   />
+                  <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
+                    label="Capacité"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.capacite}
+                    name="capacite"
+                    error={!!touched.capacite && !!errors.capacite}
+                    helpertext={touched.capacite && errors.capacite}
+                    sx={{ gridColumn: "span 4" }}
+                  />
               
                           <TextField
                     fullwidth
@@ -450,7 +474,7 @@ console.log(x)
                     sx={{ gridColumn: "span 2" }}
                   />
        <FormControl>
-  <FormLabel id="demo-radio-buttons-group-label">Enfant Gratuit</FormLabel>
+  <FormLabel id="demo-radio-buttons-group-label">Enfant Gratuit -2 ans (bébé)</FormLabel>
   <RadioGroup
     aria-labelledby="demo-radio-buttons-group-label"
     defaultValue={1}

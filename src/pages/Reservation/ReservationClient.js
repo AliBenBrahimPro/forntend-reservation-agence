@@ -245,6 +245,7 @@ export default function ReservationClient() {
                
                   <TextField
                     fullWidth
+                    disabled
                     variant="filled"
                     type="text"
                     label="Montant bus"

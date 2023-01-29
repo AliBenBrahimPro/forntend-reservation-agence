@@ -29,6 +29,12 @@ import ListEvent from "./pages/Event/ListEvent";
 import ReservationBus from "./pages/Reservation/ReservationBus";
 import ReservationEvnt from "./pages/Reservation/ReservationEvnt";
 import ReservationClient from "./pages/Reservation/ReservationClient";
+import FormAvion from "./pages/Avion/FormAvion";
+import ListAvion from "./pages/Avion/ListAvion";
+import EditAvion from "./pages/Avion/EditAvion";
+import ProgrammeForm from "./pages/Programme/FormProg";
+import ListProgramme from "./pages/Programme/ListProg";
+import EditProgramme from "./pages/Programme/EditProg";
 
 function RouteApp() {
   const [theme, colorMode] = useMode();
@@ -44,15 +50,29 @@ function RouteApp() {
             <Route path="/" element={<Dashboard />} />
              <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/team" element={<Team />} />
+
                 <Route path="/hotelform" element={<Hotelform />} />
                 <Route path="/hotelform/:id" element={<EditHotel />} />
+                <Route path="/listHotel" element={<ListHotel />} />
+
                 <Route path="/busForm" element={<BusForm />} />
                 <Route path="/busForm/:id" element={<EditBus />} />
+                <Route path="/listbus" element={<ListBus />} />
+
                 <Route path="/eventForm" element={<EventForm />} />
                 <Route path="/eventForm/:id" element={<EditEvent />} />
-                <Route path="/listHotel" element={<ListHotel />} />
-                <Route path="/listbus" element={<ListBus />} />
                 <Route path="/listevent" element={<ListEvent />} />
+
+                <Route path="/avionForm" element={<FormAvion />} />
+                <Route path="/avionForm/:id" element={<EditAvion />} />
+                <Route path="/listavion" element={<ListAvion />} />
+
+                <Route path="/programmeForm" element={<ProgrammeForm />} />
+                <Route path="/programmeForm/:id" element={<EditProgramme />} />
+                <Route path="/listprogramme" element={<ListProgramme />} />
+                
+                
+                
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/bar" element={<Bar />} />
