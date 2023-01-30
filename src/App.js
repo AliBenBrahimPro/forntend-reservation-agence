@@ -36,6 +36,8 @@ import ProgrammeForm from "./pages/Programme/FormProg";
 import ListProgramme from "./pages/Programme/ListProg";
 import EditProgramme from "./pages/Programme/EditProg";
 import UserForm from "./pages/User/UserForm";
+import ListUser from "./pages/User/Listuser";
+import EditUser from "./pages/User/Edituser";
 
 function RouteApp() {
   const [theme, colorMode] = useMode();
@@ -73,6 +75,8 @@ function RouteApp() {
                 <Route path="/listprogramme" element={<ListProgramme />} />
                 
                 <Route path="/userForm" element={<UserForm />} />
+                <Route path="/userForm/:id" element={<EditUser />} />
+                <Route path="/listuser" element={<ListUser />} />
                 
                 
                 <Route path="/invoices" element={<Invoices />} />

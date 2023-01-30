@@ -6,27 +6,27 @@ import { useMediaQuery } from "@mui/material";
 import Header from "../../components/Header";
 import { useDispatch ,useSelector} from 'react-redux';
 import Swal from 'sweetalert2'
-import { insertBus,getSingleBus,editBus } from '../../redux/busSlice';
+import { editUser,getSingleUser } from '../../redux/userSlice';
 import { useParams } from 'react-router-dom';
 import moment from 'moment'
 
-function EditBus() {
+function EditUser() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const dispatch =useDispatch();
   const {id} = useParams();
-  const {data} = useSelector(state=>state.bus)
-  const bus = useSelector(state=>state.bus)
+  const {data} = useSelector(state=>state.user)
+  const user = useSelector(state=>state.user)
   useEffect(()=>{
-    dispatch(getSingleBus(id))
+    dispatch(getSingleUser(id))
         },[])  
   const handleFormSubmit = (values) => {
       console.log(values);
-      dispatch(editBus(values)).then((data)=>{
+      dispatch(editUser(values)).then((data)=>{
         console.log("data",data)
-        if(data.type==="bus/editBus/fulfilled" ){
+        if(data.type==="user/editUser/fulfilled" ){
          Swal.fire(
                    'Success',
-                   `${data.payload.matricule} a ete modifie avec succes`,
+                   `${data.payload.nom_agence} a ete modifie avec succes`,
                    'success'
                  ) 
         }else{
@@ -39,14 +39,16 @@ function EditBus() {
   };
 
   const checkoutSchema = yup.object().shape({
-      matricule:yup.string().required("Required"),
-      reference:yup.string().required("Required"),
-      nb_place:yup.number().required("Required"),
-      nb_place_reserver:yup.number().required("Required"),
-      prix_place:yup.number().required("Required"),
-      date_debut:yup.date().required("Required"),
-      date_fin:yup.date().required("Required"),
-
+    code_agence:yup.string().required("Required"),
+    nom_agence:yup.string().required("Required"),
+    e_mail:yup.string().email("Invalid email!").required("Required"),
+    numero_telephone:yup.number().required("Required"),
+    adresse:yup.string().required("Required"),
+    password:yup.string().required("Required"),
+    cp_agence:yup.number().required("Required"),
+    solde:yup.number().required("Required"),
+    credit:yup.number().required("Required"),
+    commition_hotel:yup.number().required("Required"),
   })
   return (
     <Box m="20px">
@@ -55,152 +57,137 @@ function EditBus() {
     <Formik onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} validationSchema={checkoutSchema}>
       {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
         <form onSubmit={handleSubmit}>
-          <Box
-            display="grid"
-            gap="30px"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-            sx={{
-              "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-            }}
-          >
-            <TextField
-              fullWidth
-              variant="filled"
-              type="text"
-              label="Matricule"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.matricule}
-              name="matricule"
-              error={!!touched.matricule && !!errors.matricule}
-              helperText={touched.matricule && errors.matricule}
-              sx={{ gridColumn: "span 2" }}
-            />
-            <TextField
-                  disabled
+             <Box
+                  display="grid"
+                  gap="30px"
+                  gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                  sx={{
+                    "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                  }}
+                >
+                  <TextField
                     fullWidth
                     variant="filled"
                     type="text"
-                    label="Reference"
+                    label="Code Agence"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.reference}
-                    name="reference"
-                    error={!!touched.reference && !!errors.reference}
-                    helperText={touched.reference && errors.reference}
+                    value={values.code_agence}
+                    name="code_agence"
+                    error={!!touched.code_agence && !!errors.code_agence}
+                    helperText={touched.code_agence && errors.code_agence}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Nom Agence"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.nom_agence}
+                    name="nom_agence"
+                    error={!!touched.nom_agence && !!errors.nom_agence}
+                    helperText={touched.nom_agence && errors.nom_agence}
                     sx={{ gridColumn: "span 2" }}
                   />
                    <TextField
                     fullWidth
                     variant="filled"
                     type="text"
-                    label="Point départ"
+                    label="Adresse mail"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.point_depart}
-                    name="point_depart"
-                    error={!!touched.point_depart && !!errors.point_depart}
-                    helperText={touched.point_depart && errors.point_depart}
+                    value={values.e_mail}
+                    name="e_mail"
+                    error={!!touched.e_mail && !!errors.e_mail}
+                    helperText={touched.e_mail && errors.e_mail}
                     sx={{ gridColumn: "span 2" }}
                   />
                    <TextField
                     fullWidth
                     variant="filled"
-                    type="text"
-                    label="Point arrive"
+                    type="nulber"
+                    label="numéro de téléphone"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.point_arrive}
-                    name="point_arrive"
-                    error={!!touched.point_arrive && !!errors.point_arrive}
-                    helperText={touched.point_arrive && errors.point_arrive}
+                    value={values.numero_telephone}
+                    name="numero_telephone"
+                    error={!!touched.numero_telephone && !!errors.numero_telephone}
+                    helperText={touched.numero_telephone && errors.numero_telephone}
                     sx={{ gridColumn: "span 2" }}
                   />
-                   <TextField
+                  <TextField
                     fullWidth
                     variant="filled"
                     type="text"
-                    label="Déscription"
+                    label="Adresse"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.desc}
-                    name="desc"
-                    error={!!touched.desc && !!errors.desc}
-                    helperText={touched.desc && errors.desc}
+                    value={values.adresse}
+                    name="adresse"
+                    error={!!touched.adresse && !!errors.adresse}
+                    helperText={touched.adresse && errors.adresse}
                     sx={{ gridColumn: "span 2" }}
                   />
-            <TextField
-              fullWidth
-              variant="filled"
-              type="number"
-              label="Nombre de place"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.nb_place}
-              name="nb_place"
-              error={!!touched.nb_place && !!errors.nb_place}
-              helperText={touched.nb_place && errors.nb_place}
-              sx={{ gridColumn: "span 2" }}
-            />
-            <TextField
+                  <TextField
                     fullWidth
                     variant="filled"
                     type="number"
-                    label="Nombre de place reserver"
+                    label="Code postal"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.nb_place_reserver}
-                    name="nb_place_reserver"
-                    error={!!touched.nb_place_reserver && !!errors.nb_place_reserver}
-                    helperText={touched.nb_place_reserver && errors.nb_place_reserver}
-                    sx={{ gridColumn: "span 4" }}
+                    value={values.cp_agence}
+                    name="cp_agence"
+                    error={!!touched.cp_agence && !!errors.cp_agence}
+                    helperText={touched.cp_agence && errors.cp_agence}
+                    sx={{ gridColumn: "span 2" }}
                   />
-            <TextField
-              fullWidth
-              variant="filled"
-              type="number"
-              label="Prix de place"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.prix_place}
-              name="prix_place"
-              error={!!touched.prix_place && !!errors.prix_place}
-              helperText={touched.prix_place && errors.prix_place}
-              sx={{ gridColumn: "span 4" }}
-            />
-          <TextField
-              fullWidth
-              variant="filled"
-              type="datetime-local"
-              label="Date début"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={moment(values.date_debut).format("YYYY-MM-DD[T]HH:mm:ss")}
-              name="date_debut"
-              error={!!touched.date_debut && !!errors.date_debut}
-              helperText={touched.date_debut && errors.date_debut}
-              sx={{ gridColumn: "span 4" }}
-            />
-            <TextField
-              fullWidth
-              variant="filled"
-              type="datetime-local"
-              label="Date fin"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={moment(values.date_fin).format("YYYY-MM-DD[T]HH:mm:ss")}
-              name="date_fin"
-              inputProps={{ min: values.date_debut}}
-              error={!!touched.date_fin && !!errors.date_fin}
-              helperText={touched.date_fin && errors.date_fin}
-              sx={{ gridColumn: "span 4" }}
-            />
-          </Box>
-          <Box display="flex" justifyContent="end" mt="20px">
-            <Button type="submit" color="secondary" variant="contained">
-              Modifier bus
-            </Button>
-          </Box>
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="number"
+                    label="Solde "
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.solde}
+                    name="solde"
+                    error={!!touched.solde && !!errors.solde}
+                    helperText={touched.solde && errors.solde}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="number"
+                    label="Credit"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.credit}
+                    name="credit"
+                    error={!!touched.credit && !!errors.credit}
+                    helperText={touched.credit && errors.credit}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="number"
+                    label="Commition sur hotel"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.commition_hotel}
+                    name="commition_hotel"
+                    error={!!touched.commition_hotel && !!errors.commition_hotel}
+                    helperText={touched.commition_hotel && errors.commition_hotel}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                </Box>
+                <Box display="flex" justifyContent="end" mt="20px">
+                  <Button type="submit" color="secondary" variant="contained">
+                  Modifier Agence
+                  </Button>
+                </Box>
         </form>
       )}
     </Formik>
@@ -208,4 +195,4 @@ function EditBus() {
   )
 }
 
-export default EditBus
+export default EditUser

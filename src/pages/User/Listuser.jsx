@@ -7,30 +7,25 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
-import {fetchBus,deleteBus} from '../../redux/busSlice'
+import { fetchUser,deletUser } from "../../redux/userSlice";
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
 
-function ListBus() {
+function ListUser() {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-      const bus = useSelector(state=>state.bus)
-      const {error} = useSelector(state=>state.bus)
-      const {status} = useSelector(state=>state.bus)
-      const {data} = useSelector(state=>state.bus)
+      const bus = useSelector(state=>state.user)
+      const {error} = useSelector(state=>state.user)
+      const {status} = useSelector(state=>state.user)
+      const {data} = useSelector(state=>state.user)
       let navigate = useNavigate();
   
   const dispatch = useDispatch();
   
   useEffect(()=>{
-   dispatch(fetchBus())
+   dispatch(fetchUser())
   
       },[dispatch])
-  
-      useEffect(()=>{
-  
-       console.log('bus : ', bus)
-           },[bus])
    
     const columns = [
       {
@@ -64,7 +59,7 @@ function ListBus() {
                   }).then((result) => {
                     if (result.isConfirmed) {
 
-                      dispatch(deleteBus(params.id))
+                      dispatch(deletUser(params.id))
                     }
                   })
                   
@@ -76,23 +71,23 @@ function ListBus() {
        
         
       },
-      { field: "matricule", headerName: "Matricule", width: 150 },
-      { field: "reference", headerName: "Reference", width: 150 },
-      { field: "point_depart", headerName: "Point départ", width: 200 },
-      { field: "point_arrive", headerName: "Point arrive", width: 200 },
+      { field: "code_agence", headerName: "Code Agence", width: 150 },
+      { field: "nom_agence", headerName: "Nom agence", width: 150 },
+      { field: "e_mail", headerName: "Adresse mail", width: 200 },
+      { field: "numero_telephone", headerName: "Numéro de téléphone", width: 200 },
       {
-        field: "nb_place",
-        headerName: "Nombre de place",
-        width: 100,
+        field: "adresse",
+        headerName: "Adresse",
+        width: 200,
       },
       {
-        field: "nb_place_reserver",
-        headerName: "Nombre de place reserver",
-        width: 100,
+        field: "cp_agence",
+        headerName: "Code postal",
+        width:100,
       },
-      { field: "prix_place", headerName: "Prix de place", width: 100 },
-      { field: "date_debut", headerName: "date debut", width: 100 },
-      { field: "date_fin", headerName: "Date fin", width: 100 },
+      { field: "solde", headerName: "solde de l'agence", width: 200 },
+      { field: "credit", headerName: "credit de l'agence", width: 200 },
+      { field: "commition_hotel", headerName: "Commition sur l'hotel", width: 200 },
     ];
   return (
     <Box m="20px">
@@ -110,7 +105,7 @@ function ListBus() {
     <Box display="flex" justifyContent="space-between" alignItems="center">
 
 
-<Header title="List des bus" subtitle="Bienvenue a ton liste des bus" />
+<Header title="List des bus" subtitle="Bienvenue a ton liste des Agence" />
 </Box>
 <Box
 m="8px 0 0 0"
@@ -156,4 +151,4 @@ components={{ Toolbar: GridToolbar }}
   )
 }
 
-export default ListBus
+export default ListUser

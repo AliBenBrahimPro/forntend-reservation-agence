@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-export const fetchAvion = createAsyncThunk(
-    'avion/fetchAvion',
+export const fetchUser = createAsyncThunk(
+    'user/fetchUser',
     async (_,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/avion/getallavion`)
+          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/user/getAllAgence`)
       const data = await res.json()
       return data}
       catch(error){
@@ -37,12 +37,12 @@ export const fetchAvion = createAsyncThunk(
    }
    }
  )
-  export const deleteAvion = createAsyncThunk(
-    'avion/deleteAvion',
+  export const deletUser = createAsyncThunk(
+    'user/deleteUser',
     async (id,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-   await fetch(`${process.env.REACT_APP_BASE_URL}/api/avion/deleteavion/${id}`, {
+   await fetch(`${process.env.REACT_APP_BASE_URL}/api/user/detleteuser/${id}`, {
          method: 'DELETE',
          headers: {
          'Content-type': 'application/json; charset=UTF-8',
@@ -56,12 +56,12 @@ export const fetchAvion = createAsyncThunk(
          );
 
 
-         export const getSingleAvion = createAsyncThunk(
-          'avion/getSingleAvion',
+         export const getSingleUser = createAsyncThunk(
+          'user/getSingleUser',
           async (id,thunkAPI) => {
             const {rejectWithValue} = thunkAPI;
               try{
-                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/avion/getoneavion/${id}`)
+                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/user/getagence/${id}`)
             const data = await res.json()
             return data}
             catch(error){
@@ -72,14 +72,14 @@ export const fetchAvion = createAsyncThunk(
 
 
 
-               export const editAvion = createAsyncThunk(
-                'avion/editAvion',
+               export const editUser = createAsyncThunk(
+                'user/editUser',
                 async (todo, { rejectWithValue }) => {
                   try {
-                    const { id, nom_avion,prix_place_simple, reference, point_arrive,point_depart, nb_place, date_debut,date_fin,prix_place_speciale,nb_place_reserver } = todo;
+                    const { id,code_agence,nom_agence,e_mail,password,numero_telephone,adresse,cp_agence,solde,credit,commition_hotel} = todo;
               
-                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/avion/updateavion/${id}`, {
-                        nom_avion,prix_place_simple, reference, point_arrive,point_depart, nb_place, date_debut,date_fin,prix_place_speciale,nb_place_reserver
+                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/user/updateAgence/${id}`, {
+                      code_agence,nom_agence,e_mail,password,numero_telephone,adresse,cp_agence,solde,credit,commition_hotel
                     });
                     console.log("response edit",response)
                     return response.data;
@@ -90,6 +90,27 @@ export const fetchAvion = createAsyncThunk(
                   }
                 }
               );
+              
+               
+              export const login = createAsyncThunk(
+                'user/loginuser',
+                async (todo, { rejectWithValue }) => {
+                  try {
+                    const { e_mail,password} = todo;
+              
+                    const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/user/loginAgence`, {
+                    e_mail,password
+                    });
+                    console.log("response login",response)
+                    return response.data;
+                    
+                  } catch (error) {
+                    console.log(error);
+                    return rejectWithValue(error.message);
+                  }
+                }
+              );
+
                
 
 
@@ -105,23 +126,23 @@ export const fetchAvion = createAsyncThunk(
         
     },
     extraReducers:{
-        // show hotels
-        [fetchAvion.fulfilled]:(state,action)=>{
+        // show agence
+        [fetchUser.fulfilled]:(state,action)=>{
            state.data =action.payload;
            state.status ="success";
        state.error =null;
         },
-        [fetchAvion.pending]:(state)=>{
+        [fetchUser.pending]:(state)=>{
            state.status ="loading";
            state.error =null;
 
         },
-        [fetchAvion.rejected]:(state,action)=>{
+        [fetchUser.rejected]:(state,action)=>{
        
            state.status ="failed";
            state.error=action.payload;
          },
-         // insert books
+         // insert agence
          [insertUser.fulfilled]:(state,action)=>{
             state.data.push(action.payload);
             state.status ="success";
@@ -137,41 +158,41 @@ export const fetchAvion = createAsyncThunk(
             state.status ="failed";
             state.error=action.payload;
           },
-          // delete hotel
-          [deleteAvion.fulfilled]:(state,action)=>{
+          // delete user
+          [deletUser.fulfilled]:(state,action)=>{
             state.status ="success";
         state.error =null;
         state.data =state.data.filter((el)=> el.id !==action.payload)
          },
-         [deleteAvion.pending]:(state)=>{
+         [deletUser.pending]:(state)=>{
             state.status ="loading";
             state.error =null;
 
          },
-         [deleteAvion.rejected]:(state,action)=>{
+         [deletUser.rejected]:(state,action)=>{
         
             state.status ="failed";
             state.error=action.payload;
           },
-          //single hotel
-          [getSingleAvion.fulfilled]:(state,action)=>{
+          //single User
+          [getSingleUser.fulfilled]:(state,action)=>{
             state.data = action.payload;
             state.status ="success";
         state.error =null;
          },
-         [getSingleAvion.pending]:(state)=>{
+         [getSingleUser.pending]:(state)=>{
           state.status ="loading";
           state.error =null;
 
          },
-         [getSingleAvion.rejected]:(state,action)=>{
+         [getSingleUser.rejected]:(state,action)=>{
         
           state.status ="failed";
           state.error=action.payload;
           },
-          //edit hotel
+          //edit User
           
-          [editAvion.fulfilled]: (state, action) => {
+          [editUser.fulfilled]: (state, action) => {
            
             return {
               ...state,
@@ -179,18 +200,34 @@ export const fetchAvion = createAsyncThunk(
              
             };
           },
-          [editAvion.pending]: (state, action) => {
+          [editUser.pending]: (state, action) => {
             return {
               ...state,
               status:"loading"
             };
           },
-          [editAvion.rejected]: (state, action) => {
+          [editUser.rejected]: (state, action) => {
             return {
               ...state,
               status:"rejected",
               error:action.payload
             };
+          },
+           //login
+           [login.fulfilled]:(state,action)=>{
+            state.data = action.payload;
+            state.status ="success";
+            state.error =null;
+         },
+         [login.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+         },
+         [login.rejected]:(state,action)=>{
+        
+          state.status ="failed";
+          state.error=action.payload;
           },
           
        
