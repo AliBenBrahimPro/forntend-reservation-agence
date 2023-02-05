@@ -164,7 +164,7 @@ const MyProSidebar = () => {
           <Box paddingLeft={collapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/"
+              to="/admin"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -179,14 +179,14 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Creer Hotel"
-              to="/hotelform"
+              to="/admin/hotelform"
               icon={<AddCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="List des hotels"
-              to="/listHotel"
+              to="/admin/listHotel"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -200,14 +200,14 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Creer bus"
-              to="/busForm"
+              to="/admin/busForm"
               icon={<AddCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="List des bus"
-              to="/listbus"
+              to="/admin/listbus"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -221,14 +221,14 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Creer avion"
-              to="/avionForm"
+              to="/admin/avionForm"
               icon={<AddCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="List des avions"
-              to="/listavion"
+              to="/admin/listavion"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -242,14 +242,14 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Creer un evenement"
-              to="/eventForm"
+              to="/admin/eventForm"
               icon={<AddCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="List des évenemnt"
-              to="/listevent"
+              to="/admin/listevent"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -263,14 +263,14 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Creer un programme"
-              to="/programmeForm"
+              to="/admin/programmeForm"
               icon={<AddCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="List des programmes"
-              to="/listprogramme"
+              to="/admin/listprogramme"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -284,14 +284,14 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Ajouter une agence"
-              to="/userForm"
+              to="/admin/userForm"
               icon={<AddCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="List des agence"
-              to="/listuser"
+              to="/admin/listuser"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -306,7 +306,7 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Manage Team"
-              to="/team"
+              to="/admin/team"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -314,7 +314,7 @@ const MyProSidebar = () => {
             
             <Item
               title="Invoices Balances"
-              to="/invoices"
+              to="/admin/invoices"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -329,21 +329,21 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Profile Form"
-              to="/form"
+              to="/admin/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Calendar"
-              to="/calendar"
+              to="/admin/calendar"
               icon={<CalendarTodayOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="FAQ Page"
-              to="/faq"
+              to="/admin/faq"
               icon={<HelpOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -358,28 +358,28 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Bar Chart"
-              to="/bar"
+              to="/admin/bar"
               icon={<BarChartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Pie Chart"
-              to="/pie"
+              to="/admin/pie"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Line Chart"
-              to="/line"
+              to="/admin/line"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Geography Chart"
-              to="/geography"
+              to="/admin/geography"
               icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

@@ -8,10 +8,10 @@ import Typography from '@mui/material/Typography';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { TextField, useMediaQuery,Alert,CircularProgress, Autocomplete } from "@mui/material";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import { useNavigate, useParams } from 'react-router-dom';
-import {  fetchReservationBus } from '../../redux/reservationbusSlice';
-import {  insertClient,fetchClient,getSinglebymailClient } from '../../redux/clientSlice';
+import {  fetchReservationBus } from '../../../redux/reservationbusSlice';
+import {  insertClient,fetchClient,getSinglebymailClient } from '../../../redux/clientSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
@@ -31,6 +31,7 @@ export default function ReservationClient() {
   const client = useSelector(state=>state.client)
   const {error} = useSelector(state=>state.reservationbus)
   const {status} = useSelector(state=>state.reservationbus)
+  
   let navigate = useNavigate();
 
   useEffect(()=>{
@@ -42,13 +43,10 @@ export default function ReservationClient() {
    
         
             },[client])
+  useEffect(()=>{
+dispatch(fetchReservationBus())
 
-        useEffect(()=>{
-            dispatch(fetchReservationBus())
-           
-          
-           
-               },[dispatch])
+ },[dispatch])
            
                useEffect(()=>{
                            const test2 =[];
@@ -106,6 +104,7 @@ export default function ReservationClient() {
   const initialValues = {
       full_name: "",
       date_naissance:"",
+      cin:"",
       e_mail: "",
       numero_telephone: "",
       montant_hotel: 0,
@@ -116,6 +115,7 @@ export default function ReservationClient() {
   };
   const checkoutSchema = yup.object().shape({
       full_name:yup.string().required("Required"),
+      cin:yup.string().required("Required"),
       date_naissance:yup.date().required("Required"),
       e_mail:yup.string().email("Invalid email!").required("Required"),
       numero_telephone:yup.string().matches(phoneRegExp, "phone number is not valid!").required("Required"),
@@ -126,48 +126,9 @@ export default function ReservationClient() {
 
   })
   console.log('i am here',client)
-  return (
-    <Box>
-
-    { error!==null ?  <Alert severity="error">{error}</Alert>
-    : 
-    
-    status ==="loading"? <Box style={{position: 'relative'}}>
-    <CircularProgress size={40}
-     left={-20}
-     top={10}
-     
-     style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :reservationbus.data.length===0? "there is no data found":
-    <Box sx={{ width: '100%' }}>
-        
-      {test.length===0? "no data found": <Stepper sx={{color:"yellow"}} color='yellow' activeStep={activeStep}>
-        {test.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
   
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step sx={{color:"yellow"}} key={label} {...stepProps}>
-              <StepLabel sx={{color:"yellow"}} {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>}
-      {activeStep === test.length ? (
-        <React.Fragment >
-          <Typography  sx={{ mt: 2, mb: 1 }}>
-            la résevation est compler
-          </Typography>
-          <Box  sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button color="secondary" onClick={(e)=>navigate('/home')}> retourner a la page home</Button>
-          </Box>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
+  return (
+
            <Box m="20px">
           <Header title="Ajouter nouveau client" subtitle="Remplir les coordonnés du client" />
     
@@ -203,6 +164,19 @@ export default function ReservationClient() {
                     helperText={touched.full_name && errors.full_name}
                     sx={{ gridColumn: "span 2" }}
                   />
+                     <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="CIN"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.cin}
+                    name="cin"
+                    error={!!touched.cin && !!errors.cin}
+                    helperText={touched.cin && errors.cin}
+                    sx={{ gridColumn: "span 2" }}
+                  />
                   <TextField
                     fullWidth
                     variant="filled"
@@ -227,7 +201,7 @@ export default function ReservationClient() {
                     name="numero_telephone"
                     error={!!touched.numero_telephone && !!errors.email}
                     helperText={touched.numero_telephone && errors.numero_telephone}
-                    sx={{ gridColumn: "span 4" }}
+                    sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     fullWidth
@@ -272,10 +246,6 @@ export default function ReservationClient() {
             )}
           </Formik>
         </Box>
-          
-        </React.Fragment>
-      )}
-    </Box>}
-    </Box>
+
   );
 }

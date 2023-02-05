@@ -3,38 +3,59 @@ import { Box, Button, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import { useDispatch ,useSelector} from 'react-redux';
 import Swal from 'sweetalert2'
 import moment from 'moment'
-import { getSingleEvent } from '../../redux/eventSlice';
-import { useParams } from 'react-router-dom';
-import { reservationeventSlice,insertReservationEvent } from '../../redux/reservationevenementSlice';
+import { getSingleBus,editBus } from '../../../redux/busSlice';
+import { json, useNavigate, useParams } from 'react-router-dom';
+import { insertReservationBus } from '../../../redux/reservationbusSlice';
+
 import axios from 'axios';
-function ReservationEvnt() {
+function ReservationBus() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const {id} = useParams();
-    const {data} = useSelector(state=>state.event)
-    const {nb_place}= useSelector(state=>state.event.data)
+    const {data} = useSelector(state=>state.bus)
+    const {nb_place}= useSelector(state=>state.bus.data)
+    let navigate = useNavigate();
+
     useEffect(()=>{
-      dispatch(getSingleEvent(id))
+      dispatch(getSingleBus(id))
           },[])  
           console.log(data)
     const handleFormSubmit = (values) => {
          console.log(values);
-         values.monatnt_total=data.prix_evenement*values.nb_place
-        dispatch(insertReservationEvent(values)).then((Data)=>{
-            if(Data.type==="reservationevent/insertReservationevent/fulfilled" ){
+         values.monatnt_total=data.prix_place*values.nb_place
+        dispatch(insertReservationBus(values)).then((data)=>{
+          
+            if(data.type==="reservationbus/insertReservationBus/fulfilled" ){
+             
              Swal.fire(
                        'Success',
-                       `${data.nom_evenement} a ajouter avec succes`,
+                       `réservation a affecter avec succes`,
                        'success'
                      ) 
+                     Swal.fire({
+                     
+                      title: ' Réservation a affecter avec succes',
+                      text: "Tu veux remplir coordonnées des clients?",
+                      icon: 'success',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Ajouter client'
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        navigate(`/agence/client/${data.payload.id}`) 
+                      }
+                    })
+                   
             }else{
+              console.log(data)
                  Swal.fire({
                      icon: 'error',
-                     title: 'Oops...',
+                     title: data.response,
                      text: 'Something went wrong!',
                    })}
            })
@@ -52,14 +73,15 @@ function ReservationEvnt() {
    let initialdata={
       nb_place:"",
       monatnt_total:"",
+      type:"bus",
       date_debut:data.date_debut,
       date_fin:data.date_fin,
-      evenementId:id,
-      userId:1,
+      id_transport:id,
+      userId:localStorage.getItem('id'),
     }
   return (
     <Box m="20px">
-    <Header title="Reservervation Evenement" subtitle="Reservervation des places sur le Evenement" />
+    <Header title="Réservation Bus" subtitle="Réservation des places sur le bus" />
 
     <Formik onSubmit={handleFormSubmit} initialValues={initialdata} enableReinitialize={true} validationSchema={checkoutSchema}>
       {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
@@ -102,7 +124,7 @@ function ReservationEvnt() {
               label="Prix unitaire"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={data.prix_evenement}
+              value={data.prix_place}
               name="prix_place"
              disabled
               sx={{ gridColumn: "span 2" }}
@@ -114,7 +136,7 @@ function ReservationEvnt() {
               label="Monatnt total"
               disabled
               
-              value={data.prix_evenement*values.nb_place}
+              value={data.prix_place*values.nb_place}
               name="monatnt_total"
               error={!!touched.monatnt_total && !!errors.monatnt_total}
               helperText={touched.monatnt_total && errors.monatnt_total}
@@ -162,4 +184,4 @@ function ReservationEvnt() {
   )
 }
 
-export default ReservationEvnt
+export default ReservationBus

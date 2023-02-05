@@ -7,7 +7,7 @@ export const fetchReservationBus = createAsyncThunk(
     async (_,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/getallreservationbus`)
+          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/getallreservationtransport`)
       const data = await res.json()
       return data}
       catch(error){
@@ -21,7 +21,7 @@ export const fetchReservationBus = createAsyncThunk(
       const {rejectWithValue} = thunkAPI;
 
        try{
-         const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/addreservationbus`, 
+         const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/addreservationtransport`, 
          {
             method: 'POST', 
             body: JSON.stringify (busData),
@@ -42,7 +42,7 @@ export const fetchReservationBus = createAsyncThunk(
     async (id,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
-   await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/deletereservationbus/${id}`, {
+   await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/deletereservationtransport/${id}`, {
          method: 'DELETE',
          headers: {
          'Content-type': 'application/json; charset=UTF-8',
@@ -61,7 +61,7 @@ export const fetchReservationBus = createAsyncThunk(
           async (id,thunkAPI) => {
             const {rejectWithValue} = thunkAPI;
               try{
-                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/getreservationbusbybus/${id}`)
+                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/getreservationtransportbyid/${id}`)
             const data = await res.json()
             return data}
             catch(error){
@@ -76,15 +76,17 @@ export const fetchReservationBus = createAsyncThunk(
                 'reservationbus/editReservationBus',
                 async (todo, { rejectWithValue }) => {
                   try {
-                    const { id, nb_place, monatnt_total, date_debut,date_fin } = todo;
+                    const { id, nb_place,type, monatnt_total, date_debut,date_fin,id_transport, userId } = todo;
               
                     const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/updatereservationbus/${id}`, {
                         nb_place,
                         monatnt_total,
-                 
+                        type,
                      
                       date_debut,
-                      date_fin
+                      date_fin,
+                      id_transport,
+                      userId
                     });
                     
                     return response.data;
@@ -103,6 +105,7 @@ export const fetchReservationBus = createAsyncThunk(
     name:'reservationbus',
     initialState:{
         data:[],
+        getAllData:[],
         status:null,
         error:null,
     },
@@ -112,7 +115,7 @@ export const fetchReservationBus = createAsyncThunk(
     extraReducers:{
         // show hotels
         [fetchReservationBus.fulfilled]:(state,action)=>{
-           state.data =action.payload;
+           state.getAllData =action.payload;
            state.status ="success";
        state.error =null;
         },
@@ -146,7 +149,7 @@ export const fetchReservationBus = createAsyncThunk(
           [deleteReservationBus.fulfilled]:(state,action)=>{
             state.status ="success";
         state.error =null;
-        state.data =state.data.filter((el)=> el.id !==action.payload)
+        state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
          },
          [deleteReservationBus.pending]:(state)=>{
             state.status ="loading";

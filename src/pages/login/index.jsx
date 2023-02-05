@@ -43,7 +43,15 @@ export default function Login() {
   const handleSubmit = (event) => {
     dispatch(login(event)).then((data)=>{
     if(data.type==="user/loginuser/fulfilled" ){
-      navigate("/dashboard")
+      localStorage.setItem("id",data.payload.id)
+      localStorage.setItem("code_agence",data.payload.code_agence)
+      localStorage.setItem("nom_agence",data.payload.nom_agence)
+      Swal.fire(
+        'Success',
+        `${data.payload.nom_agence} à connecté avec succes`,
+        'success'
+      ) 
+      navigate("/agence/dashboard")
      }else{
           Swal.fire({
               icon: 'error',

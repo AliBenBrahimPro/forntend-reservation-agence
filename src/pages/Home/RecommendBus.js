@@ -16,7 +16,7 @@ export default function RecommendBus() {
   const bus = useSelector(state=>state.bus)
   const {error} = useSelector(state=>state.bus)
   const {status} = useSelector(state=>state.bus)
-  const {data} = useSelector(state=>state.bus)
+  const {getAllData} = useSelector(state=>state.bus)
   let navigate = useNavigate();
   const handleClick = (values) => {
     navigate(`/reservationbus/${values.id}`)
@@ -31,7 +31,7 @@ const dispatch = useDispatch();
        useEffect(()=>{
    
             },[bus])
-console.log('where is the problem',bus.data)
+console.log('where is the problem',bus.getAllData)
 
   return (
     <Section id="recommend">
@@ -47,9 +47,9 @@ console.log('where is the problem',bus.data)
      top={10}
      
      style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :bus.data.length===0? <Box display='flex' justifyContent='center'> "there is no data found"</Box>:
+    :bus.getAllData.length===0? <Box display='flex' justifyContent='center'> "there is no getAllData found"</Box>:
       <div className="destinations">
-        {Array.from(data).map((destination) => {
+        {getAllData.map((destination) => {
           return (
             <div className="destination">
               <img src={info1} alt="" />
@@ -147,7 +147,7 @@ const Section = styled.section`
       }
     }
   }
-  @media screen and (min-width: 280px) and (max-width: 768px) {
+  @media screen and (min-width: 280px) and (max-width: 992px) {
     .packages {
       ul {
         li {

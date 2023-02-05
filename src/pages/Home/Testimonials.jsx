@@ -91,7 +91,7 @@ const Section = styled.section`
       }
     }
   }
-  @media screen and (min-width: 280px) and (max-width: 768px) {
+  @media screen and (min-width: 280px) and (max-width: 992px) {
     .testimonials {
       flex-direction: column;
       margin: 0;

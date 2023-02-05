@@ -2,7 +2,8 @@ import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { MyProSidebarProvider } from "./pages/global/sidebar/sidebarContext";
-import Topbar from "./pages/global/Topbar";
+import { MyProSidebarAgence } from "./pages/global/sidebar/sidebarContextAgence";
+import TopbarAgence from "./pages/global/TopbarAgence";
 import Agence from "./pages/Agence/index"
 import Login from "./pages/login/index"
 import Home from "./pages/Home/Home"
@@ -17,7 +18,6 @@ import Pie from "./pages/pie";
 import FAQ from "./pages/faq";
 import Geography from "./pages/geography";
 import Hotelform from "./pages/Hotel/HotelForm";
-import VirtualizedList from "./pages/test";
 import EditHotel from "./pages/Hotel/EditHotel";
 import ListHotel from "./pages/Hotel/ListHotel";
 import BusForm from "./pages/Bus/BusForm";
@@ -26,9 +26,7 @@ import ListBus from "./pages/Bus/ListBus";
 import EventForm from "./pages/Event/EventForm";
 import EditEvent from "./pages/Event/EditEvent";
 import ListEvent from "./pages/Event/ListEvent";
-import ReservationBus from "./pages/Reservation/ReservationBus";
-import ReservationEvnt from "./pages/Reservation/ReservationEvnt";
-import ReservationClient from "./pages/Reservation/ReservationClient";
+
 import FormAvion from "./pages/Avion/FormAvion";
 import ListAvion from "./pages/Avion/ListAvion";
 import EditAvion from "./pages/Avion/EditAvion";
@@ -38,8 +36,16 @@ import EditProgramme from "./pages/Programme/EditProg";
 import UserForm from "./pages/User/UserForm";
 import ListUser from "./pages/User/Listuser";
 import EditUser from "./pages/User/Edituser";
+import AllBus from "./pages/Link Agence/Bus/AllBus";
+import ReservationBus from "./pages/Link Agence/Reservation/ReservationBus";
+import ReservationEvnt from "./pages/Link Agence/Reservation/ReservationEvnt";
+import ReservationClient from "./pages/Link Agence/Reservation/ReservationClient";
+import Topbar from "./pages/global/Topbar";
+import Test from "./pages/test";
+import FormClientAgence from "./pages/Link Agence/Client/FormClientAgence";
+import AllHotel from "./pages/Link Agence/Hotel/AllHotel";
 
-function RouteApp() {
+function LinkAdmin() {
   const [theme, colorMode] = useMode();
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -77,8 +83,7 @@ function RouteApp() {
                 <Route path="/userForm" element={<UserForm />} />
                 <Route path="/userForm/:id" element={<EditUser />} />
                 <Route path="/listuser" element={<ListUser />} />
-                
-                
+               
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/bar" element={<Bar />} />
@@ -96,6 +101,71 @@ function RouteApp() {
     </ColorModeContext.Provider>
   )
 }
+function LinkAgence() {
+  const [theme, colorMode] = useMode();
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <MyProSidebarAgence>
+        <div style={{ height: "100%", width: "100%" }}>
+          <main>
+            <TopbarAgence />
+            <Routes>
+            <Route path="/" element={<Dashboard />} />
+             <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/team" element={<Team />} />
+
+                <Route path="/allbus" element={<AllBus />} />
+                <Route path="/allhotel" element={<AllHotel />} />
+                <Route path="/reservationbus/:id" element={<ReservationBus />} />
+                <Route path="/client/:id" element={<ReservationClient />} />
+                <Route path="/reservationevenement/:id" element={<ReservationEvnt />} />
+                <Route path="/hotelform/:id" element={<EditHotel />} />
+                <Route path="/listHotel" element={<ListHotel />} />
+
+                <Route path="/busForm" element={<BusForm />} />
+                <Route path="/busForm/:id" element={<EditBus />} />
+                <Route path="/listbus" element={<ListBus />} />
+
+                <Route path="/eventForm" element={<EventForm />} />
+                <Route path="/eventForm/:id" element={<EditEvent />} />
+                <Route path="/listevent" element={<ListEvent />} />
+
+                <Route path="/avionForm" element={<FormAvion />} />
+                <Route path="/avionForm/:id" element={<EditAvion />} />
+                <Route path="/listavion" element={<ListAvion />} />
+
+                <Route path="/programmeForm" element={<ProgrammeForm />} />
+                <Route path="/programmeForm/:id" element={<EditProgramme />} />
+                <Route path="/listprogramme" element={<ListProgramme />} />
+                
+                <Route path="/userForm" element={<UserForm />} />
+                <Route path="/userForm/:id" element={<EditUser />} />
+                <Route path="/listuser" element={<ListUser />} />
+
+                <Route path="/formclient" element={<FormClientAgence />} />
+                <Route path="/formclient/:id" element={<EditUser />} />
+                <Route path="/listclient" element={<ListUser />} />
+               
+                <Route path="/invoices" element={<Invoices />} />
+                <Route path="/form" element={<Form />} />
+                <Route path="/bar" element={<Bar />} />
+                <Route path="/pie" element={<Pie />} />
+                <Route path="/line" element={<Line />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/geography" element={<Geography />} />
+                
+                </Routes>
+            </main>
+          </div>
+        </MyProSidebarAgence>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  )
+}
+
 
 const App = () => {
   const [theme, colorMode] = useMode();
@@ -106,14 +176,13 @@ const App = () => {
           <div style={{ height: "100%", width: "100%" }}>
             <main>
               <Routes>
-<Route path="/home" element={<Home/>}/>
+<Route path="/" element={<Home/>}/>
     <Route path="/login" element={<Login/>}/>
-    <Route path="/agence" element={<Agence/>}/>
-    <Route path="/test" element={<VirtualizedList/>}/>
-    <Route path="/reservationbus/:id" element={<ReservationBus />} />
-    <Route path="/client/:id" element={<ReservationClient />} />
-    <Route path="/reservationevenement/:id" element={<ReservationEvnt />} />
-    <Route path="/*" element={ <RouteApp />} />
+    <Route path="/test" element={<Test/>}/>
+    
+  
+    <Route path="/admin/*" element={ <LinkAdmin />} />
+    <Route path="/agence/*" element={ <LinkAgence />} />
 </Routes>
             </main>
           </div>

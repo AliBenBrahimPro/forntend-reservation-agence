@@ -105,6 +105,7 @@ export const fetchBus = createAsyncThunk(
     name:'bus',
     initialState:{
         data:[],
+        getAllData:[],
         status:null,
         error:null,
     },
@@ -114,7 +115,7 @@ export const fetchBus = createAsyncThunk(
     extraReducers:{
         // show hotels
         [fetchBus.fulfilled]:(state,action)=>{
-           state.data =action.payload;
+           state.getAllData =action.payload;
            state.status ="success";
        state.error =null;
         },
@@ -148,7 +149,7 @@ export const fetchBus = createAsyncThunk(
           [deleteBus.fulfilled]:(state,action)=>{
             state.status ="success";
         state.error =null;
-        state.data =state.data.filter((el)=> el.id !==action.payload)
+        state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
          },
          [deleteBus.pending]:(state)=>{
             state.status ="loading";

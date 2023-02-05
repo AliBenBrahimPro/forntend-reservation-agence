@@ -41,7 +41,7 @@ function ListUser() {
               <GridActionsCellItem
                 icon={<EditIcon />}
                 label="Edit"
-  onClick={() =>{navigate(`/userform/${params.id}`)}}
+  onClick={() =>{navigate(`/admin/userform/${params.id}`)}}
               />,
               <GridActionsCellItem
                 icon={<DeleteIcon />}

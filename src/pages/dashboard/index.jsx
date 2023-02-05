@@ -20,9 +20,13 @@ import GeographyChart from "../../components/GeographyChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+import MediaCard from "../Link Agence/Bus/MediaCard";
 
 const Dashboard = () => {
   const theme = useTheme();
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const isNonTablet = useMediaQuery("(min-width:992px)");
+  const isNonDesktop = useMediaQuery("(min-width:1280x)");
   const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const colors = tokens(theme.palette.mode);
   return (
@@ -53,10 +57,12 @@ const Dashboard = () => {
           </Button>
         </Box>
       </Box>
+ 
 
       {/* GRID & CHARTS */}
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
+     
+      <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
           <Box
             width="100%"
             backgroundColor={colors.primary[400]}
@@ -65,12 +71,12 @@ const Dashboard = () => {
             justifyContent="center"
           >
             <StatBox
-              title="12,361"
-              subtitle="Emails Sent"
-              progress="0.75"
-              increase="+14%"
+              title="431,225"
+              subtitle="Sales Obtained"
+              progress="0.50"
+              increase="+21%"
               icon={
-                <EmailIcon
+                <PointOfSaleIcon
                   sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
                 />
               }

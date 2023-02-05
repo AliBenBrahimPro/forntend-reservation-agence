@@ -19,11 +19,14 @@ import { useDispatch } from 'react-redux';
 import { insertHotels } from '../../redux/hotelSlice';
 import Dropzone from "react-dropzone";
 import axios from 'axios';
+import Test from '../test';
 
 const Hotelform = () => {
 const dispatch =useDispatch();
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+    const [file, setFile] = useState();
+
 const [climatisation,setClimatisation]=useState(false);
 const [restaurant,setrestaurant]=useState(false);
 const [centreAffaires,setcentreAffaires]=useState(false);
@@ -38,6 +41,7 @@ const [ascenseur,setascenseur]=useState(false);
 const [tennis,settennis]=useState(false);
 const [animauxAutorises,setanimauxAutorises]=useState(false);
 const [image,setImage]=useState();
+console.log("i am here",image)
     const handleFormSubmit =async (values) => {
   
       const service={
@@ -81,13 +85,8 @@ const [image,setImage]=useState();
       formData.append('date_debut',values.date_debut)
       formData.append('date_fin',values.date_fin)
     
-    console.log(JSON.stringify(service))
 const x=formData
-console.log(x)
   const res =  await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,formData)
-  console.log(res)
-      
-          
                if(res.status===200 ){
                 Swal.fire(
                           'Success',
@@ -104,19 +103,12 @@ console.log(x)
 
 
     };
- console.log(image);
     const [selectedImages, setSelectedImages] = React.useState([]);
     const onSelectFile = (event) => {
 
 
-      // const formData = new FormData();
-      // formData.append('image_hotel',selectedFiles[key])
       const selectedFiles = event.target.files;
-      // for(const key of Object.keys(selectedFiles)){
-      //   formData.append('image_hotel',selectedFiles[key])
-      //   outputImage.push(selectedFiles[key])
-        
-      // }
+  
       const selectedFilesArray = Array.from(selectedFiles);
   
       const imagesArray = selectedFilesArray.map((file) => {
@@ -199,12 +191,12 @@ console.log(x)
                 >
                   <Box  sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Ajouter des photos</Typography>
-
+                  
                   <Box  sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
              <input
               style={{display: "none" }}
               onBlur={handleBlur}
-              onChange={(e)=>setImage(e.target.files)}
+              onChange={(e)=>{setImage(e.target.files)}}
               name="image_hotel"
               accept="image/*"
               id="contained-button-file"
@@ -217,7 +209,6 @@ console.log(x)
               </Fab>
             </label>
             </Box>
-
   
 <div className="images">
         {selectedImages &&
