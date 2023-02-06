@@ -16,7 +16,7 @@ function ListEvent() {
     const event = useSelector(state=>state.event)
     const {error} = useSelector(state=>state.event)
     const {status} = useSelector(state=>state.event)
-    const {data} = useSelector(state=>state.event)
+    const {getAllData} = useSelector(state=>state.event)
     let navigate = useNavigate();
 
 const dispatch = useDispatch();
@@ -103,7 +103,7 @@ onClick={() =>{navigate(`/eventform/${params.id}`)}}
      top={10}
      
      style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :event.data.length===0? "there is no data found":
+    :event.getAllData.length===0? "there is no data found":
     <Box> 
     <Box display="flex" justifyContent="space-between" alignItems="center">
 
@@ -144,7 +144,7 @@ sx={{
 }}
 >
 <DataGrid
-rows={data}
+rows={getAllData}
 columns={columns}
 components={{ Toolbar: GridToolbar }}
 />

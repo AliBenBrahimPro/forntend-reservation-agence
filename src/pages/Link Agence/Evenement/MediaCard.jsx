@@ -8,9 +8,8 @@ import Typography from '@mui/material/Typography';
 import { Box, Rating, useTheme } from '@mui/material';
 import { tokens } from "../../../theme";
 import { json, useNavigate } from 'react-router-dom';
-import { height } from '@mui/system';
 
-export default function MediaCard({title,stars,subtile,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
+export default function MediaCard({title,subtile,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const cardcolor=colors.primary[400];
@@ -19,17 +18,19 @@ export default function MediaCard({title,stars,subtile,sub2,sub3,description,btn
   return (
     <Card  sx={{ backgroundColor:cardcolor }}>
       <CardMedia
-      component="img"
-       src={image}
-       sx={{height:200}}
-
+     component="img"
+     src={image}
+     sx={{height:200}}  
+        
+        
       />
-     <CardContent>
-      
+      <CardContent>
         <Typography gutterBottom variant="h4" component="div">
         {title}
         </Typography>
-        <Rating style={{display: 'flex'}} defaultValue={stars} size='large' readOnly/>
+        <Typography variant="h4" color="text.secondary">
+     {description}
+        </Typography>
         <Typography  style={{display: 'inline-block'}} variant="h5" color="text.secondary">
           Place disponible : 
         </Typography>
@@ -37,9 +38,7 @@ export default function MediaCard({title,stars,subtile,sub2,sub3,description,btn
        {/* <Rating defaultValue={4}></Rating> */}
       
       
-        <Typography variant="body2" color="text.secondary">
-     {description}
-        </Typography>
+       
         <Typography variant="h5" color="secondary">
     Départ
         </Typography>
@@ -63,7 +62,7 @@ export default function MediaCard({title,stars,subtile,sub2,sub3,description,btn
         </Typography>
         </Box>
     
-        <Button onClick={(e)=>navigate(`/agence/reservationbus/${id}`)} variant='outlined' color='secondary'>{btn}</Button>
+        <Button onClick={(e)=>navigate(`/agence/reservationevenement/${id}`)} variant='outlined' color='secondary'>{btn}</Button>
       </CardActions>
     </Card>
   );

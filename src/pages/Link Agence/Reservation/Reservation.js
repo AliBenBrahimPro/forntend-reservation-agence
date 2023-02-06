@@ -1,45 +1,58 @@
-import React from 'react'
-import { Box, Button, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Alert, Autocomplete, Box, Button, CircularProgress, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
 import Header from "../../../components/Header";
-import { insertClient } from '../../../redux/clientSlice';
+import { fetchClient, insertClient,getSingleClient } from '../../../redux/clientSlice';
 import Swal from 'sweetalert2';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 
-const FormClientAgence = () => {
+const Reservation = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
 
+ 
+    const client = useSelector(state=>state.client)
+    const {error} = useSelector(state=>state.client)
+    const {status} = useSelector(state=>state.client)
+    const {getAllData,data} = useSelector(state=>state.client)
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+    useEffect(()=>{
+        dispatch(fetchClient())
+       
+           },[dispatch])
+       
+           useEffect(()=>{
+       
+            console.log('client : ', client)
+                },[client])
     const handleFormSubmit = (values) => {
         console.log(values);
-        dispatch(insertClient(values)).then((data)=>{
-          if(data.type==="client/insertClient/fulfilled" ){
-           Swal.fire(
-                     'Success',
-                     `${data.payload.full_name} a ajouter avec succes`,
-                     'success'
-                   ) 
-          }else{
-               Swal.fire({
-                   icon: 'error',
-                   title: 'Oops...',
-                   text: 'Something went wrong!',
-                 })}
-         })
+        if(data.length===0){
+            dispatch(insertClient(values)).then((data)=>{
+                if(data.type==="client/insertClient/fulfilled" ){
+                 Swal.fire(
+                           'Success',
+                           `${data.payload.full_name} a ajouter avec succes`,
+                           'success'
+                         ) 
+                }else{
+                     Swal.fire({
+                         icon: 'error',
+                         title: 'Oops...',
+                         text: 'Something went wrong!',
+                       })}
+               })
+               
+        }else{
+
+        }
+      
         
     };
-    const initialValues = {
-        full_name: "",
-        date_naissance: "",
-        e_mail: "",
-        numero_telephone: "",
-        montant_hotel: 0,
-        cin: "",
-        chambreId:null,
-    };
+
     const checkoutSchema = yup.object().shape({
         full_name:yup.string().required("Required"),
         date_naissance:yup.date().required("Required"),
@@ -54,8 +67,17 @@ const FormClientAgence = () => {
     return (
         <Box m="20px">
           <Header title="CREATE USER" subtitle="Create a New User Profile" />
+          { error!==null ?  <Alert severity="error">{error}</Alert>
+    : 
     
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
+    status ==="loading" ? <Box style={{position: 'relative'}}>
+    <CircularProgress size={40}
+     left={-20}
+     top={10}
+     
+     style={{marginLeft: '50%'}} color="secondary" /></Box>
+    :client.getAllData.length===0? <Alert severity="error">pas de bus disponible</Alert>:
+          <Formik onSubmit={handleFormSubmit} initialValues={data} validationSchema={checkoutSchema}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
               <form onSubmit={handleSubmit}>
                 <Box
@@ -66,6 +88,17 @@ const FormClientAgence = () => {
                     "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                   }}
                 >
+<Autocomplete
+  disablePortal
+  id="combo-box-demo"
+  options={getAllData.map(e=>e.cin)}
+  onChange={(event, newValue) => {
+    getAllData.map(e=>e.cin===newValue?dispatch(getSingleClient(e.id)):null)
+  }}
+  sx={{ width: 300 }}
+  renderInput={(params) => <TextField {...params} variant='filled' label="Client" />}
+/>
+                    
                             <TextField
                     fullWidth
                     variant="filled"
@@ -112,7 +145,7 @@ const FormClientAgence = () => {
                     label="Date de naissance"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.date_naissance}
+                    value={moment(values.date_naissance).format("YYYY-MM-DD")}
                     name="date_naissance"
                     error={!!touched.date_naissance && !!errors.date_naissance}
                     helperText={touched.date_naissance && errors.date_naissance}
@@ -141,9 +174,9 @@ const FormClientAgence = () => {
                 </Box>
               </form>
             )}
-          </Formik>
+          </Formik>}
         </Box>
       );
 }
 
-export default FormClientAgence
+export default Reservation

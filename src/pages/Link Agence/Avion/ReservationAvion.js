@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
@@ -7,38 +7,35 @@ import Header from "../../../components/Header";
 import { useDispatch ,useSelector} from 'react-redux';
 import Swal from 'sweetalert2'
 import moment from 'moment'
-import { getSingleBus,editBus } from '../../../redux/busSlice';
-import { json, useNavigate, useParams } from 'react-router-dom';
+import { getSingleAvion,editBus } from '../../../redux/avionSlice';
+import {  useNavigate, useParams } from 'react-router-dom';
 import { insertReservationTrans } from '../../../redux/reservationtransSlice';
 
 import axios from 'axios';
-function ReservationBus() {
+function ReservationAvion() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const {id} = useParams();
-    const {data} = useSelector(state=>state.bus)
-    const {nb_place}= useSelector(state=>state.bus.data)
+    const {data} = useSelector(state=>state.avion)
+    const {nb_place}= useSelector(state=>state.avion.data)
     let navigate = useNavigate();
 
     useEffect(()=>{
-      dispatch(getSingleBus(id))
+      dispatch(getSingleAvion(id))
           },[])  
           console.log(data)
     const handleFormSubmit = (values) => {
-         console.log(values);
-         values.monatnt_total=data.prix_place*values.nb_place
+         console.log('i am hette',values);
+         values.monatnt_total=values.prix_place_simple*values.nb_place
+
         dispatch(insertReservationTrans(values)).then((data)=>{
           
             if(data.type==="reservationtrans/insertReservationTrans/fulfilled" ){
              
-             Swal.fire(
-                       'Success',
-                       `réservation a affecter avec succes`,
-                       'success'
-                     ) 
+          
                      Swal.fire({
                      
-                      title: ' Réservation a affecter avec succes',
+                      title: `${data.payload.nb_place} place a affecter avec succes`,
                       text: "Tu veux remplir coordonnées des clients?",
                       icon: 'success',
                       showCancelButton: true,
@@ -73,7 +70,8 @@ function ReservationBus() {
    let initialdata={
       nb_place:"",
       monatnt_total:"",
-      type:"bus",
+      type:"avion",
+      prix_place_simple:"",
       date_debut:data.date_debut,
       date_fin:data.date_fin,
       id_transport:id,
@@ -81,7 +79,7 @@ function ReservationBus() {
     }
   return (
     <Box m="20px">
-    <Header title="Réservation Bus" subtitle="Réservation des places sur le bus" />
+    <Header title="Réservation Avion" subtitle="Réservation des places sur l'avion" />
 
     <Formik onSubmit={handleFormSubmit} initialValues={initialdata} enableReinitialize={true} validationSchema={checkoutSchema}>
       {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
@@ -124,8 +122,8 @@ function ReservationBus() {
               label="Prix unitaire"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={data.prix_place}
-              name="prix_place"
+              value={data.prix_place_simple}
+              name="prix_place_simple"
              disabled
               sx={{ gridColumn: "span 2" }}
             />
@@ -136,7 +134,7 @@ function ReservationBus() {
               label="Monatnt total"
               disabled
               
-              value={data.prix_place*values.nb_place}
+              value={data.prix_place_simple*values.nb_place}
               name="monatnt_total"
               error={!!touched.monatnt_total && !!errors.monatnt_total}
               helperText={touched.monatnt_total && errors.monatnt_total}
@@ -184,4 +182,4 @@ function ReservationBus() {
   )
 }
 
-export default ReservationBus
+export default ReservationAvion

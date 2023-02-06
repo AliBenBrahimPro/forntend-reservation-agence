@@ -98,6 +98,7 @@ export const fetchAvion = createAsyncThunk(
     name:'avion',
     initialState:{
         data:[],
+        getAllData:[],
         status:null,
         error:null,
     },
@@ -107,7 +108,7 @@ export const fetchAvion = createAsyncThunk(
     extraReducers:{
         // show hotels
         [fetchAvion.fulfilled]:(state,action)=>{
-           state.data =action.payload;
+           state.getAllData =action.payload;
            state.status ="success";
        state.error =null;
         },
@@ -141,7 +142,7 @@ export const fetchAvion = createAsyncThunk(
           [deleteAvion.fulfilled]:(state,action)=>{
             state.status ="success";
         state.error =null;
-        state.data =state.data.filter((el)=> el.id !==action.payload)
+        state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
          },
          [deleteAvion.pending]:(state)=>{
             state.status ="loading";

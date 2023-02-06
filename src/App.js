@@ -38,12 +38,19 @@ import ListUser from "./pages/User/Listuser";
 import EditUser from "./pages/User/Edituser";
 import AllBus from "./pages/Link Agence/Bus/AllBus";
 import ReservationBus from "./pages/Link Agence/Reservation/ReservationBus";
-import ReservationEvnt from "./pages/Link Agence/Reservation/ReservationEvnt";
+import ReservationEvnt from "./pages/Link Agence/Evenement/ReservationEvnt";
 import ReservationClient from "./pages/Link Agence/Reservation/ReservationClient";
 import Topbar from "./pages/global/Topbar";
 import Test from "./pages/test";
 import FormClientAgence from "./pages/Link Agence/Client/FormClientAgence";
 import AllHotel from "./pages/Link Agence/Hotel/AllHotel";
+import ListClientAgence from "./pages/Link Agence/Client/ListClientAgence";
+import Reservation from "./pages/Link Agence/Reservation/Reservation";
+import AllAvion from "./pages/Link Agence/Avion/AllAvion";
+import ReservationAvion from "./pages/Link Agence/Avion/ReservationAvion";
+import AllEvent from "./pages/Link Agence/Evenement/AllEvent";
+import AllProg from "./pages/Link Agence/Programme/AllProg";
+import ClientAvion from "./pages/Link Agence/Avion/ClientAvion";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -115,10 +122,14 @@ function LinkAgence() {
             <Route path="/" element={<Dashboard />} />
              <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/team" element={<Team />} />
-
+                <Route path="/clientavion" element={<ClientAvion />} />
                 <Route path="/allbus" element={<AllBus />} />
+                <Route path="/allavion" element={<AllAvion />} />
                 <Route path="/allhotel" element={<AllHotel />} />
+                <Route path="/allevent" element={<AllEvent />} />
+                <Route path="/allprog" element={<AllProg/>} />
                 <Route path="/reservationbus/:id" element={<ReservationBus />} />
+                <Route path="/reservationavion/:id" element={<ReservationAvion />} />
                 <Route path="/client/:id" element={<ReservationClient />} />
                 <Route path="/reservationevenement/:id" element={<ReservationEvnt />} />
                 <Route path="/hotelform/:id" element={<EditHotel />} />
@@ -146,7 +157,9 @@ function LinkAgence() {
 
                 <Route path="/formclient" element={<FormClientAgence />} />
                 <Route path="/formclient/:id" element={<EditUser />} />
-                <Route path="/listclient" element={<ListUser />} />
+                <Route path="/listclient" element={<ListClientAgence />} />
+
+                <Route path="/reservation" element={<Reservation />} />
                
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/form" element={<Form />} />

@@ -10,7 +10,7 @@ import * as yup from 'yup';
 import { TextField, useMediaQuery,Alert,CircularProgress, Autocomplete } from "@mui/material";
 import Header from "../../../components/Header";
 import { useNavigate, useParams } from 'react-router-dom';
-import {  fetchReservationBus } from '../../../redux/reservationbusSlice';
+import {  fetchReservationTrans } from '../../../redux/reservationtransSlice';
 import {  insertClient,fetchClient,getSinglebymailClient } from '../../../redux/clientSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -44,7 +44,7 @@ export default function ReservationClient() {
         
             },[client])
   useEffect(()=>{
-dispatch(fetchReservationBus())
+dispatch(fetchReservationTrans())
 
  },[dispatch])
            

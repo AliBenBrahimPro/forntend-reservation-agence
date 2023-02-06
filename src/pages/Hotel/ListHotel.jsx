@@ -18,7 +18,7 @@ const ListHotel = () => {
     const hotels = useSelector(state=>state.hotels)
     const {error} = useSelector(state=>state.hotels)
     const {status} = useSelector(state=>state.hotels)
-    const {data} = useSelector(state=>state.hotels)
+    const {getAllData} = useSelector(state=>state.hotels)
     let navigate = useNavigate();
 
 const dispatch = useDispatch();
@@ -167,7 +167,7 @@ onClick={() =>{navigate(`/hotelform/${params.id}`)}}
         top={10}
         
         style={{marginLeft: '50%'}} color="secondary" /></Box>
-       :hotels.data.length===0? "there is no data found":
+       :hotels.getAllData.length===0? "there is no data found":
        <Box> 
        <Box display="flex" justifyContent="space-between" alignItems="center">
  
@@ -208,7 +208,7 @@ onClick={() =>{navigate(`/hotelform/${params.id}`)}}
  }}
 >
  <DataGrid
-   rows={data}
+   rows={getAllData}
    columns={columns}
    components={{ Toolbar: GridToolbar }}
  />

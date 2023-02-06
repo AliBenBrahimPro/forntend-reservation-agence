@@ -104,6 +104,7 @@ export const fetchEvent = createAsyncThunk(
     name:'Event',
     initialState:{
         data:[],
+        getAllData:[],
         status:null,
         error:null,
     },
@@ -113,7 +114,7 @@ export const fetchEvent = createAsyncThunk(
     extraReducers:{
         // show hotels
         [fetchEvent.fulfilled]:(state,action)=>{
-           state.data =action.payload;
+           state.getAllData =action.payload;
            state.status ="success";
        state.error =null;
         },
@@ -147,7 +148,7 @@ export const fetchEvent = createAsyncThunk(
           [deleteEvent.fulfilled]:(state,action)=>{
             state.status ="success";
         state.error =null;
-        state.data =state.data.filter((el)=> el.id !==action.payload)
+        state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
          },
          [deleteEvent.pending]:(state)=>{
             state.status ="loading";

@@ -11,7 +11,7 @@ import { useTheme, Box, Typography, IconButton } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ExploreIcon from '@mui/icons-material/Explore';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import PeopleIcon from '@mui/icons-material/People';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
@@ -193,8 +193,15 @@ const MySideBarAgence = () => {
             />
             <Item
               title="Evenement"
-              to="/agence/allevenement"
+              to="/agence/allevent"
               icon={<LocalActivityIcon/>}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Programme"
+              to="/agence/allprog"
+              icon={<ExploreIcon/>}
               selected={selected}
               setSelected={setSelected}
             />
@@ -206,8 +213,22 @@ const MySideBarAgence = () => {
               Gestion des client
             </Typography>
             <Item
-              title="Client"
+              title="Ajouter Client"
               to="/agence/formclient"
+              icon={<PeopleIcon/>}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List client"
+              to="/agence/listclient"
+              icon={<PeopleIcon/>}
+              selected={selected}
+              setSelected={setSelected}
+            />
+             <Item
+              title="reservation"
+              to="/agence/reservation"
               icon={<PeopleIcon/>}
               selected={selected}
               setSelected={setSelected}

@@ -5,14 +5,14 @@ import clientSlice from './clientSlice'
 import eventSlice from './eventSlice'
 import hotelSlice from './hotelSlice'
 import programmeSlice  from './programmeSlice'
-import reservationbusSlice from './reservationbusSlice'
+import reservationtransSlice from './reservationtransSlice'
 import userSlice from './userSlice'
 export const store = configureStore({
     reducer:{
         hotels:hotelSlice,
         bus:busSlice,
         event:eventSlice,
-        reservationbus:reservationbusSlice,
+        reservationtrans:reservationtransSlice,
         client:clientSlice,
         avion:avionSlice,
         programme:programmeSlice,

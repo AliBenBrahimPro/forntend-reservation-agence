@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-export const fetchReservationBus = createAsyncThunk(
-    'reservationbus/fetchReservationBus',
+export const fetchReservationTrans = createAsyncThunk(
+    'reservationtrans/fetchReservationTrans',
     async (_,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
@@ -15,16 +15,16 @@ export const fetchReservationBus = createAsyncThunk(
       }
     }
   )
-  export const insertReservationBus = createAsyncThunk(
-   'reservationbus/insertReservationBus',
-   async (busData,thunkAPI) => {
+  export const insertReservationTrans = createAsyncThunk(
+   'reservationtrans/insertReservationTrans',
+   async (transData,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
 
        try{
          const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/addreservationtransport`, 
          {
             method: 'POST', 
-            body: JSON.stringify (busData),
+            body: JSON.stringify (transData),
             headers: {
             'Content-type': 'application/json; charset=UTF-8',
             },
@@ -37,8 +37,8 @@ export const fetchReservationBus = createAsyncThunk(
    }
    }
  )
-  export const deleteReservationBus = createAsyncThunk(
-    'reservationbus/deleteReservationBus',
+  export const deleteReservationTrans = createAsyncThunk(
+    'reservationtrans/deleteReservationTrans',
     async (id,thunkAPI) => {
       const {rejectWithValue} = thunkAPI;
         try{
@@ -56,8 +56,8 @@ export const fetchReservationBus = createAsyncThunk(
          );
 
 
-         export const getSingleReservationBus = createAsyncThunk(
-          'reservationbus/getSingleReservationBus',
+         export const getSingleReservationTrans = createAsyncThunk(
+          'reservationtrans/getSingleReservationTrans',
           async (id,thunkAPI) => {
             const {rejectWithValue} = thunkAPI;
               try{
@@ -72,13 +72,13 @@ export const fetchReservationBus = createAsyncThunk(
 
 
 
-               export const editReservationBus = createAsyncThunk(
-                'reservationbus/editReservationBus',
+               export const editReservationTrans = createAsyncThunk(
+                'reservationtrans/editReservationTrans',
                 async (todo, { rejectWithValue }) => {
                   try {
                     const { id, nb_place,type, monatnt_total, date_debut,date_fin,id_transport, userId } = todo;
               
-                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/reservation_bus/updatereservationbus/${id}`, {
+                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/reservation_trans/updatereservationtransport/${id}`, {
                         nb_place,
                         monatnt_total,
                         type,
@@ -101,8 +101,8 @@ export const fetchReservationBus = createAsyncThunk(
 
 
          
-  export const reservationbusSlice = createSlice({
-    name:'reservationbus',
+  export const reservationtransSlice = createSlice({
+    name:'reservationtrans',
     initialState:{
         data:[],
         getAllData:[],
@@ -114,72 +114,72 @@ export const fetchReservationBus = createAsyncThunk(
     },
     extraReducers:{
         // show hotels
-        [fetchReservationBus.fulfilled]:(state,action)=>{
+        [fetchReservationTrans.fulfilled]:(state,action)=>{
            state.getAllData =action.payload;
            state.status ="success";
        state.error =null;
         },
-        [fetchReservationBus.pending]:(state)=>{
+        [fetchReservationTrans.pending]:(state)=>{
            state.status ="loading";
            state.error =null;
 
         },
-        [fetchReservationBus.rejected]:(state,action)=>{
+        [fetchReservationTrans.rejected]:(state,action)=>{
        
            state.status ="failed";
            state.error=action.payload;
          },
          // insert books
-         [insertReservationBus.fulfilled]:(state,action)=>{
+         [insertReservationTrans.fulfilled]:(state,action)=>{
             state.data.push(action.payload);
             state.status ="success";
             state.error =null;
          },
-         [insertReservationBus.pending]:(state)=>{
+         [insertReservationTrans.pending]:(state)=>{
             state.status ="loading";
             state.error =null;
 
          },
-         [insertReservationBus.rejected]:(state,action)=>{
+         [insertReservationTrans.rejected]:(state,action)=>{
         
             state.status ="failed";
             state.error=action.payload;
           },
           // delete hotel
-          [deleteReservationBus.fulfilled]:(state,action)=>{
+          [deleteReservationTrans.fulfilled]:(state,action)=>{
             state.status ="success";
         state.error =null;
         state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
          },
-         [deleteReservationBus.pending]:(state)=>{
+         [deleteReservationTrans.pending]:(state)=>{
             state.status ="loading";
             state.error =null;
 
          },
-         [deleteReservationBus.rejected]:(state,action)=>{
+         [deleteReservationTrans.rejected]:(state,action)=>{
         
             state.status ="failed";
             state.error=action.payload;
           },
           //single hotel
-          [getSingleReservationBus.fulfilled]:(state,action)=>{
+          [getSingleReservationTrans.fulfilled]:(state,action)=>{
             state.data = action.payload;
             state.status ="success";
         state.error =null;
          },
-         [getSingleReservationBus.pending]:(state)=>{
+         [getSingleReservationTrans.pending]:(state)=>{
           state.status ="loading";
           state.error =null;
 
          },
-         [getSingleReservationBus.rejected]:(state,action)=>{
+         [getSingleReservationTrans.rejected]:(state,action)=>{
         
           state.status ="failed";
           state.error=action.payload;
           },
           //edit hotel
           
-          [editReservationBus.fulfilled]: (state, action) => {
+          [editReservationTrans.fulfilled]: (state, action) => {
            
             return {
               ...state,
@@ -187,13 +187,13 @@ export const fetchReservationBus = createAsyncThunk(
              
             };
           },
-          [editReservationBus.pending]: (state, action) => {
+          [editReservationTrans.pending]: (state, action) => {
             return {
               ...state,
               status:"loading"
             };
           },
-          [editReservationBus.rejected]: (state, action) => {
+          [editReservationTrans.rejected]: (state, action) => {
             return {
               ...state,
               status:"rejected",
@@ -205,4 +205,4 @@ export const fetchReservationBus = createAsyncThunk(
     }
 })
 
-export default reservationbusSlice.reducer
+export default reservationtransSlice.reducer
