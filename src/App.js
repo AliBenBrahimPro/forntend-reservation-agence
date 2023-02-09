@@ -37,7 +37,6 @@ import UserForm from "./pages/User/UserForm";
 import ListUser from "./pages/User/Listuser";
 import EditUser from "./pages/User/Edituser";
 import AllBus from "./pages/Link Agence/Bus/AllBus";
-import ReservationBus from "./pages/Link Agence/Reservation/ReservationBus";
 import ReservationEvnt from "./pages/Link Agence/Evenement/ReservationEvnt";
 import ReservationClient from "./pages/Link Agence/Reservation/ReservationClient";
 import Topbar from "./pages/global/Topbar";
@@ -52,6 +51,9 @@ import AllEvent from "./pages/Link Agence/Evenement/AllEvent";
 import AllProg from "./pages/Link Agence/Programme/AllProg";
 import ClientAvion from "./pages/Link Agence/Avion/ClientAvion";
 import HomeAgence from "./pages/home_agence";
+import ReservationBus from "./pages/Link Agence/Bus/ReservationBus";
+import ClientBus from "./pages/Link Agence/Bus/ClientBus";
+import ClientEvent from "./pages/Link Agence/Evenement/ClientEvent";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -124,6 +126,8 @@ function LinkAgence() {
              <Route path="/dashboard" element={<HomeAgence/>} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/clientavion/:id" element={<ClientAvion />} />
+                <Route path="/clientbus/:id" element={<ClientBus />} />
+                <Route path="/clientevent/:id" element={<ClientEvent />} />
                 <Route path="/allbus" element={<AllBus />} />
                 <Route path="/allavion" element={<AllAvion />} />
                 <Route path="/allhotel" element={<AllHotel />} />

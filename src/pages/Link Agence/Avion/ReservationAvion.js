@@ -23,12 +23,9 @@ function ReservationAvion() {
     useEffect(()=>{
       dispatch(getSingleAvion(id))
           },[])  
-          console.log(data)
     const handleFormSubmit = (values) => {
          values.monatnt_total=data.prix_place_simple*values.nb_place
-console.log("total : ",values.monatnt_total)
         dispatch(insertReservationTrans(values)).then((data)=>{
-          console.log(data)
             if(data.type==="reservationtrans/insertReservationTrans/fulfilled" ){
              
                      Swal.fire({
@@ -42,13 +39,11 @@ console.log("total : ",values.monatnt_total)
                       confirmButtonText: 'Ajouter client'
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        console.log("test : ",data.payload)
                         navigate(`/agence/clientavion/${data.payload.id}`) 
                       }
                     })
                    
             }else{
-              console.log(data)
                  Swal.fire({
                      icon: 'error',
                      title: data.response,

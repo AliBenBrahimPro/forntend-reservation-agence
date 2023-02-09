@@ -11,8 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { insertRCT } from '../../../redux/rctSlice';
 
-const ClientAvion = () => {
+const ClientBus = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
 
@@ -29,10 +30,8 @@ const ClientAvion = () => {
            },[dispatch])
        
            useEffect(()=>{
-            console.log('data : ', reservationtrans.data.map(e=>e.monatnt_total/e.nb_place)[0])
                 },[client,reservationtrans])
-console.log(id)
-
+console.log("id : ",id)
     const handleFormSubmit = (values) => {
         if(data.length===0){
             dispatch(insertClient(values)).then((data)=>{
@@ -43,35 +42,56 @@ console.log(id)
                            `${data.payload.full_name} a ajouter avec succes`,
                            'success'
                          ) 
-                         axios.post(`${process.env.REACT_APP_BASE_URL}/api/RCT/addRCT`,{
-                          
-                          reservationTarnsportId:id,
-                          clientId:data.payload.id
-                        }).then(response => console.log(response) )
-                        .catch(error => {
-                           
-                            console.error('There was an error!', error);
-                        });
+                         dispatch( insertRCT({reservationTarnsportId:id, clientId:data.payload.id})).then((datarct)=>{
+                            if(datarct.type==="rct/insertRCT/fulfilled" ){
+                                Swal.fire(
+                                    'Success',
+                                    `${datarct.payload.full_name} a ajouter avec succes`,
+                                    'success'
+                                  ) 
+
+                            }
+                            else{
+                                console.log(datarct)
+
+                                Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong!',
+                                      }) 
+                            }
+                         })
                 
                 }else{
                      Swal.fire({
                          icon: 'error',
                          title: 'Oops...',
                          text: 'Something went wrong!',
-                       })}
+                       })
+                    }
                        
                })
         
                
         }else{
-          axios.post(`${process.env.REACT_APP_BASE_URL}/api/RCT/addRCT`,{
-            reservationTarnsportId:id,
-            clientId:data.id
-          }).then(response => console.log(response) )
-          .catch(error => {
-             
-              console.error('There was an error!', error);
-          });
+            dispatch( insertRCT({reservationTarnsportId:id, clientId:data.id})).then((datarct)=>{
+                if(datarct.type==="rct/insertRCT/fulfilled" ){
+                    console.log(datarct)
+                    Swal.fire(
+                        'Success',
+                        `le client a ajouter avec succes`,
+                        'success'
+                      ) 
+
+                }else{
+                    Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                          }) 
+                }
+             })
+
         }
       
         
@@ -211,4 +231,4 @@ console.log(id)
       );
 }
 
-export default ClientAvion
+export default ClientBus

@@ -8,12 +8,14 @@ import { useDispatch ,useSelector} from 'react-redux';
 import Swal from 'sweetalert2'
 import moment from 'moment'
 import { getSingleEvent } from '../../../redux/eventSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { reservationeventSlice,insertReservationEvent } from '../../../redux/reservationevenementSlice';
 import axios from 'axios';
 function ReservationEvnt() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
+    let navigate = useNavigate();
+
     const {id} = useParams();
     const {data} = useSelector(state=>state.event)
     const {nb_place}= useSelector(state=>state.event.data)
@@ -24,19 +26,36 @@ function ReservationEvnt() {
     const handleFormSubmit = (values) => {
          console.log(values);
          values.monatnt_total=data.prix_evenement*values.nb_place
-        dispatch(insertReservationEvent(values)).then((Data)=>{
-            if(Data.type==="reservationevent/insertReservationevent/fulfilled" ){
-             Swal.fire(
-                       'Success',
-                       `${data.nom_evenement} a ajouter avec succes`,
-                       'success'
-                     ) 
-            }else{
-                 Swal.fire({
-                     icon: 'error',
-                     title: 'Oops...',
-                     text: 'Something went wrong!',
-                   })}
+        dispatch(insertReservationEvent(values)).then((datarce)=>{
+            
+                   if(datarce.type==="reservationevent/insertReservationevent/fulfilled" ){
+             
+                    Swal.fire(
+                              'Success',
+                              `réservation a affecter avec succes`,
+                              'success'
+                            ) 
+                            Swal.fire({
+                            
+                             title: ' Réservation a affecter avec succes',
+                             text: "Tu veux remplir coordonnées des clients?",
+                             icon: 'success',
+                             showCancelButton: true,
+                             confirmButtonColor: '#3085d6',
+                             cancelButtonColor: '#d33',
+                             confirmButtonText: 'Ajouter client'
+                           }).then((result) => {
+                             if (result.isConfirmed) {
+                               navigate(`/agence/clientevent/${datarce.payload.id}`) 
+                             }
+                           })
+                          
+                   }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: datarce.response,
+                            text: 'Something went wrong!',
+                          })}
            })
     };
   
