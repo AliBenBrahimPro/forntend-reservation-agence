@@ -97,6 +97,7 @@ export const fetchHotels = createAsyncThunk(
     initialState:{
         data:[],
         getAllData:[],
+        getAllDataHotel:[],
         status:null,
         error:null,
     },
@@ -107,6 +108,7 @@ export const fetchHotels = createAsyncThunk(
         // show hotels
         [fetchHotels.fulfilled]:(state,action)=>{
            state.getAllData =action.payload;
+           state.getAllDataHotel =action.payload;
            state.status ="success";
        state.error =null;
         },

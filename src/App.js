@@ -51,6 +51,7 @@ import ReservationAvion from "./pages/Link Agence/Avion/ReservationAvion";
 import AllEvent from "./pages/Link Agence/Evenement/AllEvent";
 import AllProg from "./pages/Link Agence/Programme/AllProg";
 import ClientAvion from "./pages/Link Agence/Avion/ClientAvion";
+import HomeAgence from "./pages/home_agence";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -119,8 +120,8 @@ function LinkAgence() {
           <main>
             <TopbarAgence />
             <Routes>
-            <Route path="/" element={<Dashboard />} />
-             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<HomeAgence />} />
+             <Route path="/dashboard" element={<HomeAgence/>} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/clientavion/:id" element={<ClientAvion />} />
                 <Route path="/allbus" element={<AllBus />} />

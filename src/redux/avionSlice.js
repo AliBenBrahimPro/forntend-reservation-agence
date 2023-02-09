@@ -99,6 +99,7 @@ export const fetchAvion = createAsyncThunk(
     initialState:{
         data:[],
         getAllData:[],
+        getAllDataAvion:[],
         status:null,
         error:null,
     },
@@ -109,6 +110,7 @@ export const fetchAvion = createAsyncThunk(
         // show hotels
         [fetchAvion.fulfilled]:(state,action)=>{
            state.getAllData =action.payload;
+           state.getAllDataAvion =action.payload;
            state.status ="success";
        state.error =null;
         },
