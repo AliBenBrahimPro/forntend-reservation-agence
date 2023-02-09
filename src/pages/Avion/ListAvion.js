@@ -46,7 +46,7 @@ function ListAvion() {
               <GridActionsCellItem
                 icon={<EditIcon />}
                 label="Edit"
-  onClick={() =>{navigate(`/avionform/${params.id}`)}}
+  onClick={() =>{navigate(`/admin/avionform/${params.id}`)}}
               />,
               <GridActionsCellItem
                 icon={<DeleteIcon />}

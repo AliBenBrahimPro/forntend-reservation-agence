@@ -25,9 +25,11 @@ const Reservation = () => {
            },[dispatch])
        
            useEffect(()=>{
-       
+            console.log('data : ', data)
             console.log('client : ', client)
-                },[client])
+                },[client,data])
+
+
     const handleFormSubmit = (values) => {
         console.log(values);
         if(data.length===0){
@@ -38,6 +40,7 @@ const Reservation = () => {
                            `${data.payload.full_name} a ajouter avec succes`,
                            'success'
                          ) 
+                
                 }else{
                      Swal.fire({
                          icon: 'error',
@@ -45,6 +48,7 @@ const Reservation = () => {
                          text: 'Something went wrong!',
                        })}
                })
+        
                
         }else{
 
@@ -77,7 +81,7 @@ const Reservation = () => {
      
      style={{marginLeft: '50%'}} color="secondary" /></Box>
     :client.getAllData.length===0? <Alert severity="error">pas de bus disponible</Alert>:
-          <Formik onSubmit={handleFormSubmit} initialValues={data} validationSchema={checkoutSchema}>
+          <Formik onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} validationSchema={checkoutSchema}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
               <form onSubmit={handleSubmit}>
                 <Box
@@ -106,7 +110,7 @@ const Reservation = () => {
                     label="CIN"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.cin}
+                    value={data.cin}
                     name="cin"
                     error={!!touched.cin && !!errors.cin}
                     helperText={touched.cin && errors.cin}

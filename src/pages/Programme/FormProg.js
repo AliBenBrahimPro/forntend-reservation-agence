@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Autocomplete, Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Alert, Autocomplete, Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
@@ -71,7 +71,18 @@ function ProgrammeForm() {
     return (
         <Box m="20px">
           <Header title="Creer nouveau BUS" subtitle="Ajouter nouveau BUS" />
+          { hotels.error!==null ?  <Alert severity="error">{hotels.error}</Alert>
+    : 
     
+    hotels.status ==="loading"||bus.status ==="loading"||event.status ==="loading" ||avion.status ==="loading" ? <Box style={{position: 'relative'}}>
+    <CircularProgress size={40}
+     left={-20}
+     top={10}
+     style={{marginLeft: '50%'}} color="secondary" /></Box>
+    :avion.getAllData.length===0  ?<Alert severity="error">il n'est pas des avion</Alert>:
+    bus.getAllData.length===0  ?<Alert severity="error">il n'est pas des bus</Alert>:
+    hotels.getAllData.length===0  ?<Alert severity="error">il n'est pas des hotels</Alert>:
+    event.getAllData.length===0  ?<Alert severity="error">il n'est pas des évenements</Alert>:
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,setFieldValue}) => (
               <form onSubmit={handleSubmit}>
@@ -96,7 +107,7 @@ function ProgrammeForm() {
     error={!!touched.busId && !!errors.busId}
     helperText={touched.busId && errors.busId}
   >
-  {bus.data.map(e=><MenuItem value={e.id}>{e.matricule}</MenuItem>)  }
+  {bus.getAllData.map(e=><MenuItem value={e.id}>{e.matricule}</MenuItem>)  }
    
   </Select>
 </FormControl>
@@ -113,7 +124,7 @@ function ProgrammeForm() {
     error={!!touched.avionId && !!errors.avionId}
     helperText={touched.avionId && errors.avionId}
   >
-  {avion.data.map(e=><MenuItem value={e.id}>{e.nom_avion}</MenuItem>)  }
+  {avion.getAllData.map(e=><MenuItem value={e.id}>{e.nom_avion}</MenuItem>)  }
 
   </Select>
 </FormControl>
@@ -130,7 +141,7 @@ function ProgrammeForm() {
     error={!!touched.hotelId && !!errors.hotelId}
     helperText={touched.hotelId && errors.hotelId}
   >
-  {hotels.data.map(e=><MenuItem value={e.id}>{e.nom_hotel}</MenuItem>)  }
+  {hotels.getAllData.map(e=><MenuItem value={e.id}>{e.nom_hotel}</MenuItem>)  }
 
   </Select>
 </FormControl>
@@ -148,7 +159,7 @@ function ProgrammeForm() {
     helperText={touched.evenementId && errors.evenementId}
     
   >
-  {event.data.map(e=><MenuItem value={e.id}>{e.nom_evenement}</MenuItem>)  }
+  {event.getAllData.map(e=><MenuItem value={e.id}>{e.nom_evenement}</MenuItem>)  }
    
   </Select>
 </FormControl>
@@ -203,7 +214,7 @@ function ProgrammeForm() {
                 </Box>
               </form>
             )}
-          </Formik>
+          </Formik>}
         </Box>
       );
 }

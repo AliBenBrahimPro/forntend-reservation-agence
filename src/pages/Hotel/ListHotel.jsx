@@ -68,7 +68,7 @@ useEffect(()=>{
             <GridActionsCellItem
               icon={<EditIcon />}
               label="Edit"
-onClick={() =>{navigate(`/hotelform/${params.id}`)}}
+onClick={() =>{navigate(`/admin/hotelform/${params.id}`)}}
             />,
             <GridActionsCellItem
               icon={<DeleteIcon />}

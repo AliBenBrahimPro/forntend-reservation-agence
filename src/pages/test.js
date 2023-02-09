@@ -1,66 +1,81 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Box } from '@mui/material';
-import { Modal, Upload } from 'antd';
+import { Button, TextField, Typography, useMediaQuery } from '@mui/material';
+import { Box } from '@mui/system';
 import { useState } from 'react';
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-const Test = () => {
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState([
+
+
+function Test() {
+  const [person,setPerson]=useState(5);
+  const [formFields, setFormFields] = useState([
    
-  ]);
-  const handleCancel = () => setPreviewOpen(false);
-  const handlePreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+  ])
+
+  const handleFormChange = (event, index) => {
+    let data = [...formFields];
+    data[index][event.target.name] = event.target.value;
+    setFormFields(data);
+  }
+
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(formFields)
+  }
+
+  const addFields = () => {
+    let object = {
+      name: '',
+      age: ''
     }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-  };
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-  const uploadButton = (
-    <div >
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
+
+    setFormFields([...formFields, object])
+    setPerson(person-1)
+  }
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const removeFields = (index) => {
+    let data = [...formFields];
+    data.splice(index, 1)
+    setFormFields(data)
+    setPerson(person+1)
+  }
+
   return (
-    <Box style={{backgroundColor:'white'}} display='flex' flexDirection='column'>
-      <Upload
-        
-        listType="picture-card"
-        fileList={fileList}
-        onPreview={handlePreview}
-        onChange={handleChange}
-        multiple
-       
-      >
-        {fileList.length >= 8 ? null : uploadButton}
-      </Upload>
-      <Modal open={previewOpen}   onCancel={handleCancel}>
-        <img
-          alt="example"
-          style={{
-            width: '100%',
-          }}
-          src={previewImage}
-        />
-      </Modal>
+    <Box className="App">
+      <form onSubmit={submit}>
+        <Typography>you have {person} personne left</Typography>
+        {formFields.map((form, index) => {
+          return (
+            <Box
+                  display="grid"
+                  gap="30px"
+                  gridTemplateColumns="repeat(12, minmax(0, 1fr))"
+                  sx={{
+                    "& > div": { gridColumn: isNonMobile ? undefined : "span 12" },
+                  }}
+                >
+              <TextField
+                name='name'
+                placeholder='Name'
+                onChange={event => handleFormChange(event, index)}
+                value={form.name}
+                sx={{ gridColumn: "span 5" }}
+              />
+              <TextField
+                name='age'
+                placeholder='Age'
+                onChange={event => handleFormChange(event, index)}
+                value={form.age}
+                sx={{ gridColumn: "span 5" }}
+              />
+              <Button sx={{ gridColumn: "span 2" }} variant='contained' color='error' onClick={() => removeFields(index)}>Remove</Button>
+            </Box>
+          )
+        })}
+      </form>
+     {person==0?'': <Button variant='contained' color='primary' onClick={addFields}>Add More..</Button>}
+      <br />
+      <Button variant='contained' color='success' onClick={submit}>Submit</Button>
     </Box>
   );
-};
+}
+
 export default Test;

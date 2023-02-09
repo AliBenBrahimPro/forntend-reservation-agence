@@ -122,7 +122,7 @@ function LinkAgence() {
             <Route path="/" element={<Dashboard />} />
              <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/team" element={<Team />} />
-                <Route path="/clientavion" element={<ClientAvion />} />
+                <Route path="/clientavion/:id" element={<ClientAvion />} />
                 <Route path="/allbus" element={<AllBus />} />
                 <Route path="/allavion" element={<AllAvion />} />
                 <Route path="/allhotel" element={<AllHotel />} />

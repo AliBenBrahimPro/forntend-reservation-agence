@@ -55,7 +55,7 @@ const FormClientAgence = () => {
         <Box m="20px">
           <Header title="CREATE USER" subtitle="Create a New User Profile" />
     
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
+          <Formik onSubmit={handleFormSubmit} initialValues={initialValues}  validationSchema={checkoutSchema}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
               <form onSubmit={handleSubmit}>
                 <Box
@@ -136,7 +136,7 @@ const FormClientAgence = () => {
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Create New User
+                   Ajouter nouveau client
                   </Button>
                 </Box>
               </form>

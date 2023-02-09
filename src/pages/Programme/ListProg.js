@@ -45,7 +45,7 @@ function ListProgramme() {
               <GridActionsCellItem
                 icon={<EditIcon />}
                 label="Edit"
-  onClick={() =>{navigate(`/programmeForm/${params.id}`)}}
+  onClick={() =>{navigate(`/admin/programmeForm/${params.id}`)}}
               />,
               <GridActionsCellItem
                 icon={<DeleteIcon />}

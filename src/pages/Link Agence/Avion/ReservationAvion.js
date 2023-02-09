@@ -25,17 +25,15 @@ function ReservationAvion() {
           },[])  
           console.log(data)
     const handleFormSubmit = (values) => {
-         console.log('i am hette',values);
-         values.monatnt_total=values.prix_place_simple*values.nb_place
-
+         values.monatnt_total=data.prix_place_simple*values.nb_place
+console.log("total : ",values.monatnt_total)
         dispatch(insertReservationTrans(values)).then((data)=>{
-          
+          console.log(data)
             if(data.type==="reservationtrans/insertReservationTrans/fulfilled" ){
              
-          
                      Swal.fire({
                      
-                      title: `${data.payload.nb_place} place a affecter avec succes`,
+                      title: "Réservation a effecte avec succes",
                       text: "Tu veux remplir coordonnées des clients?",
                       icon: 'success',
                       showCancelButton: true,
@@ -44,7 +42,8 @@ function ReservationAvion() {
                       confirmButtonText: 'Ajouter client'
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        navigate(`/agence/client/${data.payload.id}`) 
+                        console.log("test : ",data.payload)
+                        navigate(`/agence/clientavion/${data.payload.id}`) 
                       }
                     })
                    

@@ -45,7 +45,7 @@ useEffect(()=>{
             <GridActionsCellItem
               icon={<EditIcon />}
               label="Edit"
-onClick={() =>{navigate(`/eventform/${params.id}`)}}
+onClick={() =>{navigate(`/admin/eventform/${params.id}`)}}
             />,
             <GridActionsCellItem
               icon={<DeleteIcon />}

@@ -17,7 +17,7 @@ function ListBus() {
       const bus = useSelector(state=>state.bus)
       const {error} = useSelector(state=>state.bus)
       const {status} = useSelector(state=>state.bus)
-      const {data} = useSelector(state=>state.bus)
+      const {getAllData} = useSelector(state=>state.bus)
       let navigate = useNavigate();
   
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ function ListBus() {
               <GridActionsCellItem
                 icon={<EditIcon />}
                 label="Edit"
-  onClick={() =>{navigate(`/busform/${params.id}`)}}
+  onClick={() =>{navigate(`/admin/busform/${params.id}`)}}
               />,
               <GridActionsCellItem
                 icon={<DeleteIcon />}
@@ -105,7 +105,7 @@ function ListBus() {
      top={10}
      
      style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :bus.data.length===0? "there is no data found":
+    :bus.getAllData.length===0?<Alert severity="error">Pas des bus disponible</Alert> :
     <Box> 
     <Box display="flex" justifyContent="space-between" alignItems="center">
 
@@ -146,7 +146,7 @@ sx={{
 }}
 >
 <DataGrid
-rows={data}
+rows={getAllData}
 columns={columns}
 components={{ Toolbar: GridToolbar }}
 />
