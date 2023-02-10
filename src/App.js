@@ -54,6 +54,8 @@ import HomeAgence from "./pages/home_agence";
 import ReservationBus from "./pages/Link Agence/Bus/ReservationBus";
 import ClientBus from "./pages/Link Agence/Bus/ClientBus";
 import ClientEvent from "./pages/Link Agence/Evenement/ClientEvent";
+import HotelDetails from "./pages/Link Agence/Hotel/HotelDetails";
+import Chambre from "./pages/Link Agence/chambre/Chambre";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -128,6 +130,8 @@ function LinkAgence() {
                 <Route path="/clientavion/:id" element={<ClientAvion />} />
                 <Route path="/clientbus/:id" element={<ClientBus />} />
                 <Route path="/clientevent/:id" element={<ClientEvent />} />
+                <Route path="/hoteldetails" element={<HotelDetails />} />
+                <Route path="/chambre" element={<Chambre />} />
                 <Route path="/allbus" element={<AllBus />} />
                 <Route path="/allavion" element={<AllAvion />} />
                 <Route path="/allhotel" element={<AllHotel />} />

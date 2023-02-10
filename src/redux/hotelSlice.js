@@ -65,7 +65,6 @@ export const fetchHotels = createAsyncThunk(
               try{
                 const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/hotel/getonehotel/${id}`)
             const data = await res.json()
-            console.log('single :',data)
             return data}
             catch(error){
               return rejectWithValue(error.message);
@@ -74,18 +73,44 @@ export const fetchHotels = createAsyncThunk(
                );
                export const editHotels = createAsyncThunk(
                 'hotels/editHotels',
-                async (hotelData,id) => {
+                async (todo, { rejectWithValue }) => {
                   try{
-                 const response =   await fetch(`${process.env.REACT_APP_BASE_URL}/api/hotel/updatehotel/${id}`, {
-                          method: 'PUT',
-                          body: JSON.stringify (hotelData),
-                          headers: {
-                          'Content-type': 'application/json; charset=UTF-8',
-                          },
-                          });
+                    const { id, services_equipements:{
+                      climatisation,
+                      restaurant,
+                      centreAffaires,
+                      piscine,
+                      television,
+                      boutiqueCadeaux,
+                      change,
+                      bar,
+                      plage,
+                      cafe,
+                      ascenseur,
+                      tennis,
+                      animauxAutorises
+                  },nom_hotel, e_mail, numero_telephone,adresse, nb_etoile, prix_chambre_double,prix_chambre_single,prix_chambre_triple,prix_chambre_quadruple,prix_demi_pension,prix_pension_complete,prix_all_inclusive,commision,date_debut,date_fin,image_hotel,capacite } = todo;
+
+                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/hotel/updatehotel/${id}`, {
+                      services_equipements:{
+                        climatisation,
+                        restaurant,
+                        centreAffaires,
+                        piscine,
+                        television,
+                        boutiqueCadeaux,
+                        change,
+                        bar,
+                        plage,
+                        cafe,
+                        ascenseur,
+                        tennis,
+                        animauxAutorises
+                    },nom_hotel, e_mail, numero_telephone,adresse, nb_etoile, prix_chambre_double,prix_chambre_single,prix_chambre_triple,prix_chambre_quadruple,prix_demi_pension,prix_pension_complete,prix_all_inclusive,commision,date_debut,date_fin,image_hotel,capacite
+                    });
                           return response.data;
                           } catch (error) {
-                          return console.log(error.message);
+                          return rejectWithValue(error.message);
                           }
                 }
                      );

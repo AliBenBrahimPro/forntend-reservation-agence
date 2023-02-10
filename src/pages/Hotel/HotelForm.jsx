@@ -41,7 +41,6 @@ const [ascenseur,setascenseur]=useState(false);
 const [tennis,settennis]=useState(false);
 const [animauxAutorises,setanimauxAutorises]=useState(false);
 const [image,setImage]=useState();
-console.log("i am here",image)
     const handleFormSubmit =async (values) => {
   
       const service={
@@ -480,8 +479,7 @@ const x=formData
                   <Typography variant='h4' color={colors.grey[200]}>Services & équipements</Typography>
           
             </Box>
-            <Box                     sx={{ gridColumn: "span 4",justifyContent:'center' }}
- >
+            <Box sx={{ gridColumn: "span 4",justifyContent:'center' }} >
                   
                   <FormGroup  row sx={{display: "grid",justifyContent:'center',
   gridTemplateColumns: "repeat(auto-fill, 186px)", gridGap: "10px"}} >
