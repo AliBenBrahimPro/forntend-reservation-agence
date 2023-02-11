@@ -306,21 +306,21 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="List des reservations transport"
-              to="/admin/listuser"
+              to="/admin/listreservationtransport"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="List des reservations hotel"
-              to="/admin/reservationhotel"
+              to="/admin/listreservationhotel"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="List des reservations Evenement"
-              to="/admin/listuser"
+              to="/admin/listreservationevenement"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}

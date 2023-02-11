@@ -2,76 +2,67 @@ import React, {  useState,useEffect } from "react";
 import { Box,Alert, CircularProgress, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar ,GridActionsCellItem} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import axios from 'axios';
 import Rating from '@mui/material/Rating';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
-import {fetchreservationhotel} from '../../redux/reservationhotelSlice'
+import {fetchclientReservationTrans} from '../../redux/reservationtransSlice'
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
-import {fetchHotels,deleteHotels} from '../../redux/hotelSlice'
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useParams } from 'react-router-dom';
 
-const ListreservationHotel = () => {
+const ClientReserver = () => {
+    const {id} = useParams();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-    const reservationhotel = useSelector(state=>state.reservationhotel)
+    const reservationtransport = useSelector(state=>state.reservationtrans)
     
-    const {error} = useSelector(state=>state.reservationhotel)
-    const {status} = useSelector(state=>state.reservationhotel)
-    const {getAllData} = useSelector(state=>state.reservationhotel)
+    const {error} = useSelector(state=>state.reservationtrans)
+    const {status} = useSelector(state=>state.reservationtrans)
+    const {getAllDataclient} = useSelector(state=>state.reservationtrans)
     let navigate = useNavigate();
 const dispatch = useDispatch();
-console.log(getAllData)
+console.log(getAllDataclient)
 
     useEffect(()=>{
-      dispatch(fetchreservationhotel())
+      dispatch(fetchclientReservationTrans(id))
      
-         },[dispatch])
-     
-         useEffect(()=>{
-     
-              },[reservationhotel])
+         },[])
   const columns = [
     {
       field: 'actions',
       type: 'actions',
-      headerName: 'voir tous les client',
-      width: 130,
+      headerName: 'Actions',
+      width: 100,
       cellClassName: 'actions',
       getActions: ( params ) => 
 
            [
             <GridActionsCellItem
               icon={<RemoveRedEyeIcon />}
-              label="tous les client"
-              onClick={() =>{navigate(`/admin/listclientreservation/${params.id}`)}}
+              label="Edit"
+onClick={() =>{navigate(`/admin/hotelform/${params.id}`)}}
             />,
-          ] 
+          ]
+        
+
+     
+      
     },
-    { field: "nom_hotel", headerName: "Nom Hotel", width: 100 },
-    { field: "nom_agence", headerName: "Nom Agence", width: 100 },
+    { field: "full_name", headerName: "Nom Prenom", width: 100 },
+    { field: "cin", headerName: "CIN", width: 100 },
+    { field: "e_mail", headerName: "Adresse mail", width: 100 },
     {
-      field: "nb_place",
-      headerName: "Nombre de place reserver",
+      field: "numero_telephone",
+      headerName: "Numero téléphone",
       width: 150,
     },
     {
-      field: "monatnt_total",
-      headerName: "Montant total",
+      field: "date_naissance",
+      headerName: "date Naissance",
       width: 150,
-    },
-    
-    {
-      field: "solde",
-      headerName: "Solde",
-      width: 150,
-      },
-    { field: "credit", headerName: "Credit", width: 150 },
-    { field: "date_debut", headerName: "Date debut", width: 150 },
-    { field: "date_fin", headerName: "Date fin", width: 150 },
+    }
   ];
 
   return (
@@ -86,12 +77,12 @@ console.log(getAllData)
         top={10}
         
         style={{marginLeft: '50%'}} color="secondary" /></Box>
-       :reservationhotel.getAllData.length===0? "there is no data found":
+       :reservationtransport.getAllData.length===0? "there is no data found":
        <Box> 
        <Box display="flex" justifyContent="space-between" alignItems="center">
  
 
- <Header title="List des hotels" subtitle="Bienvenue a ton liste des reservations des hotels" />
+ <Header title="List des transport" subtitle="Bienvenue a ton liste des reservations des transport" />
 </Box>
 <Box
  m="8px 0 0 0"
@@ -127,7 +118,7 @@ console.log(getAllData)
  }}
 >
  <DataGrid
-   rows={getAllData}
+   rows={getAllDataclient}
    columns={columns}
    components={{ Toolbar: GridToolbar }}
  />
@@ -137,4 +128,4 @@ console.log(getAllData)
   );
 };
 
-export default ListreservationHotel;
+export default ClientReserver;

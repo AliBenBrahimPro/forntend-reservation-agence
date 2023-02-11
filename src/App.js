@@ -57,6 +57,9 @@ import ClientEvent from "./pages/Link Agence/Evenement/ClientEvent";
 import HotelDetails from "./pages/Link Agence/Hotel/HotelDetails";
 import Chambre from "./pages/Link Agence/chambre/Chambre";
 import ListreservationHotel from "./pages/listereservation/listereservationhotel";
+import ListreservationTransport from "./pages/listereservation/listereservationtransport";
+import ListreservationEvent from "./pages/listereservation/listereservationevent";
+import ClientReserver from "./pages/listereservation/listereservationevent";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -106,6 +109,9 @@ function LinkAdmin() {
                 <Route path="/geography" element={<Geography />} />
                 
                 <Route path="/listreservationhotel" element={<ListreservationHotel/>}/>
+                <Route path="/listreservationtransport" element={<ListreservationTransport/>}/>
+                <Route path="/listreservationevenement" element={<ListreservationEvent/>}/>
+                <Route path="/listclientreservation/:id" element={<ClientReserver/>}/>
 
                 </Routes>
             </main>

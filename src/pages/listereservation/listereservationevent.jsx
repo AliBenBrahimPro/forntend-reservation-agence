@@ -8,32 +8,30 @@ import axios from 'axios';
 import Rating from '@mui/material/Rating';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
-import {fetchreservationhotel} from '../../redux/reservationhotelSlice'
+import {fetchReservationEvent} from '../../redux/reservationeventSlice'
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
-import {fetchHotels,deleteHotels} from '../../redux/hotelSlice'
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
-const ListreservationHotel = () => {
+const ListreservationEvent = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-    const reservationhotel = useSelector(state=>state.reservationhotel)
+    const reservationtransport = useSelector(state=>state.reservationEvent)
     
-    const {error} = useSelector(state=>state.reservationhotel)
-    const {status} = useSelector(state=>state.reservationhotel)
-    const {getAllData} = useSelector(state=>state.reservationhotel)
+    const {error} = useSelector(state=>state.reservationEvent)
+    const {status} = useSelector(state=>state.reservationEvent)
+    const {getAllData} = useSelector(state=>state.reservationEvent)
     let navigate = useNavigate();
 const dispatch = useDispatch();
 console.log(getAllData)
 
     useEffect(()=>{
-      dispatch(fetchreservationhotel())
-     
+      dispatch(fetchReservationEvent())
          },[dispatch])
      
          useEffect(()=>{
      
-              },[reservationhotel])
+              },[reservationtransport])
   const columns = [
     {
       field: 'actions',
@@ -51,7 +49,7 @@ console.log(getAllData)
             />,
           ] 
     },
-    { field: "nom_hotel", headerName: "Nom Hotel", width: 100 },
+    { field: "nom_evenement", headerName: "Nom d'evenement", width: 100 },
     { field: "nom_agence", headerName: "Nom Agence", width: 100 },
     {
       field: "nb_place",
@@ -86,12 +84,12 @@ console.log(getAllData)
         top={10}
         
         style={{marginLeft: '50%'}} color="secondary" /></Box>
-       :reservationhotel.getAllData.length===0? "there is no data found":
+       :reservationtransport.getAllData.length===0? "there is no data found":
        <Box> 
        <Box display="flex" justifyContent="space-between" alignItems="center">
  
 
- <Header title="List des hotels" subtitle="Bienvenue a ton liste des reservations des hotels" />
+ <Header title="List des evenements" subtitle="Bienvenue a ton liste des reservations des evenements" />
 </Box>
 <Box
  m="8px 0 0 0"
@@ -137,4 +135,4 @@ console.log(getAllData)
   );
 };
 
-export default ListreservationHotel;
+export default ListreservationEvent;

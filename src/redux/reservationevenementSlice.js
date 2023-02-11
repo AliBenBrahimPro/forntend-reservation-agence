@@ -100,6 +100,7 @@ export const fetchReservationEvent = createAsyncThunk(
     name:'reservationevent',
     initialState:{
         data:[],
+        getAllData:[],
         status:null,
         error:null,
     },
@@ -110,8 +111,9 @@ export const fetchReservationEvent = createAsyncThunk(
         // show hotels
         [fetchReservationEvent.fulfilled]:(state,action)=>{
            state.data =action.payload;
+           state.getAllData =action.payload;
            state.status ="success";
-       state.error =null;
+           state.error =null;
         },
         [fetchReservationEvent.pending]:(state)=>{
            state.status ="loading";

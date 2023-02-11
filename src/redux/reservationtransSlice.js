@@ -15,6 +15,19 @@ export const fetchReservationTrans = createAsyncThunk(
       }
     }
   )
+  export const fetchclientReservationTrans = createAsyncThunk(
+    'reservationtrans/fetchclientReservationTrans',
+    async (id,thunkAPI) => {
+      const {rejectWithValue} = thunkAPI;
+        try{
+          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/RCT/getclientbyreservation/${id}`)
+      const data = await res.json()
+      return data}
+      catch(error){
+        return rejectWithValue(error.message);
+      }
+    }
+  )
   export const insertReservationTrans = createAsyncThunk(
    'reservationtrans/insertReservationTrans',
    async (transData,thunkAPI) => {
@@ -106,6 +119,7 @@ export const fetchReservationTrans = createAsyncThunk(
     initialState:{
         data:[],
         getAllData:[],
+        getAllDataclient:[],
         status:null,
         error:null,
     },
@@ -129,6 +143,21 @@ export const fetchReservationTrans = createAsyncThunk(
            state.status ="failed";
            state.error=action.payload;
          },
+         [fetchclientReservationTrans.fulfilled]:(state,action)=>{
+          state.getAllDataclient =action.payload;
+          state.status ="success";
+      state.error =null;
+       },
+       [fetchclientReservationTrans.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+       },
+       [fetchclientReservationTrans.rejected]:(state,action)=>{
+      
+          state.status ="failed";
+          state.error=action.payload;
+        },
          // insert books
          [insertReservationTrans.fulfilled]:(state,action)=>{
             state.data.push(action.payload);
