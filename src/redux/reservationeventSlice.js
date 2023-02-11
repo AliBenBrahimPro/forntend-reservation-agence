@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 export const fetchReservationEvent = createAsyncThunk(
-  'reservationevent/fetchReservationevent',
+  'reservationEvent/fetchReservationevent',
   async (_,thunkAPI) => {
     const {rejectWithValue} = thunkAPI;
       try{
