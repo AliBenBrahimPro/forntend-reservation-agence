@@ -43,13 +43,13 @@ console.log(getAllData)
       cellClassName: 'actions',
       getActions: ( params ) => 
 
-           [
-            <GridActionsCellItem
-              icon={<RemoveRedEyeIcon />}
-              label="tous les client"
-              onClick={() =>{navigate(`/admin/listclientreservation/${params.id}`)}}
-            />,
-          ] 
+      [
+        <GridActionsCellItem
+          icon={<RemoveRedEyeIcon />}
+          label="tous les client"
+          onClick={() =>{navigate(`/admin/listclientreservation/${params.id}`)}}
+        />,
+      ] 
     },
     { field: "nom_hotel", headerName: "Nom Hotel", width: 100 },
     { field: "nom_agence", headerName: "Nom Agence", width: 100 },

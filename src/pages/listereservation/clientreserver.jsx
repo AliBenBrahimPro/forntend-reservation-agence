@@ -21,6 +21,7 @@ const ClientReserver = () => {
     const {error} = useSelector(state=>state.reservationtrans)
     const {status} = useSelector(state=>state.reservationtrans)
     const {getAllDataclient} = useSelector(state=>state.reservationtrans)
+    console.log(getAllDataclient)
     let navigate = useNavigate();
 const dispatch = useDispatch();
 console.log(getAllDataclient)
@@ -30,29 +31,9 @@ console.log(getAllDataclient)
      
          },[])
   const columns = [
-    {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
-      width: 100,
-      cellClassName: 'actions',
-      getActions: ( params ) => 
-
-           [
-            <GridActionsCellItem
-              icon={<RemoveRedEyeIcon />}
-              label="Edit"
-onClick={() =>{navigate(`/admin/hotelform/${params.id}`)}}
-            />,
-          ]
-        
-
-     
-      
-    },
-    { field: "full_name", headerName: "Nom Prenom", width: 100 },
-    { field: "cin", headerName: "CIN", width: 100 },
-    { field: "e_mail", headerName: "Adresse mail", width: 100 },
+    { field: "full_name", headerName: "Nom Prenom", width: 150 },
+    { field: "cin", headerName: "CIN", width: 130 },
+    { field: "e_mail", headerName: "Adresse mail", width: 200 },
     {
       field: "numero_telephone",
       headerName: "Numero téléphone",
@@ -82,7 +63,7 @@ onClick={() =>{navigate(`/admin/hotelform/${params.id}`)}}
        <Box display="flex" justifyContent="space-between" alignItems="center">
  
 
- <Header title="List des transport" subtitle="Bienvenue a ton liste des reservations des transport" />
+ <Header title="List des client" subtitle="Bienvenue a ton liste des client a recerver" />
 </Box>
 <Box
  m="8px 0 0 0"

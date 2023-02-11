@@ -59,7 +59,7 @@ import Chambre from "./pages/Link Agence/chambre/Chambre";
 import ListreservationHotel from "./pages/listereservation/listereservationhotel";
 import ListreservationTransport from "./pages/listereservation/listereservationtransport";
 import ListreservationEvent from "./pages/listereservation/listereservationevent";
-import ClientReserver from "./pages/listereservation/listereservationevent";
+import ClientReserver from "./pages/listereservation/clientreserver";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
