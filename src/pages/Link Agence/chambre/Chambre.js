@@ -21,6 +21,7 @@ const Chambre = () => {
     const hotels = useSelector(state=>state.hotels)
     useEffect(()=>{
         dispatch(getSingleHotels(3))
+        setPrice(data.prix_demi_pension)
             },[])
     const handleFormSubmit = (values) => {
         console.log(values);
@@ -37,7 +38,7 @@ const Chambre = () => {
         
 
     })
-
+ 
 
     return (
         <Box m="20px">
@@ -60,13 +61,15 @@ const Chambre = () => {
        sx={{ gridColumn: "span 4" }}
         row
         name="prix_chambre"
-        onChange={e=>setChambre(e.target.value)}
+        onChange={e=>{setChambre(e.target.value);
+            const prix=parseFloat( e.target.value)+ parseFloat(pensions) 
+            setPrice(prix)}}
         defaultValue={data.prix_demi_pension}
       >
         <FormControlLabel  value={data.prix_demi_pension} control={<Radio  color='default' />} label="Chambre Double" />
-        <FormControlLabel value={1+(data.prix_demi_pension*data.frais_chambre_single/100)} control={<Radio color='default'/>} label="Chambre Single" />
-        <FormControlLabel value={1-(data.prix_demi_pension*data.porcentage_chambre_triple/100)} control={<Radio color='default'/>} label="Chambre Triple" />
-        <FormControlLabel value={1-(data.prix_demi_pension*data.porcentage_chambre_quadruple/100)} control={<Radio color='default'/>} label="Chambre Quadruple" />
+        <FormControlLabel value={data.prix_demi_pension*(1+(data.frais_chambre_single/100))} control={<Radio color='default'/>} label="Chambre Single" />
+        <FormControlLabel value={data.prix_demi_pension*(1-(data.porcentage_chambre_triple/100))} control={<Radio color='default'/>} label="Chambre Triple" />
+        <FormControlLabel value={data.prix_demi_pension*(1-(data.porcentage_chambre_quadruple/100))} control={<Radio color='default'/>} label="Chambre Quadruple" />
       </RadioGroup>
     </FormControl>
     <FormControl  sx={{ gridColumn: "span 4" }}>
@@ -75,10 +78,12 @@ const Chambre = () => {
        sx={{ gridColumn: "span 4" }}
         row
         name="prix_pension"
-        onChange={e=>{setPensions(e.target.value);}}
-        defaultValue={data.prix_demi_pension}
+        onChange={e=>{setPensions(e.target.value);
+            const prix=parseFloat( e.target.value)+ parseFloat(chambre) 
+            setPrice(prix)}}
+        defaultValue={0}
       >
-         <FormControlLabel  value={1} control={<Radio  color='default' />} label="Demi Pension" />
+         <FormControlLabel  value={0} control={<Radio  color='default' />} label="Demi Pension" />
         <FormControlLabel value={data.prix_pension_complete} control={<Radio  color='default'/>} label="Pension Complète" />
         <FormControlLabel value={data.prix_all_inclusive_soft} control={<Radio color='default'/>} label="All Inclusive Soft" />
         <FormControlLabel value={data.prix_all_inclusive} control={<Radio color='default'/>} label="All Inclusive" />
