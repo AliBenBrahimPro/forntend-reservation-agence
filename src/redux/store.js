@@ -6,6 +6,7 @@ import eventSlice from './eventSlice'
 import hotelSlice from './hotelSlice'
 import programmeSlice  from './programmeSlice'
 import rctSlice from './rctSlice'
+import reservationhotelSlice from './reservationhotelSlice'
 import reservationtransSlice from './reservationtransSlice'
 import userSlice from './userSlice'
 export const store = configureStore({
@@ -18,7 +19,8 @@ export const store = configureStore({
         avion:avionSlice,
         programme:programmeSlice,
         user:userSlice,
-        rct:rctSlice
+        rct:rctSlice,
+        reservationhotel:reservationhotelSlice
 
     },
 })

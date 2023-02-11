@@ -96,7 +96,6 @@ function LinkAdmin() {
                 <Route path="/userForm" element={<UserForm />} />
                 <Route path="/userForm/:id" element={<EditUser />} />
                 <Route path="/listuser" element={<ListUser />} />
-               
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/bar" element={<Bar />} />
@@ -106,7 +105,8 @@ function LinkAdmin() {
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/geography" element={<Geography />} />
                 
-                <Route path="/testtest" elemennt={<ListreservationHotel/>}/>
+                <Route path="/listreservationhotel" element={<ListreservationHotel/>}/>
+
                 </Routes>
             </main>
           </div>
