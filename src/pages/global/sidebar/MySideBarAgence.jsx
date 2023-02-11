@@ -233,6 +233,20 @@ const MySideBarAgence = () => {
               selected={selected}
               setSelected={setSelected}
             />
+             <Item
+              title="Hotel details"
+              to="/agence/hoteldetails"
+              icon={<ApartmentIcon/>}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Chambre"
+              to="/agence/chambre"
+              icon={<ApartmentIcon/>}
+              selected={selected}
+              setSelected={setSelected}
+            />
     
    
           </Box>
