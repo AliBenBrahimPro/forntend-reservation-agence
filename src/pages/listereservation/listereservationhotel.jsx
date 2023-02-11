@@ -17,14 +17,14 @@ const ListreservationHotel = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
     const reservationhotel = useSelector(state=>state.reservationhotel)
-    const hotels = useSelector(state=>state.hotels)
-    const {getAllDataHotel} = useSelector(state=>state.hotels)
+    // const hotels = useSelector(state=>state.hotels)
+    // const {getAllDataHotel} = useSelector(state=>state.hotels)
     const {error} = useSelector(state=>state.reservationhotel)
     const {status} = useSelector(state=>state.reservationhotel)
     const {getAllData} = useSelector(state=>state.reservationhotel)
     let navigate = useNavigate();
 const dispatch = useDispatch();
-console.log(getAllDataHotel)
+console.log(getAllData)
 useEffect(async()=>{
  dispatch(fetchreservationhotel())
  dispatch(fetchHotels())

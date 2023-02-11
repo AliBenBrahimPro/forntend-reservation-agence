@@ -104,7 +104,7 @@ function LinkAdmin() {
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/geography" element={<Geography />} />
                 
-                <Route path="/reservationhotel" elemennt={<ListreservationHotel/>}/>
+                <Route path="/testtest" elemennt={<ListreservationHotel/>}/>
                 </Routes>
             </main>
           </div>
