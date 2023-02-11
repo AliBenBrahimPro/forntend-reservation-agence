@@ -54,6 +54,7 @@ import HomeAgence from "./pages/home_agence";
 import ReservationBus from "./pages/Link Agence/Bus/ReservationBus";
 import ClientBus from "./pages/Link Agence/Bus/ClientBus";
 import ClientEvent from "./pages/Link Agence/Evenement/ClientEvent";
+import ListreservationHotel from "./pages/listereservation/listereservationhotel";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -103,6 +104,7 @@ function LinkAdmin() {
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/geography" element={<Geography />} />
                 
+                <Route path="/reservationhotel" elemennt={<ListreservationHotel/>}/>
                 </Routes>
             </main>
           </div>

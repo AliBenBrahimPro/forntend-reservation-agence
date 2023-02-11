@@ -87,6 +87,7 @@ const MyProSidebar = () => {
         rtl={sidebarRTL}
         backgroundColor={colors.primary[400]}
         image={sidebarImage}
+
       >
         <Menu iconshape="square">
           <MenuItem
@@ -291,6 +292,34 @@ const MyProSidebar = () => {
             />
             <Item
               title="List des agence"
+              to="/admin/listuser"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+             <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 20px 5px 20px" }}
+            >
+              Reservation
+            </Typography>
+            <Item
+              title="List des reservations transport"
+              to="/admin/listuser"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List des reservations hotel"
+              to="/admin/reservationhotel"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List des reservations Evenement"
               to="/admin/listuser"
               icon={<FormatListBulletedIcon />}
               selected={selected}
