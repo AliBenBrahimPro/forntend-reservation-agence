@@ -59,7 +59,11 @@ import Chambre from "./pages/Link Agence/chambre/Chambre";
 import ListreservationHotel from "./pages/listereservation/listereservationhotel";
 import ListreservationTransport from "./pages/listereservation/listereservationtransport";
 import ListreservationEvent from "./pages/listereservation/listereservationevent";
-import ClientReserver from "./pages/listereservation/listereservationevent";
+import ClientReserver from "./pages/listereservation/clientreserver";
+import ListreservationHoteluser from "./pages/listereservationuser/listereservationhotel";
+import ListreservationTransportuser from "./pages/listereservationuser/listereservationtransport";
+import ListreservationEventuser from "./pages/listereservationuser/listereservationevent";
+import ClientReserveruser from "./pages/listereservationuser/clientreserver";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -186,6 +190,11 @@ function LinkAgence() {
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/geography" element={<Geography />} />
+
+                <Route path="/listuserreservationhotel" element={<ListreservationHoteluser/>}/>
+                <Route path="/listuserreservationtransport" element={<ListreservationTransportuser/>}/>
+                <Route path="/listuserreservationevenement" element={<ListreservationEventuser/>}/>
+                <Route path="/listuserclientreservation/:id" element={<ClientReserveruser/>}/>
                 
                 </Routes>
             </main>

@@ -8,12 +8,13 @@ import axios from 'axios';
 import Rating from '@mui/material/Rating';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
-import {fetchReservationEvent} from '../../redux/reservationeventSlice'
+import {getuserleReservationevent} from '../../redux/reservationeventSlice'
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
-const ListreservationEvent = () => {
+const ListreservationEventuser = () => {
+  const id = localStorage.getItem('id');
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
     const reservationtransport = useSelector(state=>state.reservationEvent)
@@ -26,7 +27,7 @@ const dispatch = useDispatch();
 console.log(getAllData)
 
     useEffect(()=>{
-      dispatch(fetchReservationEvent())
+      dispatch(getuserleReservationevent(id))
          },[dispatch])
      
          useEffect(()=>{
@@ -45,7 +46,7 @@ console.log(getAllData)
         <GridActionsCellItem
           icon={<RemoveRedEyeIcon />}
           label="tous les client"
-          onClick={() =>{navigate(`/admin/listclientreservation/${params.id}`)}}
+          onClick={() =>{navigate(`/agence/listuserclientreservation/${params.id}`)}}
         />,
       ] 
     },
@@ -135,4 +136,4 @@ console.log(getAllData)
   );
 };
 
-export default ListreservationEvent;
+export default ListreservationEventuser;

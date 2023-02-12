@@ -2,31 +2,32 @@ import React, {  useState,useEffect } from "react";
 import { Box,Alert, CircularProgress, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar ,GridActionsCellItem} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import axios from 'axios';
 import Rating from '@mui/material/Rating';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
-import {fetchReservationEvent} from '../../redux/reservationeventSlice'
+import {getuserleReservationTrans} from '../../redux/reservationtransSlice'
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
-const ListreservationEvent = () => {
+const ListreservationTransportuser = () => {
+  const id = localStorage.getItem('id');
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-    const reservationtransport = useSelector(state=>state.reservationEvent)
+    const reservationtransport = useSelector(state=>state.reservationtrans)
     
-    const {error} = useSelector(state=>state.reservationEvent)
-    const {status} = useSelector(state=>state.reservationEvent)
-    const {getAllData} = useSelector(state=>state.reservationEvent)
+    const {error} = useSelector(state=>state.reservationtrans)
+    const {status} = useSelector(state=>state.reservationtrans)
+    const {getAllDatauser} = useSelector(state=>state.reservationtrans)
     let navigate = useNavigate();
 const dispatch = useDispatch();
-console.log(getAllData)
+console.log(id)
+console.log(getAllDatauser)
 
     useEffect(()=>{
-      dispatch(fetchReservationEvent())
+      dispatch(getuserleReservationTrans(id))
+     
          },[dispatch])
      
          useEffect(()=>{
@@ -41,15 +42,16 @@ console.log(getAllData)
       cellClassName: 'actions',
       getActions: ( params ) => 
 
-      [
-        <GridActionsCellItem
-          icon={<RemoveRedEyeIcon />}
-          label="tous les client"
-          onClick={() =>{navigate(`/admin/listclientreservation/${params.id}`)}}
-        />,
-      ] 
+           [
+            <GridActionsCellItem
+              icon={<RemoveRedEyeIcon />}
+              label="tous les client"
+              onClick={() =>{navigate(`/agence/listuserclientreservation/${params.id}`)}}
+            />,
+          ] 
     },
-    { field: "nom_evenement", headerName: "Nom d'evenement", width: 150 },
+    { field: "reference", headerName: "Reference", width: 100 },
+    { field: "type", headerName: "Type transport", width: 100 },
     { field: "nom_agence", headerName: "Nom Agence", width: 100 },
     {
       field: "nb_place",
@@ -84,12 +86,12 @@ console.log(getAllData)
         top={10}
         
         style={{marginLeft: '50%'}} color="secondary" /></Box>
-       :reservationtransport.getAllData.length===0? "there is no data found":
+       :reservationtransport.getAllDatauser.length===0? "there is no data found":
        <Box> 
        <Box display="flex" justifyContent="space-between" alignItems="center">
  
 
- <Header title="List des evenements" subtitle="Bienvenue a ton liste des reservations des evenements" />
+ <Header title="List des transport" subtitle="Bienvenue a ton liste des reservations des transport" />
 </Box>
 <Box
  m="8px 0 0 0"
@@ -125,7 +127,7 @@ console.log(getAllData)
  }}
 >
  <DataGrid
-   rows={getAllData}
+   rows={getAllDatauser}
    columns={columns}
    components={{ Toolbar: GridToolbar }}
  />
@@ -135,4 +137,4 @@ console.log(getAllData)
   );
 };
 
-export default ListreservationEvent;
+export default ListreservationTransportuser;

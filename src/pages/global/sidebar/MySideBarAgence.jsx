@@ -205,6 +205,34 @@ const MySideBarAgence = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 20px 5px 20px" }}
+            >
+              Gestion de Réservation
+            </Typography>
+            <Item
+              title="List des reservations transport"
+              to="/agence/listuserreservationtransport"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List des reservations hotel"
+              to="/agence/listuserreservationhotel"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="List des reservations Evenement"
+              to="/agence/listuserreservationevenement"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
              <Typography
               variant="h6"
               color={colors.grey[300]}
