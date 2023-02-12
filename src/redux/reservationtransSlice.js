@@ -82,7 +82,19 @@ export const fetchReservationTrans = createAsyncThunk(
             }
           }
                );
-
+               export const getuserleReservationTrans = createAsyncThunk(
+                'reservationtrans/getuserReservationTrans',
+                async (id,thunkAPI) => {
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/getallreservationtransportbyuser/${id}`)
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+                     );
 
 
                export const editReservationTrans = createAsyncThunk(
@@ -120,6 +132,7 @@ export const fetchReservationTrans = createAsyncThunk(
         data:[],
         getAllData:[],
         getAllDataclient:[],
+        getAllDatauser:[],
         status:null,
         error:null,
     },
@@ -154,6 +167,21 @@ export const fetchReservationTrans = createAsyncThunk(
 
        },
        [fetchclientReservationTrans.rejected]:(state,action)=>{
+      
+          state.status ="failed";
+          state.error=action.payload;
+        },
+        [getuserleReservationTrans.fulfilled]:(state,action)=>{
+          state.getAllDatauser =action.payload;
+          state.status ="success";
+      state.error =null;
+       },
+       [getuserleReservationTrans.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+       },
+       [getuserleReservationTrans.rejected]:(state,action)=>{
       
           state.status ="failed";
           state.error=action.payload;
