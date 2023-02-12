@@ -115,7 +115,7 @@ console.log(type)
             setPrice(prix* parseFloat(nbr))}}
         defaultValue={0}
       >
-         <FormControlLabel  value={0} control={<Radio  color='default' />} label="Demi Pension" />
+         <FormControlLabel  value={0} control={<Radio  color='default' />} label="Demi Pension " />
         <FormControlLabel value={data.prix_pension_complete} control={<Radio  color='default'/>} label="Pension Complète" />
         <FormControlLabel value={data.prix_all_inclusive_soft} control={<Radio color='default'/>} label="All Inclusive Soft" />
         <FormControlLabel value={data.prix_all_inclusive} control={<Radio color='default'/>} label="All Inclusive" />
@@ -138,7 +138,7 @@ console.log(type)
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Ajouter Client
+                    Réserver
                   </Button>
                 </Box>
               </form>
