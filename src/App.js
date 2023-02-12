@@ -138,8 +138,8 @@ function LinkAgence() {
                 <Route path="/clientavion/:id" element={<ClientAvion />} />
                 <Route path="/clientbus/:id" element={<ClientBus />} />
                 <Route path="/clientevent/:id" element={<ClientEvent />} />
-                <Route path="/hoteldetails" element={<HotelDetails />} />
-                <Route path="/chambre" element={<Chambre />} />
+                <Route path="/hoteldetails/:id" element={<HotelDetails />} />
+                <Route path="/chambre/:id" element={<Chambre />} />
                 <Route path="/allbus" element={<AllBus />} />
                 <Route path="/allavion" element={<AllAvion />} />
                 <Route path="/allhotel" element={<AllHotel />} />

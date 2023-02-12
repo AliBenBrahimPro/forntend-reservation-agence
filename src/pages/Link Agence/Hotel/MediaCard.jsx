@@ -63,7 +63,7 @@ export default function MediaCard({title,stars,subtile,sub2,sub3,description,btn
         </Typography>
         </Box>
     
-        <Button onClick={(e)=>navigate(`/agence/reservationbus/${id}`)} variant='outlined' color='secondary'>{btn}</Button>
+        <Button onClick={(e)=>navigate(`/agence/hoteldetails/${id}`)} variant='outlined' color='secondary'>{btn}</Button>
       </CardActions>
     </Card>
   );

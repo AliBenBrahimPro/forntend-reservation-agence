@@ -11,35 +11,68 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSingleHotels } from '../../../redux/hotelSlice';
+import { insertChambre } from '../../../redux/chambreSlice';
+import Swal from 'sweetalert2';
+import { useNavigate, useParams } from 'react-router-dom';
 const Chambre = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
+    const {id}= useParams();
+    let navigate = useNavigate();
+
     const [price,setPrice]=useState()
-    const [chambre,setChambre]=useState()
+    const [chambres,setChambre]=useState()
+    const [nbr,setNbr]=useState(2)
     const [pensions,setPensions]=useState()
+    const [type,setType]=useState("Chambre Double")
     const {data} = useSelector(state=>state.hotels)
     const hotels = useSelector(state=>state.hotels)
+    const chambre = useSelector(state=>state.chambre)
     useEffect(()=>{
-        dispatch(getSingleHotels(3))
-        setPrice(data.prix_demi_pension)
+        dispatch(getSingleHotels(id))
             },[])
+            useEffect(() => {
+              setPrice(data.prix_demi_pension * parseFloat(nbr))
+
+            }, [hotels])
+            
     const handleFormSubmit = (values) => {
+        
+        values.montant=price;
+        values.type=type
+        values.nb_place=nbr
         console.log(values);
+        dispatch(insertChambre(values)).then((data)=>{
+          if(data.type==="chambre/insertChambre/fulfilled" ){
+           Swal.fire(
+                     'Success',
+                     `${data.payload.type} a ajouter avec succes`,
+                     'success'
+                   ) 
+          }else{
+               Swal.fire({
+                   icon: 'error',
+                   title: 'Oops...',
+                   text: 'Something went wrong!',
+                 })}
+         })
     };
     const initialValues = {
-        prix_total: "",
-        prix_chambre:"",
-        prix_pension:""
+          type: "",
+          nb_place:"",
+          date_debut:data.date_debut,
+          date_fin:data.date_fin,
+          montant:"",
+          hotelId:data.id
 
        
     };
     const checkoutSchema = yup.object().shape({
-        prix_total:yup.number().required("Required"),
         
 
     })
  
-
+console.log(type)
     return (
         <Box m="20px">
           <Header title="Selecter chambres" subtitle="Selectionner chambres " />
@@ -60,16 +93,15 @@ const Chambre = () => {
       <RadioGroup
        sx={{ gridColumn: "span 4" }}
         row
-        name="prix_chambre"
         onChange={e=>{setChambre(e.target.value);
-            const prix=parseFloat( e.target.value)+ parseFloat(pensions) 
-            setPrice(prix)}}
+            const prix=parseFloat( e.target.value)+ parseFloat(pensions??0)  
+            setPrice(prix* parseFloat(nbr))}}
         defaultValue={data.prix_demi_pension}
       >
-        <FormControlLabel  value={data.prix_demi_pension} control={<Radio  color='default' />} label="Chambre Double" />
-        <FormControlLabel value={data.prix_demi_pension*(1+(data.frais_chambre_single/100))} control={<Radio color='default'/>} label="Chambre Single" />
-        <FormControlLabel value={data.prix_demi_pension*(1-(data.porcentage_chambre_triple/100))} control={<Radio color='default'/>} label="Chambre Triple" />
-        <FormControlLabel value={data.prix_demi_pension*(1-(data.porcentage_chambre_quadruple/100))} control={<Radio color='default'/>} label="Chambre Quadruple" />
+        <FormControlLabel onClick={e=>{setType("Chambre Double"); setNbr(2)}} value={data.prix_demi_pension} control={<Radio  color='default' />} label="Chambre Double" />
+        <FormControlLabel onClick={e=>{setType("Chambre Single");setNbr(1)}}value={data.prix_demi_pension*(1+(data.frais_chambre_single/100))} control={<Radio color='default'/>} label="Chambre Single" />
+        <FormControlLabel onClick={e=>{setType("Chambre Triple");setNbr(3)}} value={data.prix_demi_pension*(1-(data.porcentage_chambre_triple/100))} control={<Radio color='default'/>} label="Chambre Triple" />
+        <FormControlLabel onClick={e=>{setType("Chambre Quadruple");setNbr(4)}} value={data.prix_demi_pension*(1-(data.porcentage_chambre_quadruple/100))} control={<Radio color='default'/>} label="Chambre Quadruple" />
       </RadioGroup>
     </FormControl>
     <FormControl  sx={{ gridColumn: "span 4" }}>
@@ -79,8 +111,8 @@ const Chambre = () => {
         row
         name="prix_pension"
         onChange={e=>{setPensions(e.target.value);
-            const prix=parseFloat( e.target.value)+ parseFloat(chambre) 
-            setPrice(prix)}}
+            const prix=parseFloat( e.target.value)+ parseFloat(chambres??data.prix_demi_pension) 
+            setPrice(prix* parseFloat(nbr))}}
         defaultValue={0}
       >
          <FormControlLabel  value={0} control={<Radio  color='default' />} label="Demi Pension" />
@@ -106,7 +138,7 @@ const Chambre = () => {
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Create New User
+                    Ajouter Client
                   </Button>
                 </Box>
               </form>

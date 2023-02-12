@@ -6,14 +6,18 @@ import './slide.css'
 import Header from '../../../components/Header';
 import { getSingleHotels } from '../../../redux/hotelSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 function HotelDetails() {
     const dispatch = useDispatch();
+    const {id}= useParams();
+    let navigate = useNavigate();
+
     const hotels = useSelector(state=>state.hotels)
     const {error} = useSelector(state=>state.hotels)
     const {status} = useSelector(state=>state.hotels)
     const {data} = useSelector(state=>state.hotels)
     useEffect(() => {
-    dispatch(getSingleHotels(3))
+    dispatch(getSingleHotels(id))
     }, [])
     
   return (
@@ -82,7 +86,7 @@ function HotelDetails() {
     </FormGroup>
     </Box>
     <Box display="flex" justifyContent="end" mt="20px">
-                  <Button type="submit" color="secondary" variant="contained">
+                  <Button onClick={(e)=>navigate(`/agence/chambre/${id}`)} type="submit" color="secondary" variant="contained">
                     Réserver
                   </Button>
                 </Box>
