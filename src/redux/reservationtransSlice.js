@@ -207,6 +207,7 @@ export const fetchReservationTrans = createAsyncThunk(
             state.status ="success";
         state.error =null;
         state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
+        state.getAllDatauser =state.getAllDatauser.filter((el)=> el.id !==action.payload)
          },
          [deleteReservationTrans.pending]:(state)=>{
             state.status ="loading";

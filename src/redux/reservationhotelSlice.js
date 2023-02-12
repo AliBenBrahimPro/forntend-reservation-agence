@@ -28,6 +28,23 @@ export const fetchreservationhotel = createAsyncThunk(
       }
     }
          );
+         export const deleteReservationhotel = createAsyncThunk(
+          'reservationhotel/deleteReservationhotel',
+          async (id,thunkAPI) => {
+            const {rejectWithValue} = thunkAPI;
+              try{
+         await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_hotel/deletereservationhotel/${id}`, {
+               method: 'DELETE',
+               headers: {
+               'Content-type': 'application/json; charset=UTF-8',
+               },
+               });
+               return id;
+               } catch (error) {
+               return rejectWithValue(error.message);
+               }
+               }
+               );
   export const reservationhotelSlice = createSlice({
     name:'reservationhotel',
     initialState:{
@@ -66,6 +83,21 @@ export const fetchreservationhotel = createAsyncThunk(
 
        },
        [getuserleReservationhotel.rejected]:(state,action)=>{
+      
+          state.status ="failed";
+          state.error=action.payload;
+        },
+        [deleteReservationhotel.fulfilled]:(state,action)=>{
+          state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
+          state.status ="success";
+          state.error =null;
+       },
+       [deleteReservationhotel.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+       },
+       [deleteReservationhotel.rejected]:(state,action)=>{
       
           state.status ="failed";
           state.error=action.payload;

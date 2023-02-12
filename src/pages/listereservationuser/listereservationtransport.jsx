@@ -7,9 +7,11 @@ import axios from 'axios';
 import Rating from '@mui/material/Rating';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
-import {getuserleReservationTrans} from '../../redux/reservationtransSlice'
+import {getuserleReservationTrans,deleteReservationTrans} from '../../redux/reservationtransSlice'
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ListreservationTransportuser = () => {
   const id = localStorage.getItem('id');
@@ -37,7 +39,7 @@ console.log(getAllDatauser)
     {
       field: 'actions',
       type: 'actions',
-      headerName: 'voir tous les client',
+      headerName: 'Actions',
       width: 130,
       cellClassName: 'actions',
       getActions: ( params ) => 
@@ -48,6 +50,38 @@ console.log(getAllDatauser)
               label="tous les client"
               onClick={() =>{navigate(`/agence/listuserclientreservation/${params.id}`)}}
             />,
+            <GridActionsCellItem
+              icon={<EditIcon />}
+              label="Edit"
+              onClick={() =>{
+                    if(params.row.type==="bus")
+                  {   navigate(`/agence/updatereservationtransportbus/${params.id}`)}
+                else{   navigate(`/agence/updatereservationtransportavion/${params.id}`)}       
+                
+                }}
+            />,
+            <GridActionsCellItem
+              icon={<DeleteIcon />}
+              label="Delete"
+              color="error"
+              onClick={(event)=> {
+                Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                     dispatch(deleteReservationTrans(params.id))
+                  }
+                })
+                
+              }}
+
+            />
           ] 
     },
     { field: "reference", headerName: "Reference", width: 100 },

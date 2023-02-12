@@ -8,7 +8,7 @@ import axios from 'axios';
 import Rating from '@mui/material/Rating';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
-import {getuserleReservationhotel} from '../../redux/reservationhotelSlice'
+import {getuserleReservationhotel,deleteReservationhotel} from '../../redux/reservationhotelSlice'
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
 import {fetchHotels,deleteHotels} from '../../redux/hotelSlice'
@@ -36,21 +36,49 @@ console.log(getAllData)
      
               },[reservationhotel])
   const columns = [
+    
     {
       field: 'actions',
       type: 'actions',
-      headerName: 'voir tous les client',
+      headerName: 'Actions',
       width: 130,
       cellClassName: 'actions',
       getActions: ( params ) => 
 
-      [
-        <GridActionsCellItem
-          icon={<RemoveRedEyeIcon />}
-          label="tous les client"
-          onClick={() =>{navigate(`/agence/listuserclientreservation/${params.id}`)}}
-        />,
-      ] 
+           [
+            <GridActionsCellItem
+              icon={<RemoveRedEyeIcon />}
+              label="tous les client"
+              onClick={() =>{navigate(`/agence/listuserclientreservation/${params.id}`)}}
+            />,
+            <GridActionsCellItem
+              icon={<EditIcon />}
+              label="Edit"
+              onClick={() =>{navigate(`/admin/avionform/${params.id}`)}}
+            />,
+            <GridActionsCellItem
+              icon={<DeleteIcon />}
+              label="Delete"
+              color="error"
+              onClick={(event)=> {
+                Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                     dispatch(deleteReservationhotel(params.id))
+                  }
+                })
+                
+              }}
+
+            />
+          ] 
     },
     { field: "nom_hotel", headerName: "Nom Hotel", width: 100 },
     { field: "nom_agence", headerName: "Nom Agence", width: 100 },

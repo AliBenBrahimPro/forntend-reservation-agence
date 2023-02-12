@@ -28,6 +28,23 @@ export const getuserleReservationevent = createAsyncThunk(
     }
   }
        );
+       export const deleteReservationeVENT = createAsyncThunk(
+        'reservationEvent/deleteReservationEVENT',
+        async (id,thunkAPI) => {
+          const {rejectWithValue} = thunkAPI;
+            try{
+       await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_evenement/deletereservationevenement/${id}`, {
+             method: 'DELETE',
+             headers: {
+             'Content-type': 'application/json; charset=UTF-8',
+             },
+             });
+             return id;
+             } catch (error) {
+             return rejectWithValue(error.message);
+             }
+             }
+             );
   export const reservationEventSlice = createSlice({
     name:'reservationEvent',
     initialState:{
@@ -66,6 +83,21 @@ export const getuserleReservationevent = createAsyncThunk(
 
        },
        [getuserleReservationevent.rejected]:(state,action)=>{
+      
+          state.status ="failed";
+          state.error=action.payload;
+        },
+        [deleteReservationeVENT.fulfilled]:(state,action)=>{
+          state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
+          state.status ="success";
+          state.error =null;
+       },
+       [deleteReservationeVENT.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+       },
+       [deleteReservationeVENT.rejected]:(state,action)=>{
       
           state.status ="failed";
           state.error=action.payload;
