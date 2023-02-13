@@ -19,7 +19,7 @@ function HotelDetails() {
     useEffect(() => {
     dispatch(getSingleHotels(id))
     }, [])
-    
+    console.log("hoteldata",data)
   return (
 <Box>
 { error!==null ?  <Alert severity="error">{error}</Alert>

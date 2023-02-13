@@ -53,12 +53,12 @@ console.log(getAllDatauser)
             <GridActionsCellItem
               icon={<EditIcon />}
               label="Edit"
-              onClick={() =>{
-                    if(params.row.type==="bus")
-                  {   navigate(`/agence/updatereservationtransportbus/${params.id}`)}
-                else{   navigate(`/agence/updatereservationtransportavion/${params.id}`)}       
+              // onClick={() =>{
+              //       if(params.row.type==="bus")
+              //     {   navigate(`/agence/updatereservationtransportbus/${params.id}`)}
+              //   else{   navigate(`/agence/updatereservationtransportavion/${params.id}`)}       
                 
-                }}
+              //   }}
             />,
             <GridActionsCellItem
               icon={<DeleteIcon />}

@@ -195,8 +195,8 @@ function LinkAgence() {
 
                 <Route path="/listuserreservationhotel" element={<ListreservationHoteluser/>}/>
                 <Route path="/listuserreservationtransport" element={<ListreservationTransportuser/>}/>
-                <Route path="/updatereservationtransportbus/:id" element={<UpdateReservationBus/>}/>
-                <Route path="/updatereservationtransportavion/:id" element={<UpdateReservationAvion/>}/>
+                {/* <Route path="/updatereservationtransportbus/:id" element={<UpdateReservationBus/>}/> */}
+                {/* <Route path="/updatereservationtransportavion/:id" element={<UpdateReservationAvion/>}/> */}
                 <Route path="/listuserreservationevenement" element={<ListreservationEventuser/>}/>
                 <Route path="/listuserclientreservation/:id" element={<ClientReserveruser/>}/>
                 

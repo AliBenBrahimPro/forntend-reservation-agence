@@ -12,9 +12,11 @@ import FormLabel from '@mui/material/FormLabel';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSingleHotels } from '../../../redux/hotelSlice';
 import { insertChambre } from '../../../redux/chambreSlice';
+import { insertReservationhotel } from '../../../redux/reservationhotelSlice';
 import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 const Chambre = () => {
+  const iduser = localStorage.getItem('id');
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const {id}= useParams();
@@ -42,20 +44,54 @@ const Chambre = () => {
         values.type=type
         values.nb_place=nbr
         console.log(values);
-        dispatch(insertChambre(values)).then((data)=>{
-          if(data.type==="chambre/insertChambre/fulfilled" ){
-           Swal.fire(
-                     'Success',
-                     `${data.payload.type} a ajouter avec succes`,
-                     'success'
-                   ) 
-          }else{
-               Swal.fire({
-                   icon: 'error',
-                   title: 'Oops...',
-                   text: 'Something went wrong!',
-                 })}
-         })
+        const data={
+          nb_place:nbr,
+          monatnt_total:price,
+          date_debut:values.date_debut,
+          date_fin:values.date_fin,
+          hotelId:values.hotelId,
+          userId:iduser
+        }
+       let x= dispatch(insertReservationhotel(data)).then(secc=>{
+        console.log(secc)
+        if(secc.type==="reservationhotel/insertReservationhotel/fulfilled" ){
+
+          dispatch(insertChambre(values)).then(sec=>{
+            if(sec.type==="chambre/insertChambre/fulfilled" ){
+              Swal.fire(
+              'Success',
+              `${sec.payload.type} a ajouter avec succes`,
+              'success'
+            ) }
+            else{
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                })}
+          })
+         }else{
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!',
+                })}
+      })
+        console.log(x.PromiseState)
+        // .then((data)=>{
+          // if(data.type==="chambre/insertChambre/fulfilled" ){
+          //  Swal.fire(
+          //            'Success',
+          //            `${data.payload.type} a ajouter avec succes`,
+          //            'success'
+          //          ) 
+          // }else{
+          //      Swal.fire({
+          //          icon: 'error',
+          //          title: 'Oops...',
+          //          text: 'Something went wrong!',
+          //        })}
+        //  })
     };
     const initialValues = {
           type: "",
