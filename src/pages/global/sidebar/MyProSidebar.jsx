@@ -146,7 +146,7 @@ const MyProSidebar = () => {
                   alt="profile user"
                   width="100px"
                   height="100px"
-                  src={Profileimage}
+                  src='./admin.png'
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -157,7 +157,7 @@ const MyProSidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Ali Ben Brahim
+                  Admin dzagence
                 </Typography>
               </Box>
             </Box>
