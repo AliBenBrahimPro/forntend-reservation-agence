@@ -51,7 +51,7 @@ console.log(getAllData)
             <GridActionsCellItem
               icon={<EditIcon />}
               label="Edit"
-              onClick={() =>{navigate(`/admin/avionform/${params.id}`)}}
+              onClick={() =>{navigate(`/agence/updatereservationevenement/${params.id}`)}}
             />,
             <GridActionsCellItem
               icon={<DeleteIcon />}

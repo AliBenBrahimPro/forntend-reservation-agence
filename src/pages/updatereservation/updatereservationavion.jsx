@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 import moment from 'moment'
 import { getSingleAvion,editBus } from '../../redux/avionSlice';
 import {  useNavigate, useParams } from 'react-router-dom';
-import { editReservationTrans } from '../../redux/reservationtransSlice';
+import { editReservationTrans,getSingleReservationTrans } from '../../redux/reservationtransSlice';
 
 import axios from 'axios';
 function UpdateReservationAvion() {
@@ -18,31 +18,23 @@ function UpdateReservationAvion() {
     const {id} = useParams();
     const {data} = useSelector(state=>state.avion)
     const {nb_place}= useSelector(state=>state.avion.data)
+    const {getonereservation} = useSelector(state=>state.reservationtrans)
     let navigate = useNavigate();
 
     useEffect(()=>{
-      dispatch(getSingleAvion(id))
+      dispatch(getSingleReservationTrans(id)).then(secc=>{
+        dispatch(getSingleAvion(secc.payload[0].id_transport))})
           },[])  
     const handleFormSubmit = (values) => {
          values.monatnt_total=data.prix_place_simple*values.nb_place
         dispatch(editReservationTrans(values)).then((data)=>{
             if(data.type==="reservationtrans/editReservationTrans/fulfilled" ){
              
-                     Swal.fire({
-                     
-                      title: "Réservation a effecte avec succes",
-                      text: "Tu veux remplir coordonnées des clients?",
-                      icon: 'success',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Ajouter client'
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        navigate(`/agence/clientavion/${data.payload.id}`) 
-                      }
-                    })
-                   
+              Swal.fire(
+                'Success',
+                `réservation a modiffier  avec succes`,
+                'success'
+              ) 
             }else{
                  Swal.fire({
                      icon: 'error',
@@ -62,14 +54,14 @@ function UpdateReservationAvion() {
 
     })
    let initialdata={
-      nb_place:"",
-      monatnt_total:"",
-      type:"avion",
-      prix_place_simple:"",
-      date_debut:data.date_debut,
-      date_fin:data.date_fin,
-      id_transport:id,
-      userId:localStorage.getItem('id'),
+    id:getonereservation[0]?.id,
+    nb_place:getonereservation[0]?.nb_place,
+    monatnt_total:getonereservation[0]?.monatnt_total,
+    type:"avion",
+    date_debut:data?.date_debut,
+    date_fin:data?.date_fin,
+    id_transport:data?.id,
+    userId:localStorage.getItem('id'),
     }
   return (
     <Box m="20px">

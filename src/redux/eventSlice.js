@@ -166,7 +166,7 @@ export const fetchEvent = createAsyncThunk(
           [getSingleEvent.fulfilled]:(state,action)=>{
             state.data = action.payload;
             state.status ="success";
-        state.error =null;
+            state.error =null;
          },
          [getSingleEvent.pending]:(state)=>{
           state.status ="loading";

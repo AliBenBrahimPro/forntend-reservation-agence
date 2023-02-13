@@ -103,7 +103,7 @@ export const fetchReservationTrans = createAsyncThunk(
                   try {
                     const { id, nb_place,type, monatnt_total, date_debut,date_fin,id_transport, userId } = todo;
               
-                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/reservation_trans/updatereservationtransport/${id}`, {
+                    const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/updatereservationtransport/${id}`, {
                         nb_place,
                         monatnt_total,
                         type,
@@ -133,6 +133,7 @@ export const fetchReservationTrans = createAsyncThunk(
         getAllData:[],
         getAllDataclient:[],
         getAllDatauser:[],
+        getonereservation:[],
         status:null,
         error:null,
     },
@@ -221,7 +222,8 @@ export const fetchReservationTrans = createAsyncThunk(
           },
           //single hotel
           [getSingleReservationTrans.fulfilled]:(state,action)=>{
-            state.data = action.payload;
+            state.getonereservation = action.payload;
+            state.getAllDatauser = action.payload;
             state.status ="success";
         state.error =null;
          },

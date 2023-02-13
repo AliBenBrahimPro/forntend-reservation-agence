@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
@@ -7,41 +7,37 @@ import Header from "../../components/Header";
 import { useDispatch ,useSelector} from 'react-redux';
 import Swal from 'sweetalert2'
 import moment from 'moment'
-import { getSingleBus,editBus } from '../../redux/busSlice';
-import { json, useNavigate, useParams } from 'react-router-dom';
-import { editReservationTrans ,getSingleReservationTrans} from '../../redux/reservationtransSlice';
+import { getSingleEvent } from '../../redux/eventSlice';
+import {  useNavigate, useParams } from 'react-router-dom';
+import { editReservationEvent,getSingleReservationEvent } from '../../redux/reservationeventSlice';
 
 import axios from 'axios';
-function UpdateReservationBus() {
+function UpdateReservationevent() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
-    const reservationtransport = useSelector(state=>state.reservationtrans)
     const dispatch =useDispatch();
     const {id} = useParams();
-    const {data} = useSelector(state=>state.bus)
-    const {getonereservation} = useSelector(state=>state.reservationtrans)
-    const {nb_place}= useSelector(state=>state.bus.data)
+    const {data} = useSelector(state=>state.event)
+    const {getonereservationevent} = useSelector(state=>state.reservationEvent)
     let navigate = useNavigate();
-console.log("test",getonereservation,id)
+
     useEffect(()=>{
-      dispatch(getSingleReservationTrans(id)).then(secc=>{
-        dispatch(getSingleBus(secc.payload[0].id_transport))})
-          },[dispatch])  
-          console.log("test",getonereservation,id,data)
+      dispatch(getSingleReservationEvent(id)).then(secc=>{
+        console.log(secc)
+        dispatch(getSingleEvent(secc.payload[0].evenementId))})
+          },[])  
+          console.log(getonereservationevent,data)
     const handleFormSubmit = (values) => {
-         console.log(values);
-         values.monatnt_total=data.prix_place*values.nb_place
-        dispatch(editReservationTrans(values)).then((data)=>{
-          
-            if(data.type==="reservationtrans/editReservationTrans/fulfilled" ){
+         values.monatnt_total=data.prix_evenement*values.nb_place
+
+        dispatch(editReservationEvent(values)).then((data)=>{
+            if(data.type==="reservationEvent/editReservationevent/fulfilled" ){
              
-             Swal.fire(
-                       'Success',
-                       `réservation a modiffier  avec succes`,
-                       'success'
-                     ) 
-                   
+              Swal.fire(
+                'Success',
+                `réservation a modiffier  avec succes`,
+                'success'
+              ) 
             }else{
-              console.log(data)
                  Swal.fire({
                      icon: 'error',
                      title: data.response,
@@ -60,19 +56,17 @@ console.log("test",getonereservation,id)
 
     })
    let initialdata={
-      id:getonereservation[0]?.id,
-      nb_place:getonereservation[0]?.nb_place,
-      monatnt_total:getonereservation[0]?.monatnt_total,
-      type:"bus",
-      date_debut:data?.date_debut,
-      date_fin:data?.date_fin,
-      id_transport:data?.id,
-      userId:localStorage.getItem('id'),
+    id:getonereservationevent[0]?.id,
+    nb_place:getonereservationevent[0]?.nb_place,
+    monatnt_total:getonereservationevent[0]?.monatnt_total,
+    date_debut:data?.date_debut,
+    date_fin:data?.date_fin,
+    evenementId:data?.id,
+    userId:localStorage.getItem('id'),
     }
-    console.log("data",initialdata)
   return (
     <Box m="20px">
-    <Header title="Réservation Bus" subtitle="Réservation des places sur le bus" />
+    <Header title="Reservervation Evenement" subtitle="Reservervation des places sur le Evenement" />
 
     <Formik onSubmit={handleFormSubmit} initialValues={initialdata} enableReinitialize={true} validationSchema={checkoutSchema}>
       {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
@@ -105,7 +99,7 @@ console.log("test",getonereservation,id)
               variant="filled"
               type="text"
               label="Nombre de place disponible"
-              value={nb_place-data.nb_place_reserver}
+              value={data.nb_place-data.nb_place_reserver}
               sx={{ gridColumn: "span 2" }}
             />
             <TextField
@@ -115,7 +109,7 @@ console.log("test",getonereservation,id)
               label="Prix unitaire"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={data.prix_place}
+              value={data.prix_evenement}
               name="prix_place"
              disabled
               sx={{ gridColumn: "span 2" }}
@@ -127,7 +121,7 @@ console.log("test",getonereservation,id)
               label="Monatnt total"
               disabled
               
-              value={data.prix_place*values.nb_place}
+              value={data.prix_evenement*values.nb_place}
               name="monatnt_total"
               error={!!touched.monatnt_total && !!errors.monatnt_total}
               helperText={touched.monatnt_total && errors.monatnt_total}
@@ -165,7 +159,7 @@ console.log("test",getonereservation,id)
           </Box>
           <Box display="flex" justifyContent="end" mt="20px">
             <Button type="submit" color="secondary" variant="contained">
-              Modefier
+              Réserver
             </Button>
           </Box>
         </form>
@@ -175,4 +169,4 @@ console.log("test",getonereservation,id)
   )
 }
 
-export default UpdateReservationBus
+export default UpdateReservationevent

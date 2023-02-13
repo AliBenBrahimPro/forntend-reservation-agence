@@ -45,11 +45,51 @@ export const getuserleReservationevent = createAsyncThunk(
              }
              }
              );
+             export const getSingleReservationEvent = createAsyncThunk(
+              'reservationEvent/getSingleReservationevent',
+              async (id,thunkAPI) => {
+                const {rejectWithValue} = thunkAPI;
+                  try{
+                    const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_evenement/getreservationevenementbyid/${id}`)
+                const data = await res.json()
+                return data}
+                catch(error){
+                  return rejectWithValue(error.message);
+                }
+              }
+                   );
+    
+    
+    
+                   export const editReservationEvent = createAsyncThunk(
+                    'reservationEvent/editReservationevent',
+                    async (todo, { rejectWithValue }) => {
+                      try {
+                        const { id, nb_place,evenementId,userId, monatnt_total, date_debut,date_fin } = todo;
+                        const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/api/reservation_evenement/updatereservationevenement/${id}`, {
+                            nb_place,
+                            monatnt_total,
+                            date_debut,
+                            date_fin,
+                            userId,
+                            evenementId
+                        });
+                        
+                        return response.data;
+                        
+                      } catch (error) {
+                        console.log(error);
+                        return rejectWithValue(error.message);
+                      }
+                    }
+                  );
+                   
   export const reservationEventSlice = createSlice({
     name:'reservationEvent',
     initialState:{
         data:[],
         getAllData:[],
+        getonereservationevent:[],
         status:null,
         error:null,
     },
@@ -101,6 +141,45 @@ export const getuserleReservationevent = createAsyncThunk(
       
           state.status ="failed";
           state.error=action.payload;
+        },
+        [getSingleReservationEvent.fulfilled]:(state,action)=>{
+          state.data = action.payload;
+          state.getonereservationevent = action.payload;
+          state.status ="success";
+      state.error =null;
+       },
+       [getSingleReservationEvent.pending]:(state)=>{
+        state.status ="loading";
+        state.error =null;
+
+       },
+       [getSingleReservationEvent.rejected]:(state,action)=>{
+      
+        state.status ="failed";
+        state.error=action.payload;
+        },
+        //edit hotel
+        
+        [editReservationEvent.fulfilled]: (state, action) => {
+         
+          return {
+            ...state,
+            data: action.payload,
+           
+          };
+        },
+        [editReservationEvent.pending]: (state, action) => {
+          return {
+            ...state,
+            status:"loading"
+          };
+        },
+        [editReservationEvent.rejected]: (state, action) => {
+          return {
+            ...state,
+            status:"rejected",
+            error:action.payload
+          };
         },}
 })
 
