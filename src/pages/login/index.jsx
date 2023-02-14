@@ -67,6 +67,7 @@ export default function Login() {
       localStorage.setItem("nom_agence",data.payload.nom_agence)
       localStorage.setItem("email_agence",data.payload.e_mail)
       localStorage.setItem("tokens",data.payload.tokens)
+      localStorage.setItem("commision_hotel",data.payload.commition_hotel)
       Swal.fire(
         'Success',
         `${data.payload.nom_agence} à connecté avec succes`,

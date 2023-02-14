@@ -24,11 +24,11 @@ const Chambre = () => {
     const dispatch =useDispatch();
     const {id}= useParams();
     let navigate = useNavigate();
-
+    const commision=localStorage.getItem("commision_hotel")
     const [price,setPrice]=useState()
-    const [chambres,setChambre]=useState()
+    const [chambres,setChambre]=useState(2)
     const [nbr,setNbr]=useState(2)
-    const [pensions,setPensions]=useState()
+    const [pensions,setPensions]=useState(1)
     const [type,setType]=useState("Chambre Double")
     const {data} = useSelector(state=>state.hotels)
     const hotels = useSelector(state=>state.hotels)
@@ -37,10 +37,10 @@ const Chambre = () => {
         dispatch(getSingleHotels(id))
             },[])
             useEffect(() => {
-              setPrice(data.prix_demi_pension * parseFloat(nbr))
+              setPrice(((data.prix_demi_pension * parseFloat(nbr))*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
 
             }, [hotels])
-            console.log("data",data.nom_hotel)
+            // console.log("data",data.nom_hotel)
     const handleFormSubmit = (values) => {
       // console.log("nom",data.nom_hotel);
         values.montant=price;
@@ -58,7 +58,7 @@ const Chambre = () => {
        let  nom_agence=localStorage.getItem('nom_agence')
        let e_mail_agence=localStorage.getItem('email_agence')
        let x= dispatch(insertReservationhotel(data2)).then(secc=>{
-        console.log(secc)
+        // console.log(secc)
         if(secc.type==="reservationhotel/insertReservationhotel/fulfilled" ){
 
           dispatch(insertChambre(values)).then(async(sec)=>{
@@ -100,21 +100,6 @@ const Chambre = () => {
                   text: 'Something went wrong!',
                 })}
       })
-        console.log(x.PromiseState)
-        // .then((data)=>{
-          // if(data.type==="chambre/insertChambre/fulfilled" ){
-          //  Swal.fire(
-          //            'Success',
-          //            `${data.payload.type} a ajouter avec succes`,
-          //            'success'
-          //          ) 
-          // }else{
-          //      Swal.fire({
-          //          icon: 'error',
-          //          title: 'Oops...',
-          //          text: 'Something went wrong!',
-          //        })}
-        //  })
     };
     const initialValues = {
           type: "",
@@ -131,7 +116,8 @@ const Chambre = () => {
 
     })
  
-console.log(type)
+console.log("test222",chambres,pensions)
+// console.log(data.prix_all_inclusive)
     return (
         <Box m="20px">
           <Header title="Selecter chambres" subtitle="Selectionner chambres " />
@@ -148,36 +134,198 @@ console.log(type)
                   }}
                 >
                     <FormControl  sx={{ gridColumn: "span 4" }}>
-      <FormLabel>Chambres</FormLabel>
+      <p>Chambres</p>
       <RadioGroup
        sx={{ gridColumn: "span 4" }}
         row
         onChange={e=>{setChambre(e.target.value);
-            const prix=parseFloat( e.target.value)+ parseFloat(pensions??0)  
-            setPrice(prix* parseFloat(nbr))}}
-        defaultValue={data.prix_demi_pension}
+          let prix=0;
+          if(parseInt(pensions)==1)
+          { 
+            if(parseInt(e.target.value)===1)
+             { 
+              prix=parseFloat(data.prix_demi_pension)+parseFloat(data.frais_chambre_single)
+              setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             }else if(parseInt(e.target.value)===2)
+            { console.log("2") 
+              prix=parseFloat(data.prix_demi_pension)
+              setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }else if(parseInt(e.target.value)===3)
+             { console.log("3") 
+              prix=parseFloat(data.prix_demi_pension)*(1-(data.porcentage_chambre_triple/100))
+              setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             }
+             else if(parseInt(e.target.value)===4){
+              console.log("4") 
+              prix=parseFloat(data.prix_demi_pension)*(1-(data.porcentage_chambre_quadruple/100))
+              setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             }
+          }else if(parseInt(pensions)===2)
+          {
+            if(parseInt(e.target.value)===1)
+            {
+             prix=parseFloat(data.prix_pension_complete)+parseFloat(data.frais_chambre_single)
+             setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }else if(parseInt(e.target.value)===2)
+           {
+             prix=parseFloat(data.prix_pension_complete)
+             setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+           }else if(parseInt(e.target.value)===3)
+            {
+             prix=parseFloat(data.prix_pension_complete)*(1-(data.porcentage_chambre_triple/100))
+             setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }
+            else if(parseInt(e.target.value)===4){
+             prix=parseFloat(data.prix_pension_complete)*(1-(data.porcentage_chambre_quadruple/100))
+             setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }
+          }else if(parseInt(pensions)==3)
+          {
+            if(parseInt(e.target.value)===1)
+            {
+             prix=parseFloat(data.prix_all_inclusive_soft)+parseFloat(data.frais_chambre_single)
+             setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }else if(parseInt(e.target.value)===2)
+           {
+             prix=parseFloat(data.prix_all_inclusive_soft)
+             setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+           }else if(parseInt(e.target.value)===3)
+            {
+             prix=parseFloat(data.prix_all_inclusive_soft)*(1-(data.porcentage_chambre_triple/100))
+             setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }
+            else if(parseInt(e.target.value)===4){
+             prix=parseFloat(data.prix_all_inclusive_soft)*(1-(data.porcentage_chambre_quadruple/100))
+             setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }
+          }else if(parseInt(pensions)===4)
+          {
+            if(parseInt(e.target.value)===1)
+            {
+             prix=parseFloat(data.prix_all_inclusive)+parseFloat(data.frais_chambre_single)
+             setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }else if(parseInt(e.target.value)===2)
+           {
+             prix=parseFloat(data.prix_all_inclusive)
+             setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+           }else if(parseInt(e.target.value)===3)
+            {
+             prix=parseFloat(data.prix_all_inclusive)*(1-(data.porcentage_chambre_triple/100))
+             setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }
+            else if(parseInt(e.target.value)===4){
+             prix=parseFloat(data.prix_all_inclusive)*(1-(data.porcentage_chambre_quadruple/100))
+             setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+            }
+          }
+            // setPrice(prix* parseFloat(nbr))
+          }}
+        defaultValue={2}
       >
-        <FormControlLabel onClick={e=>{setType("Chambre Double"); setNbr(2)}} value={data.prix_demi_pension} control={<Radio  color='default' />} label="Chambre Double" />
-        <FormControlLabel onClick={e=>{setType("Chambre Single");setNbr(1)}}value={data.prix_demi_pension*(1+(data.frais_chambre_single/100))} control={<Radio color='default'/>} label="Chambre Single" />
-        <FormControlLabel onClick={e=>{setType("Chambre Triple");setNbr(3)}} value={data.prix_demi_pension*(1-(data.porcentage_chambre_triple/100))} control={<Radio color='default'/>} label="Chambre Triple" />
-        <FormControlLabel onClick={e=>{setType("Chambre Quadruple");setNbr(4)}} value={data.prix_demi_pension*(1-(data.porcentage_chambre_quadruple/100))} control={<Radio color='default'/>} label="Chambre Quadruple" />
+        <FormControlLabel onClick={e=>{setType("Chambre Double"); setNbr(2)}} value={2} control={<Radio  color='default' />} label="Chambre Double" />
+        <FormControlLabel onClick={e=>{setType("Chambre Single");setNbr(1)}}value={1} control={<Radio color='default'/>} label="Chambre Single" />
+        <FormControlLabel onClick={e=>{setType("Chambre Triple");setNbr(3)}} value={3} control={<Radio color='default'/>} label="Chambre Triple" />
+        <FormControlLabel onClick={e=>{setType("Chambre Quadruple");setNbr(4)}} value={4} control={<Radio color='default'/>} label="Chambre Quadruple" />
       </RadioGroup>
     </FormControl>
     <FormControl  sx={{ gridColumn: "span 4" }}>
-      <FormLabel  >Pensions</FormLabel>
+      <p>Pensions</p>
       <RadioGroup
        sx={{ gridColumn: "span 4" }}
         row
         name="prix_pension"
         onChange={e=>{setPensions(e.target.value);
-            const prix=parseFloat( e.target.value)+ parseFloat(chambres??data.prix_demi_pension) 
-            setPrice(prix* parseFloat(nbr))}}
-        defaultValue={0}
+          let prix=0;
+            if(parseInt(e.target.value)==1)
+            {  console.log("1") 
+              if(parseInt(chambres)===1)
+               {
+                prix=parseFloat(data.prix_demi_pension)+parseFloat(data.frais_chambre_single)
+                setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               }else if(parseInt(chambres)===2)
+              {   console.log("22") 
+                prix=parseFloat(data.prix_demi_pension)
+                setPrice(((prix*2)(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }else if(parseInt(chambres)===3)
+               {
+                prix=parseFloat(data.prix_demi_pension)*(1-(data.porcentage_chambre_triple/100))
+                setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               }
+               else if(parseInt(chambres)===4){
+                prix=parseFloat(data.prix_demi_pension)*(1-(data.porcentage_chambre_quadruple/100))
+                setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               }
+            }else if(parseInt(e.target.value)===2)
+            {console.log("2",chambres) 
+              if(parseInt(chambres)===1)
+              {
+               prix=parseFloat(data.prix_pension_complete)+parseFloat(data.frais_chambre_single)
+               setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }else if(parseInt(chambres)===2)
+             {  console.log("22") 
+               prix=parseFloat(data.prix_pension_complete)
+              //  console.log(prix)
+               setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             }else if(parseInt(chambres)===3)
+              {
+               prix=parseFloat(data.prix_pension_complete)*(1-(data.porcentage_chambre_triple/100))
+               setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }
+              else if(parseInt(chambres)===4){
+
+               prix=parseFloat(data.prix_pension_complete)*(1-(data.porcentage_chambre_quadruple/100))
+               setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }
+            }else if(parseInt(e.target.value)===3)
+            {console.log("3") 
+              if(parseInt(chambres)===1)
+              {
+               prix=parseFloat(data.prix_all_inclusive_soft)+parseFloat(data.frais_chambre_single)
+               setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }else if(parseInt(chambres)===2)
+             { console.log("22") 
+               prix=parseFloat(data.prix_all_inclusive_soft)
+               setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             }else if(parseInt(chambres)===3)
+              {
+               prix=parseFloat(data.prix_all_inclusive_soft)*(1-(data.porcentage_chambre_triple/100))
+               setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }
+              else if(parseInt(chambres)===4){
+               prix=parseFloat(data.prix_all_inclusive_soft)*(1-(data.porcentage_chambre_quadruple/100))
+               setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }
+            }else if(parseInt(e.target.value)===4)
+            {  console.log("4") 
+            
+              if(parseInt(chambres)===1)
+              {
+               prix=parseFloat(data.prix_all_inclusive)+parseFloat(data.frais_chambre_single)
+               setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }else if(parseInt(chambres)===2)
+             { console.log("22") 
+               prix=parseFloat(data.prix_all_inclusive)
+               setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             }else if(parseInt(chambres)===3)
+              {
+               prix=parseFloat(data.prix_all_inclusive)*(1-(data.porcentage_chambre_triple/100))
+               setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }
+              else if(parseInt(chambres)===4){
+           
+               prix=parseFloat(data.prix_all_inclusive)*(1-(data.porcentage_chambre_quadruple/100))
+               setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              }
+            }
+            // const prix=parseFloat( e.target.value)+ parseFloat(chambres??data.prix_demi_pension) 
+            // setPrice(prix* parseFloat(nbr))
+          }}
+        defaultValue={1}
       >
-         <FormControlLabel  value={0} control={<Radio  color='default' />} label="Demi Pension " />
-        <FormControlLabel value={data.prix_pension_complete} control={<Radio  color='default'/>} label="Pension Complète" />
-        <FormControlLabel value={data.prix_all_inclusive_soft} control={<Radio color='default'/>} label="All Inclusive Soft" />
-        <FormControlLabel value={data.prix_all_inclusive} control={<Radio color='default'/>} label="All Inclusive" />
+         <FormControlLabel  value={1} control={<Radio  color='default' />} label="Demi Pension " />
+        <FormControlLabel value={2} control={<Radio  color='default'/>} label="Pension Complète" />
+        <FormControlLabel value={3} control={<Radio color='default'/>} label="All Inclusive Soft" />
+        <FormControlLabel value={4} control={<Radio color='default'/>} label="All Inclusive" />
       </RadioGroup>
     </FormControl>
                 
