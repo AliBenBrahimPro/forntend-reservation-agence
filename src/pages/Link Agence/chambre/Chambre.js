@@ -15,6 +15,9 @@ import { insertChambre } from '../../../redux/chambreSlice';
 import { insertReservationhotel } from '../../../redux/reservationhotelSlice';
 import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import moment from 'moment/moment';
+
 const Chambre = () => {
   const iduser = localStorage.getItem('id');
     const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -37,14 +40,14 @@ const Chambre = () => {
               setPrice(data.prix_demi_pension * parseFloat(nbr))
 
             }, [hotels])
-            
+            console.log("data",data.nom_hotel)
     const handleFormSubmit = (values) => {
-        
+      // console.log("nom",data.nom_hotel);
         values.montant=price;
         values.type=type
         values.nb_place=nbr
-        console.log(values);
-        const data={
+     
+        const data2={
           nb_place:nbr,
           monatnt_total:price,
           date_debut:values.date_debut,
@@ -52,12 +55,31 @@ const Chambre = () => {
           hotelId:values.hotelId,
           userId:iduser
         }
-       let x= dispatch(insertReservationhotel(data)).then(secc=>{
+       let  nom_agence=localStorage.getItem('nom_agence')
+       let e_mail_agence=localStorage.getItem('email_agence')
+       let x= dispatch(insertReservationhotel(data2)).then(secc=>{
         console.log(secc)
         if(secc.type==="reservationhotel/insertReservationhotel/fulfilled" ){
 
-          dispatch(insertChambre(values)).then(sec=>{
+          dispatch(insertChambre(values)).then(async(sec)=>{
+            const email={
+              email:e_mail_agence,
+              nom_agence:nom_agence,
+              nb_chambre:1,
+              nb_client:nbr,
+              date_debut:moment(values.date_debut).format('DD/MM/YYYY'),
+              date_fin:moment(values.date_fin).format('DD/MM/YYYY'),
+          }
+          const email_agence={
+            email:e_mail_agence,
+            nom_agence:nom_agence,
+             nom_hotel:data.nom_hotel,
+             date_debut:moment(values.date_debut).format('DD/MM/YYYY'),
+             date_fin:moment(values.date_fin).format('DD/MM/YYYY'),
+        }
             if(sec.type==="chambre/insertChambre/fulfilled" ){
+              await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmail`,email)
+             await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmailagence`,email_agence)
               Swal.fire(
               'Success',
               `${sec.payload.type} a ajouter avec succes`,
