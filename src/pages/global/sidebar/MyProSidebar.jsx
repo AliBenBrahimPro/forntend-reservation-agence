@@ -86,7 +86,7 @@ const MyProSidebar = () => {
         breakPoint="md"
         rtl={sidebarRTL}
         backgroundColor={colors.primary[400]}
-        image={sidebarImage}
+        image='./user.png'
 
       >
         <Menu iconshape="square">

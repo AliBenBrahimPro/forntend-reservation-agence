@@ -79,7 +79,7 @@ const MySideBarAgence = () => {
         breakPoint="md"
         rtl={sidebarRTL}
         backgroundColor={colors.primary[400]}
-        image={sidebarImage}
+        image='./admin.png'
       >
         <Menu iconshape="square">
           <MenuItem
