@@ -15,6 +15,7 @@ import {  ThemeProvider } from '@mui/material/styles';
 import { useTheme } from '@mui/material';
 import { useNavigate } from "react-router-dom/dist";
 import { login } from '../../redux/userSlice';
+import { loginadmin } from '../../redux/adminSlice';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { Visibility,VisibilityOff} from '@mui/icons-material'
@@ -41,6 +42,23 @@ export default function Login() {
     const navigate =useNavigate();
     const dispatch =useDispatch();
   const handleSubmit = (event) => {
+    if(event.e_mail ==="dzagence.responsable@gmail.com"){
+        dispatch(loginadmin(event)).then((data)=>{
+          if(data.type==="admin/loginuadmin/fulfilled" ){
+            Swal.fire(
+              'Success',
+              `Admin dzagence à connecté avec succes`,
+              'success'
+            ) 
+            navigate("/admin/dashboard")
+         
+           }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                  })}})
+    }else{
     dispatch(login(event)).then((data)=>{
     if(data.type==="user/loginuser/fulfilled" ){
       localStorage.setItem("id",data.payload.id)
@@ -53,12 +71,13 @@ export default function Login() {
         'success'
       ) 
       navigate("/agence/dashboard")
+   
      }else{
           Swal.fire({
               icon: 'error',
               title: 'Oops...',
               text: 'Something went wrong!',
-            })}})
+            })}}) }
     }
    
   const data={

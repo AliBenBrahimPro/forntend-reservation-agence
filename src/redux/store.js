@@ -1,4 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit'
+import adminSlice from './adminSlice'
 import avionSlice from './avionSlice'
 import busSlice from './busSlice'
 import chambreSlice from './chambreSlice'
@@ -24,7 +25,8 @@ export const store = configureStore({
         rct:rctSlice,
         reservationhotel:reservationhotelSlice,
         reservationEvent:reservationEventSlice,
-        chambre:chambreSlice
+        chambre:chambreSlice,
+        admin:adminSlice
 
 
     },

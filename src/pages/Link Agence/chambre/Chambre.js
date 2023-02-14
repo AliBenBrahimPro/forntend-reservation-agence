@@ -69,6 +69,7 @@ const Chambre = () => {
               nb_client:nbr,
               date_debut:moment(values.date_debut).format('DD/MM/YYYY'),
               date_fin:moment(values.date_fin).format('DD/MM/YYYY'),
+              type:type
           }
           const email_agence={
             email:e_mail_agence,

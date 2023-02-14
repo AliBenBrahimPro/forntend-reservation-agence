@@ -37,10 +37,10 @@ function HotelDetails() {
         <div className='main-slide'>
             
     <Carousel  >
-    { data.image_hotel.map(e=><div>
+    {/* { data.image_hotel.map(e=><div>
         <img height={350} width={200} src={`${process.env.REACT_APP_BASE_URL}/${e}`} />
     </div>) 
-    }
+    } */}
     
 </Carousel>
 </div>
