@@ -113,6 +113,7 @@ function EditEvent() {
               error={!!touched.nb_place_reserver && !!errors.nb_place_reserver}
               helperText={touched.nb_place_reserver && errors.nb_place_reserver}
               sx={{ gridColumn: "span 4" }}
+              disabled
             />
             <TextField
               fullWidth

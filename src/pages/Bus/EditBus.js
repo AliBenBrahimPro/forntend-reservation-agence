@@ -143,6 +143,7 @@ function EditBus() {
               sx={{ gridColumn: "span 2" }}
             />
             <TextField
+            disabled
                     fullWidth
                     variant="filled"
                     type="number"

@@ -152,19 +152,6 @@ function BusForm() {
                     fullWidth
                     variant="filled"
                     type="number"
-                    label="Nombre de place reserver"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.nb_place_reserver}
-                    name="nb_place_reserver"
-                    error={!!touched.nb_place_reserver && !!errors.nb_place_reserver}
-                    helperText={touched.nb_place_reserver && errors.nb_place_reserver}
-                    sx={{ gridColumn: "span 4" }}
-                  />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="number"
                     label="Prix de place"
                     onBlur={handleBlur}
                     onChange={handleChange}

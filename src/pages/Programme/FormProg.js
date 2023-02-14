@@ -60,10 +60,10 @@ function ProgrammeForm() {
     };
     const checkoutSchema = yup.object().shape({
         nom_programme:yup.string().required("Required"),
-        hotelId:yup.number().required("Required"),
-        busId:yup.number().required("Required"),
-        avionId:yup.number().required("Required"),
-        evenementId:yup.number().required("Required"),
+        hotelId:yup.number(),
+        busId:yup.number(),
+        avionId:yup.number(),
+        evenementId:yup.number(),
         date_debut:yup.date().required("Required"),
         date_fin:yup.date().required("Required"),
 
@@ -71,18 +71,19 @@ function ProgrammeForm() {
     return (
         <Box m="20px">
           <Header title="Creer nouveau BUS" subtitle="Ajouter nouveau BUS" />
-          { hotels.error!==null ?  <Alert severity="error">{hotels.error}</Alert>
+          {/* { hotels.error!==null ?  <Alert severity="error">{hotels.error}</Alert>
     : 
     
     hotels.status ==="loading"||bus.status ==="loading"||event.status ==="loading" ||avion.status ==="loading" ? <Box style={{position: 'relative'}}>
     <CircularProgress size={40}
      left={-20}
      top={10}
-     style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :avion.getAllData.length===0  ?<Alert severity="error">il n'est pas des avion</Alert>:
-    bus.getAllData.length===0  ?<Alert severity="error">il n'est pas des bus</Alert>:
-    hotels.getAllData.length===0  ?<Alert severity="error">il n'est pas des hotels</Alert>:
-    event.getAllData.length===0  ?<Alert severity="error">il n'est pas des évenements</Alert>:
+     style={{marginLeft: '50%'}} color="secondary" />
+     </Box> */}
+    {/* // :avion.getAllData.length===0  ?<Alert severity="error">il n'est pas des avion</Alert>:
+    // bus.getAllData.length===0  ?<Alert severity="error">il n'est pas des bus</Alert>:
+    // hotels.getAllData.length===0  ?<Alert severity="error">il n'est pas des hotels</Alert>:
+    // event.getAllData.length===0  ?<Alert severity="error">il n'est pas des évenements</Alert>: */}
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,setFieldValue}) => (
               <form onSubmit={handleSubmit}>
@@ -214,7 +215,8 @@ function ProgrammeForm() {
                 </Box>
               </form>
             )}
-          </Formik>}
+          </Formik>
+          {/* } */}
         </Box>
       );
 }

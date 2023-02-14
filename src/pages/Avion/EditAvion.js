@@ -20,7 +20,7 @@ function EditAvion() {
     dispatch(getSingleAvion(id))
         },[])  
   const handleFormSubmit = (values) => {
-      console.log(values);
+      console.log("aa",values);
       dispatch(editAvion(values)).then((data)=>{
         console.log("data",data)
         if(data.type==="avion/editAvion/fulfilled" ){
@@ -47,7 +47,7 @@ function EditAvion() {
     prix_place_simple:yup.number().required("Required"),
     date_debut:yup.date().required("Required"),
     date_fin:yup.date().required("Required"),
-    prix_place_speciale:yup.number().required("Required"),
+    // prix_place_speciale:yup.number().required("Required"),
 
 })
   return (
@@ -131,19 +131,6 @@ function EditAvion() {
                     helperText={touched.prix_place_simple && errors.prix_place_simple}
                     sx={{ gridColumn: "span 2" }}
                   />
-                   <TextField
-                    fullWidth
-                    variant="filled"
-                    type="number"
-                    label="Prix de place speciale"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.prix_place_speciale}
-                    name="prix_place_speciale"
-                    error={!!touched.prix_place_speciale && !!errors.prix_place_speciale}
-                    helperText={touched.prix_place_speciale && errors.prix_place_speciale}
-                    sx={{ gridColumn: "span 2" }}
-                  />
                   <TextField
                     fullWidth
                     variant="filled"
@@ -158,6 +145,7 @@ function EditAvion() {
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
+                  disabled
                     fullWidth
                     variant="filled"
                     type="number"

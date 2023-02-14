@@ -83,11 +83,6 @@ onClick={() =>{navigate(`/admin/eventform/${params.id}`)}}
       headerName: "Nombre de place",
       width: 250,
     },
-    {
-      field: "nb_place_reserver",
-      headerName: "Nombre de place reserver",
-      width: 250,
-    },
     { field: "prix_evenement", headerName: "Prix d'évenement", width: 100 },
     { field: "date_debut", headerName: "date debut", width: 100 },
     { field: "date_fin", headerName: "Date fin", width: 100 },

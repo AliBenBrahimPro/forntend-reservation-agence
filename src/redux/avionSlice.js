@@ -126,9 +126,9 @@ export const fetchAvion = createAsyncThunk(
          },
          // insert books
          [insertAvion.fulfilled]:(state,action)=>{
-            state.data.push(action.payload);
+           state.data.push(action.payload);
             state.status ="success";
-        state.error =null;
+            state.error =null;
          },
          [insertAvion.pending]:(state)=>{
             state.status ="loading";

@@ -13,10 +13,13 @@ function FormAvion() {
     const dispatch =useDispatch();
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
     const handleFormSubmit = (values) => {
-        console.log(values);
+        console.log("teste2",values);
        
         dispatch(insertAvion(values)).then((data)=>{
+          console.log("test",data);
           if(data.type==="avion/insertAvion/fulfilled" ){
+
+            console.log("test",values);
            Swal.fire(
                      'Success',
                      `${data.payload.nom_avion} a ajouter avec succes`,
@@ -36,11 +39,10 @@ function FormAvion() {
       reference: Math.floor(Math.random() * (999999 - 1 + 1)) + 1,
       point_arrive:"",
       point_depart:"",
-      
       nb_place: "",
       date_debut: "",
       date_fin: "",
-      prix_place_speciale:'',
+      prix_place_speciale:0,
       nb_place_reserver:0,
       
      
@@ -130,26 +132,13 @@ function FormAvion() {
                     fullWidth
                     variant="filled"
                     type="text"
-                    label="Prix place simple"
+                    label="Prix place"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.prix_place_simple}
                     name="prix_place_simple"
                     error={!!touched.prix_place_simple && !!errors.prix_place_simple}
                     helperText={touched.prix_place_simple && errors.prix_place_simple}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                   <TextField
-                    fullWidth
-                    variant="filled"
-                    type="number"
-                    label="Prix de place speciale"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.prix_place_speciale}
-                    name="prix_place_speciale"
-                    error={!!touched.prix_place_speciale && !!errors.prix_place_speciale}
-                    helperText={touched.prix_place_speciale && errors.prix_place_speciale}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -165,20 +154,6 @@ function FormAvion() {
                     helperText={touched.nb_place && errors.nb_place}
                     sx={{ gridColumn: "span 2" }}
                   />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="number"
-                    label="Nombre de place reserver"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.nb_place_reserver}
-                    name="nb_place_reserver"
-                    error={!!touched.nb_place_reserver && !!errors.nb_place_reserver}
-                    helperText={touched.nb_place_reserver && errors.nb_place_reserver}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                 
                   <TextField
                     fullWidth
                     variant="filled"

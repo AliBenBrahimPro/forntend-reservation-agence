@@ -85,13 +85,7 @@ function ListAvion() {
         headerName: "Nombre de place",
         width: 100,
       },
-      {
-        field: "nb_place_reserver",
-        headerName: "Nombre de place reserver",
-        width: 100,
-      },
-      { field: "prix_place_simple", headerName: "Prix de place simple", width: 100 },
-      { field: "prix_place_speciale", headerName: "Prix de place special", width: 100 },
+      { field: "prix_place_simple", headerName: "Prix de place", width: 100 },
       { field: "date_debut", headerName: "date debut", width: 100 },
       { field: "date_fin", headerName: "Date fin", width: 100 },
     ];
