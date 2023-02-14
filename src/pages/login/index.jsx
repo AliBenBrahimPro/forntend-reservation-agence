@@ -44,6 +44,7 @@ export default function Login() {
   const handleSubmit = (event) => {
     if(event.e_mail ==="dzagence.responsable@gmail.com"){
         dispatch(loginadmin(event)).then((data)=>{
+          localStorage.setItem("tokens",data.payload.tokens)
           if(data.type==="admin/loginuadmin/fulfilled" ){
             Swal.fire(
               'Success',
@@ -65,6 +66,7 @@ export default function Login() {
       localStorage.setItem("code_agence",data.payload.code_agence)
       localStorage.setItem("nom_agence",data.payload.nom_agence)
       localStorage.setItem("email_agence",data.payload.e_mail)
+      localStorage.setItem("tokens",data.payload.tokens)
       Swal.fire(
         'Success',
         `${data.payload.nom_agence} à connecté avec succes`,
