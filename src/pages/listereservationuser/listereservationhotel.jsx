@@ -1,11 +1,11 @@
 import React, {  useState,useEffect } from "react";
-import { Box,Alert, CircularProgress, useTheme } from "@mui/material";
+import { Box,Alert, CircularProgress, useTheme, Typography, Button } from "@mui/material";
 import { DataGrid, GridToolbar ,GridActionsCellItem} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import Rating from '@mui/material/Rating';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
 import {getuserleReservationhotel,deleteReservationhotel} from '../../redux/reservationhotelSlice'
@@ -98,7 +98,21 @@ console.log(getAllData)
       headerName: "Solde",
       width: 150,
       },
+
     { field: "credit", headerName: "Credit", width: 150 },
+    {
+      field: "userId",
+      headerName: "Affecter client",
+      width: 150,
+      renderCell: ({ row: { id } }) => {
+        return (
+          <Button  onClick={e=>navigate('')} sx={{backgroundColor:colors.greenAccent[600]}} variant="variant" startIcon={<AccountCircleIcon />}>
+  Affecter
+</Button>
+          
+        );
+      },
+    },
     { field: "date_debut", headerName: "Date debut", width: 150 },
     { field: "date_fin", headerName: "Date fin", width: 150 },
   ];

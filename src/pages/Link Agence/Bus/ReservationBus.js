@@ -12,6 +12,7 @@ import { json, useNavigate, useParams } from 'react-router-dom';
 import { insertReservationTrans } from '../../../redux/reservationtransSlice';
 
 import axios from 'axios';
+import { getSingleUser } from '../../../redux/userSlice';
 function ReservationBus() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
@@ -31,11 +32,8 @@ function ReservationBus() {
           
             if(data.type==="reservationtrans/insertReservationTrans/fulfilled" ){
              
-             Swal.fire(
-                       'Success',
-                       `réservation a affecter avec succes`,
-                       'success'
-                     ) 
+              dispatch(getSingleUser(localStorage.getItem('id')))
+
                      Swal.fire({
                      
                       title: ' Réservation a affecter avec succes',

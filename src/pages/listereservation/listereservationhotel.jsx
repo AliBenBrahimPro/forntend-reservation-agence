@@ -1,11 +1,11 @@
 import React, {  useState,useEffect } from "react";
-import { Box,Alert, CircularProgress, useTheme } from "@mui/material";
+import { Box,Alert, CircularProgress, useTheme, Typography } from "@mui/material";
 import { DataGrid, GridToolbar ,GridActionsCellItem} from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import Rating from '@mui/material/Rating';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
 import {fetchreservationhotel} from '../../redux/reservationhotelSlice'
@@ -70,6 +70,29 @@ console.log(getAllData)
       width: 150,
       },
     { field: "credit", headerName: "Credit", width: 150 },
+    {
+      field: "userId",
+      headerName: "Affecter client",
+      width: 100,
+      renderCell: ({ row: { id } }) => {
+        return (
+          <Box
+            width="100%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={colors.greenAccent[800]}
+            borderRadius="4px"
+          >
+            <AccountCircleIcon/>
+            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+              Affecter
+            </Typography>
+          </Box>
+        );
+      },
+    },
     { field: "date_debut", headerName: "Date debut", width: 150 },
     { field: "date_fin", headerName: "Date fin", width: 150 },
   ];

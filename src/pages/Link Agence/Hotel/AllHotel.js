@@ -48,7 +48,7 @@ function AllHotel() {
                 getAllData.map(e=>
                 {console.log(`${process.env.REACT_APP_BASE_URL}/${e.image_hotel[0]}`)
                 return (<Grid  item xs={12} sm={4} md={4}>
-                    <MediaCard stars={e.nb_etoile} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={`${process.env.REACT_APP_BASE_URL}/${e.image_hotel[0]}`} title={`${e.nom_hotel}`} subtile={`  ${e.capacite}`} onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
+                    <MediaCard stars={e.nb_etoile} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={`${process.env.REACT_APP_BASE_URL}/${e.image_hotel[0]}`} title={`${e.nom_hotel}`} subtile={`  ${e.capacite-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
                     </Grid>)})
             }
             

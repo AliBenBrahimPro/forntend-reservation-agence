@@ -19,7 +19,9 @@ export default function MediaCard({title,subtile,sub2,sub3,description,btn,onebt
     <Card  sx={{ backgroundColor:cardcolor }}>
       <CardMedia
         sx={{ height: 200 }}
+        component="img"
         image={image}
+        
         
         
         

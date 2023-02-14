@@ -67,6 +67,7 @@ import ClientReserveruser from "./pages/listereservationuser/clientreserver";
 import UpdateReservationBus from "./pages/updatereservation/updatereservationtrans";
 import UpdateReservationAvion from "./pages/updatereservation/updatereservationavion";
 import UpdateReservationevent from "./pages/updatereservation/updatereservationevent";
+import ReservationCH from "./pages/Link Agence/chambre/reservationClient";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -143,6 +144,7 @@ function LinkAgence() {
              <Route path="/dashboard" element={<HomeAgence/>} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/clientavion/:id" element={<ClientAvion />} />
+                <Route path="/reservationCH/:id" element={<ReservationCH />} />
                 <Route path="/clientbus/:id" element={<ClientBus />} />
                 <Route path="/clientevent/:id" element={<ClientEvent />} />
                 <Route path="/hoteldetails/:id" element={<HotelDetails />} />
