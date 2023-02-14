@@ -51,7 +51,7 @@ export default function Login() {
               `Admin dzagence à connecté avec succes`,
               'success'
             ) 
-            navigate("/admin/dashboard")
+            navigate("/admin")
          
            }else{
                 Swal.fire({
@@ -73,7 +73,7 @@ export default function Login() {
         `${data.payload.nom_agence} à connecté avec succes`,
         'success'
       ) 
-      navigate("/agence/dashboard")
+      navigate("/agence")
    
      }else{
           Swal.fire({

@@ -27,12 +27,14 @@ const Chambre = () => {
     const commision=localStorage.getItem("commision_hotel")
     const [price,setPrice]=useState()
     const [chambres,setChambre]=useState(2)
+    const [enfant,setEnfant]=useState(0)
     const [nbr,setNbr]=useState(2)
     const [pensions,setPensions]=useState(1)
     const [type,setType]=useState("Chambre Double")
     const {data} = useSelector(state=>state.hotels)
     const hotels = useSelector(state=>state.hotels)
     const chambre = useSelector(state=>state.chambre)
+    console.log(data)
     useEffect(()=>{
         dispatch(getSingleHotels(id))
             },[])
@@ -69,7 +71,8 @@ const Chambre = () => {
               nb_client:nbr,
               date_debut:moment(values.date_debut).format('DD/MM/YYYY'),
               date_fin:moment(values.date_fin).format('DD/MM/YYYY'),
-              type:type
+              type:type,
+              enfant_gratuit:enfant
           }
           const email_agence={
             email:e_mail_agence,
@@ -79,13 +82,14 @@ const Chambre = () => {
              date_fin:moment(values.date_fin).format('DD/MM/YYYY'),
         }
             if(sec.type==="chambre/insertChambre/fulfilled" ){
-              await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmail`,email)
-             await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmailagence`,email_agence)
+             
               Swal.fire(
               'Success',
               `${sec.payload.type} a ajouter avec succes`,
               'success'
-            ) }
+            ) 
+            await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmail`,email)
+            await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmailagence`,email_agence)}
             else{
               Swal.fire({
                   icon: 'error',
@@ -327,6 +331,18 @@ console.log("test222",chambres,pensions)
         <FormControlLabel value={3} control={<Radio color='default'/>} label="All Inclusive Soft" />
         <FormControlLabel value={4} control={<Radio color='default'/>} label="All Inclusive" />
       </RadioGroup>
+     { parseInt(data.enfant_gratuit )=== 1 ?
+     <>
+     <p>Enfant gratuit -2ans</p>
+     <RadioGroup
+       sx={{ gridColumn: "span 4" }}
+       row
+       name="prix_pension"
+       onChange={e=>setEnfant(e.target.value)}
+        defaultValue={0}>
+        <FormControlLabel value={1} control={<Radio  color='default' />} label="Avec un bébé -2ans "  />
+        <FormControlLabel value={0} control={<Radio  color='default' />} label="n'est pas un bébé -2ans "  />
+      </RadioGroup></>:null}
     </FormControl>
                 
                   <TextField
