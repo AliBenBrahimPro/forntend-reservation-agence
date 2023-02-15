@@ -89,7 +89,11 @@ const Chambre = () => {
               'success'
             ) 
             await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmail`,email)
-            await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmailagence`,email_agence)}
+            await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmailagence`,email_agence)
+            navigate(`/agence/reservationCH/${sec.payload.id}`)
+          }
+           
+
             else{
               Swal.fire({
                   icon: 'error',

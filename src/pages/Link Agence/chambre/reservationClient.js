@@ -10,13 +10,13 @@ import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { insertRCH } from '../../../redux/rchSlice';
 
 const ReservationCH = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
-
+    const navigate = useNavigate()
     const {id} = useParams();
     const chambre = useSelector(state=>state.chambre)
     const client = useSelector(state=>state.client)
@@ -50,7 +50,6 @@ console.log("id : ",data)
                                     `le client a ajouter avec succes`,
                                     'success'
                                   ) 
-
                             }
                             else{
                                 console.log(datarch)
