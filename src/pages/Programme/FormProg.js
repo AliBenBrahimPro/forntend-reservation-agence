@@ -13,6 +13,7 @@ import { fetchEvent } from '../../redux/eventSlice';
 import { fetchBus } from '../../redux/busSlice';
 
 function ProgrammeForm() {
+  const tokens=localStorage.getItem('tokens')
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const hotels = useSelector(state=>state.hotels)
@@ -21,7 +22,7 @@ function ProgrammeForm() {
     const bus = useSelector(state=>state.bus)
     useEffect(()=>{
         dispatch(fetchHotels())
-        dispatch(fetchAvion())
+        dispatch(fetchAvion(tokens))
         dispatch(fetchEvent())
         dispatch(fetchBus())
        
@@ -33,7 +34,7 @@ function ProgrammeForm() {
 
     const handleFormSubmit = (values) => {
         console.log(values);
-       
+      //  values.evenementId ?null : values.evenementId=null
         dispatch(insertProgramme(values)).then((data)=>{
           if(data.type==="programme/insertProgramme/fulfilled" ){
            Swal.fire(
@@ -54,7 +55,7 @@ function ProgrammeForm() {
         hotelId: "",
         busId:"",
         avionId:"",
-        evenementId: "",
+        evenementId:null,
         date_debut: "",
         date_fin: "",
     };

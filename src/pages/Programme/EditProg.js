@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom';
 import moment from 'moment';
 
 function EditProgramme() {
+  const tokens=localStorage.getItem('tokens')
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const hotels = useSelector(state=>state.hotels)
@@ -30,7 +31,7 @@ function EditProgramme() {
     useEffect(()=>{
         dispatch( getSingleProgramme(id))
         dispatch(fetchHotels())
-        dispatch(fetchAvion())
+        dispatch(fetchAvion(tokens))
         dispatch(fetchEvent())
         dispatch(fetchBus())
        

@@ -24,6 +24,7 @@ import busimg from "../../assets/bus.jpg";
 import avionimg from "../../assets/avion.jpg";
 
 const HomeAgence = () => {
+  const tokenss=localStorage.getItem('tokens')
   const theme = useTheme();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isNonTablet = useMediaQuery("(min-width:992px)");
@@ -39,7 +40,7 @@ const dispatch = useDispatch();
 
 useEffect(()=>{
   dispatch(fetchBus())
-  dispatch(fetchAvion())
+  dispatch(fetchAvion(tokenss))
   dispatch(fetchHotels())
   dispatch(fetchEvent())
      },[dispatch])
