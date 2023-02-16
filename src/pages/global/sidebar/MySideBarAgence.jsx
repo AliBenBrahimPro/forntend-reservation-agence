@@ -19,6 +19,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SwitchRightOutlinedIcon from "@mui/icons-material/SwitchRightOutlined";
 import SwitchLeftOutlinedIcon from "@mui/icons-material/SwitchLeftOutlined";
+import user from "../../../assets/user.png";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -79,7 +80,7 @@ const MySideBarAgence = () => {
         breakPoint="md"
         rtl={sidebarRTL}
         backgroundColor={colors.primary[400]}
-        image='./admin.png'
+        image={user}
       >
         <Menu iconshape="square">
           <MenuItem
@@ -138,7 +139,7 @@ const MySideBarAgence = () => {
                   alt="profile user"
                   width="100px"
                   height="100px"
-                  src='./user.png'
+                  src={user}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
@@ -156,7 +157,7 @@ const MySideBarAgence = () => {
           )}
           <Box paddingLeft={collapsed ? undefined : "10%"}>
             <Item
-              title="Dashboard"
+              title="Home"
               to="/agence"
               icon={<HomeOutlinedIcon />}
               selected={selected}

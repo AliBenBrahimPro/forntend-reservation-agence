@@ -98,6 +98,7 @@ export const fetchProgramme = createAsyncThunk(
     initialState:{
         data:[],
         getAllData:[],
+        getAllDataprogramme:[],
         status:null,
         error:null,
     },
@@ -108,6 +109,7 @@ export const fetchProgramme = createAsyncThunk(
         // show hotels
         [fetchProgramme.fulfilled]:(state,action)=>{
            state.getAllData =action.payload;
+           state.getAllDataprogramme =action.payload;
            state.status ="success";
        state.error =null;
         },

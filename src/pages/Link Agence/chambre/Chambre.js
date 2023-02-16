@@ -115,9 +115,9 @@ const Chambre = () => {
           date_debut:data.date_debut,
           date_fin:data.date_fin,
           montant:"",
-          hotelId:data.id
-
-       
+          hotelId:data.id,
+          date_debut:"",
+          date_fin:""
     };
     const checkoutSchema = yup.object().shape({
         
@@ -253,7 +253,7 @@ console.log("test222",chambres,pensions)
                }else if(parseInt(chambres)===2)
               {   console.log("22") 
                 prix=parseFloat(data.prix_demi_pension)
-                setPrice(((prix*2)(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+                setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
               }else if(parseInt(chambres)===3)
                {
                 prix=parseFloat(data.prix_demi_pension)*(1-(data.porcentage_chambre_triple/100))
@@ -362,6 +362,33 @@ console.log("test222",chambres,pensions)
                     helperText={touched.prix_total && errors.prix_total}
                     sx={{ gridColumn: "span 4" }}
                   />
+       <TextField
+              fullWidth
+              variant="filled"
+              type="datetime-local"
+              label="Date début"
+             
+              onChange={handleChange}
+              value={moment(values.date_debut).format("YYYY-MM-DD[T]HH:mm")}
+              name="date_debut"
+              error={!!touched.date_debut && !!errors.date_debut}
+              helperText={touched.date_debut && errors.date_debut}
+              sx={{ gridColumn: "span 4" }}
+            />
+            <TextField
+              fullWidth
+              variant="filled"
+              type="datetime-local"
+              label="Date fin"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={moment(values.date_fin).format("YYYY-MM-DD[T]HH:mm")}
+              name="date_fin"
+              inputProps={{ min: values.date_debut}}
+              error={!!touched.date_fin && !!errors.date_fin}
+              helperText={touched.date_fin && errors.date_fin}
+              sx={{ gridColumn: "span 4" }}
+            />
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
