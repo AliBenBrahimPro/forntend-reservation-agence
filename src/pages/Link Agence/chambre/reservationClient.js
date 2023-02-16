@@ -19,6 +19,7 @@ const ReservationCH = () => {
     const navigate = useNavigate()
     const {id} = useParams();
     const chambre = useSelector(state=>state.chambre)
+    const [nbrplace,setNbrPlace]=useState()
     const client = useSelector(state=>state.client)
     const {error} = useSelector(state=>state.client)
     const {status} = useSelector(state=>state.client)
@@ -27,12 +28,15 @@ const ReservationCH = () => {
     useEffect(()=>{
         dispatch(fetchClient())
         dispatch(getSingleChambre(id))
+        
            },[dispatch])
        
            useEffect(()=>{
+            setNbrPlace(chambre.data.nb_place)
                 },[client,chambre])
-console.log("id : ",data)
+console.log("id : ",chambre.data)
     const handleFormSubmit = (values) => {
+      setNbrPlace(nbrplace-1)
         if(data.length===0){
             dispatch(insertClient(values)).then((data)=>{
                 if(data.type==="client/insertClient/fulfilled" ){
@@ -106,11 +110,11 @@ console.log("id : ",data)
   };
 
     const checkoutSchema = yup.object().shape({
-        full_name:yup.string().required("Required"),
-        date_naissance:yup.date().required("Required"),
-        e_mail:yup.string().email("Invalid email!").required("Required"),
-        numero_telephone:yup.string().matches(phoneRegExp, "phone number is not valid!").required("Required"),
-        cin:yup.number().required("Required"),
+        // full_name:yup.string().required("Required"),
+        // date_naissance:yup.date().required("Required"),
+        // e_mail:yup.string().email("Invalid email!").required("Required"),
+        // numero_telephone:yup.string().matches(phoneRegExp, "phone number is not valid!").required("Required"),
+        // cin:yup.number().required("Required"),
         
         
 
@@ -140,7 +144,8 @@ console.log("id : ",data)
                     "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                   }}
                 >
-{client.getAllData.length===0? <Alert sx={{ gridColumn: "span 4" }} severity="error">pas de client disponible</Alert>:<Autocomplete
+                  <Alert severity="info" sx={{ gridColumn: "span 4" }}>il rest {nbrplace} client</Alert>
+{client.getAllData.length===0? <Alert severity="info" sx={{ gridColumn: "span 4" }} >pas de client disponible</Alert>:<Autocomplete
   disablePortal
   id="combo-box-demo"
   options={getAllData.map(e=>e.cin)}

@@ -90,7 +90,7 @@ const Chambre = () => {
             ) 
             await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmail`,email)
             await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmailagence`,email_agence)
-            navigate(`/agence/reservationCH/${sec.payload.id}`)
+            navigate(`/agence/chooseclient/${sec.payload.id}`)
           }
            
 

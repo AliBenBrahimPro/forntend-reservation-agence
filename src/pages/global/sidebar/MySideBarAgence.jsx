@@ -275,6 +275,13 @@ const MySideBarAgence = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Item
+              title="Chosse Client"
+              to="/agence/formprogagence"
+              icon={<ApartmentIcon/>}
+              selected={selected}
+              setSelected={setSelected}
+            />
     
    
           </Box>

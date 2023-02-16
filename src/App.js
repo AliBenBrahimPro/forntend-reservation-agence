@@ -68,6 +68,12 @@ import UpdateReservationBus from "./pages/updatereservation/updatereservationtra
 import UpdateReservationAvion from "./pages/updatereservation/updatereservationavion";
 import UpdateReservationevent from "./pages/updatereservation/updatereservationevent";
 import ReservationCH from "./pages/Link Agence/chambre/reservationClient";
+import NoClient from "./pages/Link Agence/components/NoClient";
+import ChooseClient from "./pages/Link Agence/components/ChooseClient";
+import ExistClient from "./pages/Link Agence/components/ExistClient";
+import ClientForm from "./pages/Link Agence/components/ClientForm";
+import NewClientHotel from "./pages/Link Agence/Hotel/NewClientHotel";
+import FormProgAgence from "./pages/Link Agence/Programme/FormProgAgence";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -144,43 +150,55 @@ function LinkAgence() {
              <Route path="/dashboard" element={<HomeAgence/>} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/clientavion/:id" element={<ClientAvion />} />
+                <Route path="/chooseclient/:id" element={<ChooseClient />} />
+                <Route path="/existclient" element={<ExistClient />} />
+                <Route path="/clientform/:id" element={<ClientForm />} />
                 <Route path="/reservationCH/:id" element={<ReservationCH />} />
+                <Route path="/noclient" element={<NoClient />} />
                 <Route path="/clientbus/:id" element={<ClientBus />} />
                 <Route path="/clientevent/:id" element={<ClientEvent />} />
-                <Route path="/hoteldetails/:id" element={<HotelDetails />} />
-                <Route path="/chambre/:id" element={<Chambre />} />
+                <Route path="/client/:id" element={<ReservationClient />} />
+                <Route path="/formprogagence" element={<FormProgAgence />} />
+
+                
+
+                {/* display */}
                 <Route path="/allbus" element={<AllBus />} />
                 <Route path="/allavion" element={<AllAvion />} />
                 <Route path="/allhotel" element={<AllHotel />} />
                 <Route path="/allevent" element={<AllEvent />} />
                 <Route path="/allprog" element={<AllProg/>} />
+                {/* reservation */}
                 <Route path="/reservationbus/:id" element={<ReservationBus />} />
                 <Route path="/reservationavion/:id" element={<ReservationAvion />} />
-                <Route path="/client/:id" element={<ReservationClient />} />
+                {/* hotel */}
                 <Route path="/reservationevenement/:id" element={<ReservationEvnt />} />
                 <Route path="/hotelform/:id" element={<EditHotel />} />
                 <Route path="/listHotel" element={<ListHotel />} />
-
+                <Route path="/hoteldetails/:id" element={<HotelDetails />} />
+                <Route path="/chambre/:id" element={<Chambre />} />
+                <Route path="/newclienthotel/:id" element={<NewClientHotel />} />
+                {/* bus */}
                 <Route path="/busForm" element={<BusForm />} />
                 <Route path="/busForm/:id" element={<EditBus />} />
                 <Route path="/listbus" element={<ListBus />} />
-
+                {/* evenet */}
                 <Route path="/eventForm" element={<EventForm />} />
                 <Route path="/eventForm/:id" element={<EditEvent />} />
                 <Route path="/listevent" element={<ListEvent />} />
-
+                {/* avion */}
                 <Route path="/avionForm" element={<FormAvion />} />
                 <Route path="/avionForm/:id" element={<EditAvion />} />
                 <Route path="/listavion" element={<ListAvion />} />
-
+                {/* programme */}
                 <Route path="/programmeForm" element={<ProgrammeForm />} />
                 <Route path="/programmeForm/:id" element={<EditProgramme />} />
                 <Route path="/listprogramme" element={<ListProgramme />} />
-                
+                {/* agence */}
                 <Route path="/userForm" element={<UserForm />} />
                 <Route path="/userForm/:id" element={<EditUser />} />
                 <Route path="/listuser" element={<ListUser />} />
-
+                {/* client */}
                 <Route path="/formclient" element={<FormClientAgence />} />
                 <Route path="/formclient/:id" element={<EditUser />} />
                 <Route path="/listclient" element={<ListClientAgence />} />
