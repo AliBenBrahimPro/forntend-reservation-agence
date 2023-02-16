@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
@@ -10,10 +10,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useNavigate } from 'react-router-dom';
+import Chambre from '../chambre/Chambre';
+import ReservationBus from '../Bus/ReservationBus';
+import ReservationAvion from '../Avion/ReservationAvion';
 const FormProgAgence = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
     const navigate =useNavigate()
+    const [transport,setTransport]= useState("1")
     const handleFormSubmit = (values) => {
         console.log(values);
 
@@ -35,7 +39,7 @@ const FormProgAgence = () => {
 
     return (
         <Box m="20px">
-          <Header title="CREATE USER" subtitle="Create a New User Profile" />
+          <Header title="Formulaire du programme" subtitle="Remplir les coordonnées" />
     
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
@@ -55,91 +59,19 @@ const FormProgAgence = () => {
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
+        onChange={e=>setTransport(e.target.value)}
+        defaultValue={1}
       >
-        <FormControlLabel value="female" control={<Radio color='default' />} label="Bus" />
-        <FormControlLabel value="male" control={<Radio color='default' />} label="Avion" />
+        <FormControlLabel value="1" control={<Radio color='default' />} label="Bus" />
+        <FormControlLabel value="2" control={<Radio color='default' />} label="Avion" />
 
       </RadioGroup>
     </FormControl>
     </Box>
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="First Name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.firstName}
-                    name="firstName"
-                    error={!!touched.firstName && !!errors.firstName}
-                    helperText={touched.firstName && errors.firstName}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Last Name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.lastName}
-                    name="lastName"
-                    error={!!touched.lastName && !!errors.lastName}
-                    helperText={touched.lastName && errors.lastName}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Email"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.email}
-                    name="email"
-                    error={!!touched.email && !!errors.email}
-                    helperText={touched.email && errors.email}
-                    sx={{ gridColumn: "span 4" }}
-                  />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Contact Number"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.contact}
-                    name="contact"
-                    error={!!touched.contact && !!errors.contact}
-                    helperText={touched.contact && errors.contact}
-                    sx={{ gridColumn: "span 4" }}
-                  />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Address 1"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.address1}
-                    name="address1"
-                    error={!!touched.address1 && !!errors.address1}
-                    helperText={touched.address1 && errors.address1}
-                    sx={{ gridColumn: "span 4" }}
-                  />
-                  <TextField
-                    fullWidth
-                    variant="filled"
-                    type="text"
-                    label="Address 2"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.address2}
-                    name="address2"
-                    error={!!touched.address2 && !!errors.address2}
-                    helperText={touched.address2 && errors.address2}
-                    sx={{ gridColumn: "span 4" }}
-                  />
+   {transport==="1" ?<Box sx={{ gridColumn: "span 4"}}><ReservationBus/> </Box>:""}
+  {transport==="2" ?  <Box sx={{ gridColumn: "span 4"}}><ReservationAvion/></Box>:""}
+
+
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">

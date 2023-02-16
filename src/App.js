@@ -78,6 +78,7 @@ import Ccp from "./pages/Link Agence/Programme/Ccp";
 import Ecp from "./pages/Link Agence/Programme/EcP";
 import Ncp from "./pages/Link Agence/Programme/Ncp";
 import Fcp from "./pages/Link Agence/Programme/Fcp";
+import Stepers from "./pages/Link Agence/Programme/stepers";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -202,6 +203,7 @@ function LinkAgence() {
                 <Route path="/ecp" element={<Ecp />} />
                 <Route path="/ncp/:id" element={<Ncp />} />
                 <Route path="/fcp/:id" element={<Fcp />} />
+                <Route path="/Stepers" element={<Stepers />} />
 
 
                 {/* agence */}

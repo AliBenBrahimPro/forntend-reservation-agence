@@ -1,0 +1,20 @@
+.ant-steps .ant-steps-item-process .ant-steps-item-icon
+{ background: #3da58a;
+  background-color: #3da58a;
+  border-color: #3da58a;
+ } 
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon{
+    background: rgba(188, 188, 188, 0.23);
+  background-color:rgba(188, 188, 188, 0.23);
+  border-color:rgba(188, 188, 188, 0.23);
+}
+.ant-steps .ant-steps-item-process .ant-steps-item-container .ant-steps-item-content .ant-steps-item-title{
+    color: #3da58a;
+}
+
+:where(.css-dev-only-do-not-override-ixblex).ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+    color: rgb(127, 127, 127);
+}
+:where(.css-dev-only-do-not-override-ixblex).ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+    color: rgb(127, 127, 127);
+}
