@@ -9,11 +9,15 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { useNavigate } from 'react-router-dom';
 const FormProgAgence = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+    const navigate =useNavigate()
     const handleFormSubmit = (values) => {
         console.log(values);
+
+        navigate(`/agence/ccp/${1}`)
     };
     const initialValues = {
         firstName: "",
@@ -24,12 +28,7 @@ const FormProgAgence = () => {
         address2: "",
     };
     const checkoutSchema = yup.object().shape({
-        firstName:yup.string().required("Required"),
-        lastName:yup.string().required("Required"),
-        email:yup.string().email("Invalid email!").required("Required"),
-        contact:yup.string().matches(phoneRegExp, "phone number is not valid!").required("Required"),
-        address1:yup.string().required("Required"),
-        address2:yup.string().required("Required"),
+      
 
     })
 
@@ -50,7 +49,7 @@ const FormProgAgence = () => {
                   }}
                 >
                     <Box sx={{ gridColumn: "span 4",display:'flex',justifyContent:'center' }}>
-                        <FormControl >
+      <FormControl >
       <FormLabel color='primary' id="demo-row-radio-buttons-group-label">Type de transport</FormLabel>
       <RadioGroup
         row

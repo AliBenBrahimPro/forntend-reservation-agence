@@ -74,6 +74,10 @@ import ExistClient from "./pages/Link Agence/components/ExistClient";
 import ClientForm from "./pages/Link Agence/components/ClientForm";
 import NewClientHotel from "./pages/Link Agence/Hotel/NewClientHotel";
 import FormProgAgence from "./pages/Link Agence/Programme/FormProgAgence";
+import Ccp from "./pages/Link Agence/Programme/Ccp";
+import Ecp from "./pages/Link Agence/Programme/EcP";
+import Ncp from "./pages/Link Agence/Programme/Ncp";
+import Fcp from "./pages/Link Agence/Programme/Fcp";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -194,6 +198,12 @@ function LinkAgence() {
                 <Route path="/programmeForm" element={<ProgrammeForm />} />
                 <Route path="/programmeForm/:id" element={<EditProgramme />} />
                 <Route path="/listprogramme" element={<ListProgramme />} />
+                <Route path="/ccp/:id" element={<Ccp />} />
+                <Route path="/ecp" element={<Ecp />} />
+                <Route path="/ncp/:id" element={<Ncp />} />
+                <Route path="/fcp/:id" element={<Fcp />} />
+
+
                 {/* agence */}
                 <Route path="/userForm" element={<UserForm />} />
                 <Route path="/userForm/:id" element={<EditUser />} />
