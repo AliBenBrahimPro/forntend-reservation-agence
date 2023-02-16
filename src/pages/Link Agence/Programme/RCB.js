@@ -65,7 +65,7 @@ function RCB({id,nbr,event}) {
     })
    let initialdata={
       nb_place:"",
-      monatnt_total:"",
+      monatnt_total:data.prix_place*nbr,
       type:"bus",
       date_debut:data.date_debut,
       date_fin:data.date_fin,
