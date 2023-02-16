@@ -4,10 +4,13 @@ import { useParams } from 'react-router-dom';
 
 export const fetchAvion = createAsyncThunk(
     'avion/fetchAvion',
-    async (_,thunkAPI) => {
+    async (tokens,thunkAPI) => {
+      console.log("token",tokens)
       const {rejectWithValue} = thunkAPI;
         try{
-          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/avion/getallavion`)
+          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/avion/getallavion`,{headers :{
+            Authorization : `Bearer ${tokens}`
+          }})
       const data = await res.json()
       return data}
       catch(error){

@@ -62,6 +62,7 @@ export default function Login() {
     }else{
     dispatch(login(event)).then((data)=>{
     if(data.type==="user/loginuser/fulfilled" ){
+      console.log(data.payload)
       localStorage.setItem("id",data.payload.id)
       localStorage.setItem("code_agence",data.payload.code_agence)
       localStorage.setItem("nom_agence",data.payload.nom_agence)

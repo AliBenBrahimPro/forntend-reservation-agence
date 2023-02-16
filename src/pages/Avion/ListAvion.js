@@ -12,6 +12,7 @@ import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
 
 function ListAvion() {
+  const tokenss=localStorage.getItem('tokens')
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
       const avion = useSelector(state=>state.avion)
@@ -23,7 +24,7 @@ function ListAvion() {
   const dispatch = useDispatch();
   
   useEffect(()=>{
-   dispatch(fetchAvion())
+   dispatch(fetchAvion(tokenss))
   
       },[dispatch])
   

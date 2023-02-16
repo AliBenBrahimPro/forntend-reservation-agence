@@ -11,6 +11,8 @@ import avionimg from "../../../assets/avion.jpg";
 import moment from 'moment'
 
 function AllAvion() {
+    const tokens=localStorage.getItem('tokens')
+    console.log(tokens)
 
         const avion = useSelector(state=>state.avion)
       const {error} = useSelector(state=>state.avion)
@@ -21,7 +23,7 @@ function AllAvion() {
   const dispatch = useDispatch();
   
   useEffect(()=>{
-   dispatch(fetchAvion())
+   dispatch(fetchAvion(tokens))
   
       },[dispatch])
   
