@@ -6,6 +6,7 @@ import Header from '../../../components/Header';
 import { getSingleHotels } from '../../../redux/hotelSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import PricingTable from './PricingTable';
 function HotelDetails() {
     const dispatch = useDispatch();
     const {id}= useParams();
@@ -44,9 +45,7 @@ function HotelDetails() {
 </Carousel>
 </Box>  
 </div>
-<Typography marginBottom={5} variant="h3"fontWeight="bold">Prix et tarifs :</Typography>
-<Typography  marginBottom={5}>Chambre double :  </Typography>
-<Typography  marginBottom={5}>- Demi pension : {data.prix_demi_pension} - Pension Complete : {data.prix_pension_complete} </Typography>
+<PricingTable />
 
 <Typography marginBottom={5} variant="h3"fontWeight="bold">Services & équipements :</Typography>
 
