@@ -94,7 +94,20 @@ export const fetchAvion = createAsyncThunk(
                 }
               );
                
-
+              export const countAvion = createAsyncThunk(
+                'avion/countAvion',
+                async (tokens,thunkAPI) => {
+                  console.log("token",tokens)
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/avion/countAvion`)
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+              )
 
          
   export const avionSlice = createSlice({
@@ -103,6 +116,7 @@ export const fetchAvion = createAsyncThunk(
         data:[],
         getAllData:[],
         getAllDataAvion:[],
+        countavion:0,
         status:null,
         error:null,
     },
@@ -197,6 +211,21 @@ export const fetchAvion = createAsyncThunk(
               status:"rejected",
               error:action.payload
             };
+          },
+          [countAvion.fulfilled]:(state,action)=>{
+            state.countavion = action.payload.nb;
+            state.status ="success";
+        state.error =null;
+         },
+         [countAvion.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+         },
+         [countAvion.rejected]:(state,action)=>{
+        
+          state.status ="failed";
+          state.error=action.payload;
           },
           
        

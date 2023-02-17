@@ -40,10 +40,10 @@ function ProgrammeForm() {
         const formData = new FormData();
         formData.append('image_programme',values.image_programme)
         formData.append('nom_programme',values.nom_programme)
-        formData.append('hotelId',values.hotelId)
-        formData.append('busId',values.busId)
-        formData.append('evenementId',values.evenementId)
-        formData.append('avionId',values.avionId)
+      if(values.hotelId !=0 )formData.append('hotelId',values.hotelId) 
+      if( values.busId !=0 )formData.append('busId',values.busId)
+      if(values.evenementId !=0 ) formData.append('evenementId',values.evenementId)
+      if( values.avionId != 0 ) formData.append('avionId',values.avionId) 
         formData.append('date_debut',values.date_debut)
         formData.append('date_fin',values.date_fin)
         const res= axios.post(`${process.env.REACT_APP_BASE_URL}/api/programme/addprogramme`,formData)
@@ -59,20 +59,20 @@ function ProgrammeForm() {
          }
     const initialValues = {
         nom_programme: "",
-        hotelId: "",
-        busId:"",
-        avionId:"",
-        evenementId:null,
+        hotelId:0,
+        busId:0,
+        avionId:0,
+        evenementId:0,
         date_debut: "",
         date_fin: "",
         image_programme:null
     };
     const checkoutSchema = yup.object().shape({
         nom_programme:yup.string().required("Required"),
-        hotelId:yup.number(),
-        busId:yup.number(),
-        avionId:yup.number(),
-        evenementId:yup.number(),
+        // hotelId:yup.number(),
+        // busId:yup.number(),
+        // avionId:yup.number(),
+        // evenementId:yup.number(),
         date_debut:yup.date().required("Required"),
         date_fin:yup.date().required("Required"),
 
@@ -147,8 +147,6 @@ function ProgrammeForm() {
     label="Avion"
     name='avionId'
     onChange={handleChange}
-    error={!!touched.avionId && !!errors.avionId}
-    helperText={touched.avionId && errors.avionId}
   >
   {avion.getAllData.map(e=><MenuItem value={e.id}>{e.nom_avion}</MenuItem>)  }
 

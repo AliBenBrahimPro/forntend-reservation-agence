@@ -90,6 +90,20 @@ export const fetchProgramme = createAsyncThunk(
                 }
               );
                
+              export const countProg = createAsyncThunk(
+                'programme/countProg',
+                async (tokens,thunkAPI) => {
+                  console.log("token",tokens)
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/programme/countprogramme`)
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+              )
 
 
          

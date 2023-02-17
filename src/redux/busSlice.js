@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { countHotel } from './hotelSlice';
 
 export const fetchBus = createAsyncThunk(
     'bus/fetchBus',
@@ -98,6 +99,20 @@ export const fetchBus = createAsyncThunk(
                 }
               );
                
+              export const countBus = createAsyncThunk(
+                'bus/countBus',
+                async (tokens,thunkAPI) => {
+                  console.log("token",tokens)
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/bus/getcountbus`)
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+              )
 
 
          
@@ -106,6 +121,7 @@ export const fetchBus = createAsyncThunk(
     initialState:{
         data:[],
         getAllData:[],
+        countbus:0,
         status:null,
         error:null,
     },
@@ -199,6 +215,22 @@ export const fetchBus = createAsyncThunk(
               status:"rejected",
               error:action.payload
             };
+          },
+
+          [countBus.fulfilled]:(state,action)=>{
+            state.countbus= action.payload.nb;
+            state.status ="success";
+        state.error =null;
+         },
+         [countBus.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+         },
+         [countBus.rejected]:(state,action)=>{
+        
+          state.status ="failed";
+          state.error=action.payload;
           },
           
        

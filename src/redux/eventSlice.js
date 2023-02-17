@@ -97,6 +97,20 @@ export const fetchEvent = createAsyncThunk(
                 }
               );
                
+              export const countEvent = createAsyncThunk(
+                'event/countEvent',
+                async (tokens,thunkAPI) => {
+                  console.log("token",tokens)
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/evenement/countEvenement`)
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+              )
 
 
          
@@ -106,6 +120,7 @@ export const fetchEvent = createAsyncThunk(
         data:[],
         getAllData:[],
         getAllDataEvent:[],
+        countevent:0,
         status:null,
         error:null,
     },
@@ -200,6 +215,21 @@ export const fetchEvent = createAsyncThunk(
               status:"rejected",
               error:action.payload
             };
+          },
+          [countEvent.fulfilled]:(state,action)=>{
+            state.countevent= action.payload.nb;
+            state.status ="success";
+            state.error =null;
+         },
+         [countEvent.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+         },
+         [countEvent.rejected]:(state,action)=>{
+        
+          state.status ="failed";
+          state.error=action.payload;
           },
           
        

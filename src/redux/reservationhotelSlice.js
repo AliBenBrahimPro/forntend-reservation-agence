@@ -50,8 +50,10 @@ export const fetchreservationhotel = createAsyncThunk(
                 'reservationhotel/insertReservationhotel',
                 async (transData,thunkAPI) => {
                    const {rejectWithValue} = thunkAPI;
+                 const iduser=  localStorage.getItem('id')
              
                     try{
+
                       const res = await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_hotel/addreservationhotel`, 
                       {
                          method: 'POST', 

@@ -115,7 +115,20 @@ export const fetchHotels = createAsyncThunk(
                 }
                      );
 
-
+                     export const countHotel = createAsyncThunk(
+                      'hotels/countHotel',
+                      async (_,thunkAPI) => {
+                        const {rejectWithValue} = thunkAPI;
+                          try{
+                            const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/hotel/getcounthotel`)
+                        const data = await res.json()
+                        return data}
+                        catch(error){
+                          return rejectWithValue(error.message);
+                        }
+                      }
+                    )
+      
          
   export const hotelSlice = createSlice({
     name:'hotels',
@@ -123,6 +136,7 @@ export const fetchHotels = createAsyncThunk(
         data:[],
         getAllData:[],
         getAllDataHotel:[],
+        counthotel:0,
         status:null,
         error:null,
     },
@@ -195,7 +209,21 @@ export const fetchHotels = createAsyncThunk(
           state.status ="failed";
           state.error=action.payload;
           },
-          //edit hotel
+          [countHotel.fulfilled]:(state,action)=>{
+            state.counthotel =action.payload.nb;
+            state.status ="success";
+            state.error =null;
+         },
+         [countHotel.pending]:(state)=>{
+            state.status ="loading";
+            state.error =null;
+ 
+         },
+         [countHotel.rejected]:(state,action)=>{
+        
+            state.status ="failed";
+            state.error=action.payload;
+          },
           
        
     }

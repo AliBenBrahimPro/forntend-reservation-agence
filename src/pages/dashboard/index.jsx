@@ -21,6 +21,19 @@ import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import MediaCard from "../Link Agence/Bus/MediaCard";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { countAvion } from '../../redux/avionSlice';
+import { countHotel } from '../../redux/hotelSlice';
+import { countBus } from '../../redux/busSlice';
+import { countEvent } from '../../redux/eventSlice';
+import { countUser } from '../../redux/userSlice';
+import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import LocalActivityIcon from '@mui/icons-material/LocalActivity';
+import ExploreIcon from '@mui/icons-material/Explore';
+import Histogram from 'react-chart-histogram';
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -29,6 +42,22 @@ const Dashboard = () => {
   const isNonDesktop = useMediaQuery("(min-width:1280x)");
   const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const colors = tokens(theme.palette.mode);
+  const dispatch =useDispatch();
+  const {countavion} = useSelector(state=>state.avion)
+  const {counthotel} = useSelector(state=>state.hotels)
+  const {countbus} = useSelector(state=>state.bus)
+  const {countevent} = useSelector(state=>state.event)
+  const {countuser} = useSelector(state=>state.user)
+  const reservationtitle=['Reservation Hotel','Reservation Transport','reservation Evenement','Reservation Programmes']
+  const data = [324, 45, 672,800];
+  const options = { fillColor:'#6870fa', strokeColor: '#6870fa' };
+  useEffect(()=>{
+    dispatch(countAvion())
+    dispatch(countHotel())
+    dispatch(countBus())
+    dispatch(countEvent())
+    dispatch(countUser())
+        },[dispatch])
   return (
     <Box m="20px">
       {/* HEADER */}
@@ -71,12 +100,10 @@ const Dashboard = () => {
             justifyContent="center"
           >
             <StatBox
-              title="431,225"
-              subtitle="Sales Obtained"
-              progress="0.50"
-              increase="+21%"
+              title={counthotel}
+              subtitle="Nombre des Hotel :"
               icon={
-                <PointOfSaleIcon
+                <ApartmentIcon
                   sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
                 />
               }
@@ -92,12 +119,10 @@ const Dashboard = () => {
             justifyContent="center"
           >
             <StatBox
-              title="431,225"
-              subtitle="Sales Obtained"
-              progress="0.50"
-              increase="+21%"
+              title={countavion}
+              subtitle="Nombre des Avion :"
               icon={
-                <PointOfSaleIcon
+                <AirplanemodeActiveIcon
                   sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
                 />
               }
@@ -113,10 +138,65 @@ const Dashboard = () => {
             justifyContent="center"
           >
             <StatBox
-              title="32,441"
-              subtitle="New Clients"
-              progress="0.30"
-              increase="+5%"
+              title={countbus}
+              subtitle="Nombre des Bus :"
+              icon={
+                <DirectionsBusIcon
+                  sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+        </Grid>
+        <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
+          <Box
+            width="100%"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <StatBox
+              title={countevent}
+              subtitle="Nombre des Evenements :"
+              icon={
+                <LocalActivityIcon
+                  sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+        </Grid>
+        <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
+          <Box
+            width="100%"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <StatBox
+              title={countevent}
+              subtitle="Nombre des Programmes :"
+              icon={
+                <ExploreIcon
+                  sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+        </Grid>
+        <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
+          <Box
+            width="100%"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <StatBox
+              title={countuser}
+              subtitle="Nombre des Agences :"
               icon={
                 <PersonAddIcon
                   sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -125,28 +205,6 @@ const Dashboard = () => {
             />
           </Box>
         </Grid>
-        <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
-          <Box
-            width="100%"
-            backgroundColor={colors.primary[400]}
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <StatBox
-              title="1,325,134"
-              subtitle="Traffic Received"
-              progress="0.80"
-              increase="+43%"
-              icon={
-                <TrafficIcon
-                  sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-                />
-              }
-            />
-          </Box>
-        </Grid>
-
         <Grid
           xs={12}
           sm={12}
@@ -171,14 +229,7 @@ const Dashboard = () => {
                     fontWeight="600"
                     color={colors.grey[100]}
                   >
-                    Revenue Generated
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    fontWeight="600"
-                    color={colors.greenAccent[500]}
-                  >
-                    $58,373,698
+                   Reservation
                   </Typography>
                 </Box>
                 <Box>
@@ -189,9 +240,13 @@ const Dashboard = () => {
                   </IconButton>
                 </Box>
               </Box>
-              <Box height="250px" m="-20px 0 0 0">
-                <LineChart isDashboard={true} />
-              </Box>
+              <Histogram
+                  xLabels={reservationtitle}
+                  yValues={data}
+                  width='800px'
+                  height='300px'
+                  options={options}
+              />
             </Box>
           </Grid>
           <Grid xs={12} sm={12} md={6}>

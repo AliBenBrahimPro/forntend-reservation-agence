@@ -111,7 +111,20 @@ export const fetchUser = createAsyncThunk(
                 }
               );
 
-               
+              export const countUser= createAsyncThunk(
+                'user/countUser',
+                async (tokens,thunkAPI) => {
+                  console.log("token",tokens)
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/user/countagence`)
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+              )        
 
 
          
@@ -119,6 +132,7 @@ export const fetchUser = createAsyncThunk(
     name:'user',
     initialState:{
         data:[],
+        countuser:0,
         status:null,
         error:null,
     },
@@ -225,6 +239,21 @@ export const fetchUser = createAsyncThunk(
 
          },
          [login.rejected]:(state,action)=>{
+        
+          state.status ="failed";
+          state.error=action.payload;
+          },
+          [countUser.fulfilled]:(state,action)=>{
+            state.countuser= action.payload.nb;
+            state.status ="success";
+            state.error =null;
+         },
+         [countUser.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+         },
+         [countUser.rejected]:(state,action)=>{
         
           state.status ="failed";
           state.error=action.payload;
