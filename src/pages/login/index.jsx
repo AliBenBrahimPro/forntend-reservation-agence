@@ -57,7 +57,7 @@ export default function Login() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong!',
+                    text: "Quelque chose s'est mal passé!",
                   })}})
     }else{
     dispatch(login(event)).then((data)=>{
@@ -80,7 +80,7 @@ export default function Login() {
           Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: 'Something went wrong!',
+              text: "Quelque chose s'est mal passé!",
             })}}) }
     }
    

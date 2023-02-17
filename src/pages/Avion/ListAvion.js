@@ -55,13 +55,13 @@ function ListAvion() {
                 color="error"
                 onClick={(event)=> {
                   Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Es-tu sûr?',
+                    text: "Vous ne pourrez pas revenir en arrière !",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Oui, supprimez-le !'
                   }).then((result) => {
                     if (result.isConfirmed) {
 

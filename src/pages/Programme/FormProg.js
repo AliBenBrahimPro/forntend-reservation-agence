@@ -35,7 +35,7 @@ function ProgrammeForm() {
        
                 },[hotels,event,hotels,bus,avion])
 
-    const handleFormSubmit = (values) => {
+    const handleFormSubmit = (values,{resetForm}) => {
         console.log(values);
         const formData = new FormData();
         formData.append('image_programme',values.image_programme)
@@ -47,15 +47,26 @@ function ProgrammeForm() {
         formData.append('date_debut',values.date_debut)
         formData.append('date_fin',values.date_fin)
         const res= axios.post(`${process.env.REACT_APP_BASE_URL}/api/programme/addprogramme`,formData)
-        .then((res)=> res.status===200? Swal.fire(
+        .then((res)=>{ if(res.status===200) {Swal.fire(
           'Success',
           `${res.data.nom_programme} a ajouter avec succes`,
           'success'
-        ) :  Swal.fire({
+        ) 
+        resetForm({
+          nom_programme: "",
+          hotelId:0,
+          busId:0,
+          avionId:0,
+          evenementId:0,
+          date_debut: "",
+          date_fin: "",
+          image_programme:null
+      })
+      }else{ Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Something went wrong!',
-        }))
+          text: "Quelque chose s'est mal passé!",
+        })}})
          }
     const initialValues = {
         nom_programme: "",

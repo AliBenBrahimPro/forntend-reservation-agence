@@ -102,14 +102,14 @@ const RCH = ({hotelsid,avionid,busid,eventid}) => {
               Swal.fire({
                   icon: 'error',
                   title: 'Oops...',
-                  text: 'Something went wrong!',
+                  text: "Quelque chose s'est mal passé!",
                 })}
           })
          }else{
               Swal.fire({
                   icon: 'error',
                   title: 'Oops...',
-                  text: 'Something went wrong!',
+                  text: "Quelque chose s'est mal passé!",
                 })}
       })
     };

@@ -138,7 +138,7 @@ export const fetchReservationTrans = createAsyncThunk(
               );
                
               export const countResevationtransport= createAsyncThunk(
-                'reservationtrans/countTransport',
+                'reservationtrans/countreservationtarnsport',
                 async (tokens,thunkAPI) => {
                   console.log("token",tokens)
                   const {rejectWithValue} = thunkAPI;
@@ -150,7 +150,37 @@ export const fetchReservationTrans = createAsyncThunk(
                     return rejectWithValue(error.message);
                   }
                 }
+              )   
+              export const countResevationtransportbus= createAsyncThunk(
+                'reservationtrans/countTransportbus',
+                async (_,thunkAPI) => {
+                  // console.log("token",tokens)
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/countreservationtransportbus`)
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
               )
+
+              export const countResevationtransportavion= createAsyncThunk(
+                'reservationtrans/countTransportavion',
+                async (tokens,thunkAPI) => {
+                  console.log("token",tokens)
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/countreservationtransportavion`)
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+              )
+
 
          
   export const reservationtransSlice = createSlice({
@@ -162,6 +192,8 @@ export const fetchReservationTrans = createAsyncThunk(
         getAllDatauser:[],
         getonereservation:[],
         counttransport:0,
+        counttransportavion:0,
+        counttransportbus:0,
         status:null,
         error:null,
     },
@@ -305,6 +337,36 @@ export const fetchReservationTrans = createAsyncThunk(
               status:"rejected",
               error:action.payload
             };
+          },
+          [countResevationtransportavion.fulfilled]:(state,action)=>{
+            state.counttransportavion= action.payload.nb;
+            state.status ="success";
+            state.error =null;
+         },
+         [countResevationtransportavion.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+         },
+         [countResevationtransportavion.rejected]:(state,action)=>{
+        
+          state.status ="failed";
+          state.error=action.payload;
+          },
+          [countResevationtransportbus.fulfilled]:(state,action)=>{
+            state.counttransportbus= action.payload.nb;
+            state.status ="success";
+            state.error =null;
+         },
+         [countResevationtransportbus.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+         },
+         [countResevationtransportbus.rejected]:(state,action)=>{
+        
+          state.status ="failed";
+          state.error=action.payload;
           },
           [countResevationtransport.fulfilled]:(state,action)=>{
             state.counttransport= action.payload.nb;

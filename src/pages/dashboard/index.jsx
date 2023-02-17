@@ -31,7 +31,7 @@ import { countUser } from '../../redux/userSlice';
 import { countProg } from '../../redux/programmeSlice';
 import { countResevationevent } from '../../redux/reservationeventSlice';
 import { countResevationhotel } from '../../redux/reservationhotelSlice';
-import { countResevationtransport } from '../../redux/reservationtransSlice';
+import { countResevationtransport,countResevationtransportavion,countResevationtransportbus } from '../../redux/reservationtransSlice';
 import { countResevationprogramme } from '../../redux/reservationprogrammeSlice';
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import ApartmentIcon from '@mui/icons-material/Apartment';
@@ -39,6 +39,8 @@ import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import LocalActivityIcon from '@mui/icons-material/LocalActivity';
 import ExploreIcon from '@mui/icons-material/Explore';
 import Histogram from 'react-chart-histogram';
+import DonutChart from 'react-donut-chart';
+import axios from "axios";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -55,24 +57,29 @@ const Dashboard = () => {
   const {countuser} = useSelector(state=>state.user)
   const {countprog} = useSelector(state=>state.programme)
   const {counttransport} = useSelector(state=>state.reservationtrans)
+  const {counttransportbus} = useSelector(state=>state.reservationtrans)
+  const {counttransportavion} = useSelector(state=>state.reservationtrans)
   const {countreservationhotel} = useSelector(state=>state.reservationhotel)
   const {countreservationevent} = useSelector(state=>state.reservationEvent)
   const {countreservationprogramme} = useSelector(state=>state.reservationprogramme)
   const reservationtitle=['Reservation Hotel','Reservation Transport','reservation Evenement','Reservation Programmes']
   const data = [countreservationhotel, counttransport, countreservationevent,countreservationprogramme];
   const options = { fillColor:'#6870fa', strokeColor: '#6870fa' };
-  useEffect(()=>{
-    dispatch(countAvion())
-    dispatch(countHotel())
-    dispatch(countBus())
-    dispatch(countEvent())
-    dispatch(countUser())
-    dispatch(countProg())
-    dispatch(countResevationhotel())
-    dispatch(countResevationtransport())
-    dispatch(countResevationevent())
-    dispatch(countResevationprogramme())
-        },[dispatch])
+
+    useEffect(()=>{
+      dispatch(countAvion())
+      dispatch(countHotel())
+      dispatch(countBus())
+      dispatch(countEvent())
+      dispatch(countUser())
+      dispatch(countProg())
+      dispatch(countResevationhotel())
+      dispatch(countResevationtransport())
+      dispatch(countResevationtransportavion())
+      dispatch(countResevationtransportbus())
+      dispatch(countResevationevent())
+      dispatch(countResevationprogramme())
+         },[])
   return (
     <Box m="20px">
       {/* HEADER */}
@@ -84,21 +91,9 @@ const Dashboard = () => {
         alignItems={smScreen ? "center" : "start"}
         m="10px 0"
       >
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        <Header title="tableau de bord" subtitle="Bienvenue sur votre tableau de bord" />
 
         <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Download Reports
-          </Button>
         </Box>
       </Box>
  
@@ -243,16 +238,10 @@ const Dashboard = () => {
                     variant="h5"
                     fontWeight="600"
                     color={colors.grey[100]}
+                    style={{padding: "20px"}}
                   >
                    Reservation
                   </Typography>
-                </Box>
-                <Box>
-                  <IconButton>
-                    <DownloadOutlinedIcon
-                      sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
-                    />
-                  </IconButton>
                 </Box>
               </Box>
               <Histogram
@@ -264,60 +253,8 @@ const Dashboard = () => {
               />
             </Box>
           </Grid>
-          <Grid xs={12} sm={12} md={6}>
-            <Box backgroundColor={colors.primary[400]} p="30px">
-              <Typography variant="h5" fontWeight="600">
-                Campaign
-              </Typography>
-              <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                mt="25px"
-              >
-                <ProgressCircle size="125" />
-                <Typography
-                  variant="h5"
-                  color={colors.greenAccent[500]}
-                  sx={{ mt: "15px" }}
-                >
-                  $48,352 revenue generated
-                </Typography>
-                <Typography>
-                  Includes extra misc expenditures and costs
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-          <Grid xs={12} sm={12} md={6}>
-            <Box backgroundColor={colors.primary[400]}>
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                sx={{ padding: "30px 30px 0 30px" }}
-              >
-                Sales Quantity
-              </Typography>
-              <Box height="250px" mt="-20px">
-                <BarChart isDashboard={true} />
-              </Box>
-            </Box>
-          </Grid>
-          <Grid xs={12}>
-            <Box backgroundColor={colors.primary[400]} padding="30px">
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                sx={{ marginBottom: "15px" }}
-              >
-                Geography Based Traffic
-              </Typography>
-              <Box height="200px">
-                <GeographyChart isDashboard={true} />
-              </Box>
-            </Box>
-          </Grid>
         </Grid>
+
         <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
           <Box
             backgroundColor={colors.primary[400]}
@@ -325,55 +262,32 @@ const Dashboard = () => {
             overflow="auto"
             m="25px 0 0 0"
           >
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              borderBottom={`4px solid ${colors.primary[500]}`}
-              color={colors.grey[100]}
-              p="15px"
-            >
-              <Typography
-                variant="h5"
-                fontWeight="600"
-                color={colors.grey[100]}
-              >
-                Resent Transaction
-              </Typography>
-            </Box>
-            {mockTransactions.map((transaction, i) => {
-              return (
-                <Box
-                  key={`${transaction}-${i}`}
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  borderBottom={`4px solid ${colors.primary[500]}`}
-                  p="15px"
-                >
-                  <Box>
-                    <Typography
-                      variant="h5"
-                      fontWeight="600"
-                      color={colors.greenAccent[100]}
-                    >
-                      {transaction.txId}
-                    </Typography>
-                    <Typography color={colors.grey[100]}>
-                      {transaction.user}
-                    </Typography>
-                  </Box>
-                  <Box color={colors.grey[100]}>{transaction.date}</Box>
-                  <Box
-                    color={colors.greenAccent[500]}
-                    p="5px 10px"
-                    borderRadius="4px"
+                <Box>
+                  <Typography
+                    variant="h5"
+                    fontWeight="600"
+                    color={colors.grey[100]}
+                  style={{padding: "20px"}}
                   >
-                    ${transaction.cost}
+                   Reservation Transport 
+                  </Typography>
                   </Box>
-                </Box>
-              );
-            })}
+                  <DonutChart
+                        data={[
+                          {
+                            label: 'Avion',
+                            value: (parseInt(counttransportbus)/parseInt(counttransport))*100,
+                          },
+                          {
+                            label: 'Bus',
+                            value: (parseInt(counttransportavion)/parseInt(counttransport))*100,
+                          },
+                        ]}
+                        strokeColor={'emptyColor'}
+                        colors={["#4cceac","#6870fa"]}
+                        width="360"
+                        height="300"
+                      />
           </Box>
         </Grid>
       </Grid>

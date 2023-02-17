@@ -54,7 +54,7 @@ const Fcp = () => {
         //                     Swal.fire({
         //                             icon: 'error',
         //                             title: 'Oops...',
-        //                             text: 'Something went wrong!',
+        //                             text: "Quelque chose s'est mal passé!",
         //                           }) 
         //                 }
         //              })
@@ -64,7 +64,7 @@ const Fcp = () => {
         //          Swal.fire({
         //              icon: 'error',
         //              title: 'Oops...',
-        //              text: 'Something went wrong!',
+        //              text: "Quelque chose s'est mal passé!",
         //            })
         //         }
                    

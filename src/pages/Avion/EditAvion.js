@@ -9,8 +9,10 @@ import Swal from 'sweetalert2'
 import { insertAvion,getSingleAvion,editAvion } from '../../redux/avionSlice';
 import { useParams } from 'react-router-dom';
 import moment from 'moment'
+import { useNavigate } from "react-router-dom";
 
 function EditAvion() {
+  const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const dispatch =useDispatch();
   const {id} = useParams();
@@ -29,11 +31,12 @@ function EditAvion() {
                    `${data.payload.nom_avion} a ete modifie avec succes`,
                    'success'
                  ) 
+                 navigate("/admin/ListAvion")
         }else{
              Swal.fire({
                  icon: 'error',
                  title: 'Oops...',
-                 text: 'Something went wrong!',
+                 text: "Quelque chose s'est mal passé!",
                })}
        })
   };

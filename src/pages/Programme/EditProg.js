@@ -14,8 +14,10 @@ import {  getSingleProgramme} from '../../redux/programmeSlice';
 import { fetchBus } from '../../redux/busSlice';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
+import { useNavigate } from "react-router-dom";
 
 function EditProgramme() {
+  const navigate = useNavigate();
   const tokens=localStorage.getItem('tokens')
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
@@ -52,11 +54,12 @@ function EditProgramme() {
                      `${data.payload.nom_programme} a ajouter avec succes`,
                      'success'
                    ) 
+                   navigate("/admin/ListProgramme")
           }else{
                Swal.fire({
                    icon: 'error',
                    title: 'Oops...',
-                   text: 'Something went wrong!',
+                   text: "Quelque chose s'est mal passé!",
                  })}
          })
     };

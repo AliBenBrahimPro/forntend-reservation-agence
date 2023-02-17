@@ -15,7 +15,7 @@ import axios from 'axios';
 function EventForm() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const dispatch =useDispatch();
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = (values,{resetForm}) => {
       console.log(values);
       const formData = new FormData();
          formData.append('image_evenement',values.image_evenement)
@@ -28,15 +28,27 @@ function EventForm() {
          formData.append('date_debut',values.date_debut)
          formData.append('date_fin',values.date_fin)
 const res= axios.post(`${process.env.REACT_APP_BASE_URL}/api/evenement/addevenement`,formData)
-.then((res)=> res.status===200? Swal.fire(
+.then((res)=> { if(res.status===200)
+  { Swal.fire(
   'Success',
   `${res.data.nom_evenement} a ajouter avec succes`,
   'success'
-) :  Swal.fire({
+)
+resetForm( {
+  image_evenement:"",
+  nom_evenement: "",
+  description: "",
+  nb_place: "",
+  nb_place_reserver: 0,
+  prix_evenement: "",
+  date_debut: "",
+  date_fin:""
+})
+}else {Swal.fire({
   icon: 'error',
   title: 'Oops...',
-  text: 'Something went wrong!',
-}))
+  text:"Quelque chose s'est mal passé!",
+})}})
 
 
   };

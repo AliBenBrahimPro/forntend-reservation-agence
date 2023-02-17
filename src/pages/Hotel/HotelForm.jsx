@@ -41,7 +41,7 @@ const [ascenseur,setascenseur]=useState(false);
 const [tennis,settennis]=useState(false);
 const [animauxAutorises,setanimauxAutorises]=useState(false);
 const [image,setImage]=useState();
-    const handleFormSubmit =async (values) => {
+    const handleFormSubmit =async (values,{resetForm}) => {
   
       const service={
         "climatisation":climatisation,
@@ -92,11 +92,30 @@ const x=formData
                           `${res.data.nom_hotel} a ajouter avec succes`,
                           'success'
                         ) 
+                        resetForm({ image_hotel:[],
+                          nom_hotel: "",
+                          e_mail:"",
+                          numero_telephone:"",
+                          adresse:"",
+                          nb_etoile:0,
+                          capacite:"",
+                          frais_chambre_single:"",
+                          porcentage_chambre_triple:"",
+                          porcentage_chambre_quadruple:"",
+                          prix_demi_pension:"",
+                          prix_pension_complete:"",
+                          prix_all_inclusive:"",
+                          prix_all_inclusive_soft:"",
+                          enfant_gratuit:1,
+                          commision:"",
+                          services_equipements:"",
+                          date_debut:"",
+                          date_fin:"",})
                }else{
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Something went wrong!',
+                        text:"Quelque chose s'est mal passé!",
                       })}
               
 
@@ -127,7 +146,6 @@ const x=formData
         adresse:"",
         nb_etoile:0,
         capacite:"",
-        // prix_chambre_double:"",
         frais_chambre_single:"",
         porcentage_chambre_triple:"",
         porcentage_chambre_quadruple:"",

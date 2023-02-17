@@ -12,7 +12,7 @@ function FormAvion() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-    const handleFormSubmit = (values) => {
+    const handleFormSubmit = (values,{resetForm}) => {
         console.log("teste2",values);
        
         dispatch(insertAvion(values)).then((data)=>{
@@ -25,11 +25,26 @@ function FormAvion() {
                      `${data.payload.nom_avion} a ajouter avec succes`,
                      'success'
                    ) 
+
+             resetForm({
+              nom_avion: "",
+              prix_place_simple: "",
+            reference: Math.floor(Math.random() * (999999 - 1 + 1)) + 1,
+            point_arrive:"",
+            point_depart:"",
+            nb_place: "",
+            date_debut: "",
+            date_fin: "",
+            prix_place_speciale:0,
+            nb_place_reserver:0,
+            
+           
+          })
           }else{
                Swal.fire({
                    icon: 'error',
                    title: 'Oops...',
-                   text: 'Something went wrong!',
+                   text: "Quelque chose s'est mal passé!",
                  })}
          })
     };

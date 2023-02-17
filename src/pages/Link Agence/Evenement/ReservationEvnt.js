@@ -54,7 +54,7 @@ function ReservationEvnt() {
                         Swal.fire({
                             icon: 'error',
                             title: datarce.response,
-                            text: 'Something went wrong!',
+                            text: "Quelque chose s'est mal passé!",
                           })}
            })
     };

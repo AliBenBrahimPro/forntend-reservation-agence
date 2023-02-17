@@ -49,7 +49,7 @@ function ReservationAvion() {
                  Swal.fire({
                      icon: 'error',
                      title: data.response,
-                     text: 'Something went wrong!',
+                     text: "Quelque chose s'est mal passé!",
                    })}
            })
     };

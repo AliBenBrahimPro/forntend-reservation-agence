@@ -44,7 +44,7 @@ const NCA = () => {
                 Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Something went wrong!',
+                        text: "Quelque chose s'est mal passé!",
                       }) 
             }
          })

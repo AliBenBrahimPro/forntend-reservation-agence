@@ -12,7 +12,7 @@ function BusForm() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-    const handleFormSubmit = (values) => {
+    const handleFormSubmit = (values,{resetForm}) => {
         console.log(values);
        
         dispatch(insertBus(values)).then((data)=>{
@@ -22,11 +22,21 @@ function BusForm() {
                      `${data.payload.matricule} a ajouter avec succes`,
                      'success'
                    ) 
+            resetForm({ matricule: "",
+            reference: Math.floor(Math.random() * (999999 - 1 + 1)) + 1,
+            point_depart:"",
+            point_arrive:"",
+            nb_place: "",
+            desc: "",
+            nb_place_reserver:0,
+            prix_place: "",
+            date_debut: "",
+            date_fin: "",})
           }else{
                Swal.fire({
                    icon: 'error',
                    title: 'Oops...',
-                   text: 'Something went wrong!',
+                   text: "Quelque chose s'est mal passé!",
                  })}
          })
     };

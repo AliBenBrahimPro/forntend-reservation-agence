@@ -53,13 +53,13 @@ function ListProgramme() {
                 color="error"
                 onClick={(event)=> {
                   Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    title: 'Es-tu sûr?',
+                    text: "Vous ne pourrez pas revenir en arrière !",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Oui, supprimez-le !'
                   }).then((result) => {
                     if (result.isConfirmed) {
 
@@ -76,12 +76,12 @@ function ListProgramme() {
         
       },
       { field: "nom_programme", headerName: "nom_programme", width: 150 },
-      { field: "hotelId", headerName: "hotelId", width: 150 },
-      { field: "busId", headerName: "busId", width: 200 },
-      { field: "avionId", headerName: "avionId", width: 200 },
+      { field: "nom_hotel", headerName: "Hotel", width: 150 },
+      { field: "matricule", headerName: "Bus", width: 200 },
+      { field: "reference_avion", headerName: "Avion", width: 200 },
       {
-        field: "evenementId",
-        headerName: "evenementId",
+        field: "nom_evenement",
+        headerName: "Evenement",
         width: 100,
       },
       

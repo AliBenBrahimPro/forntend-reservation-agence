@@ -9,7 +9,10 @@ import Swal from 'sweetalert2'
 import { getSingleEvent,editEvent } from '../../redux/eventSlice';
 import { useParams } from 'react-router-dom';
 import moment from 'moment'
+import { useNavigate } from "react-router-dom";
+
 function EditEvent() {
+  const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const dispatch =useDispatch();
   const {id} = useParams();
@@ -28,11 +31,12 @@ function EditEvent() {
                    `${data.payload.nom_evenement} a ete modifie avec succes`,
                    'success'
                  ) 
+                 navigate("/admin/listevent")
         }else{
              Swal.fire({
                  icon: 'error',
                  title: 'Oops...',
-                 text: 'Something went wrong!',
+                 text: "Quelque chose s'est mal passé!",
                })}
        })
   };

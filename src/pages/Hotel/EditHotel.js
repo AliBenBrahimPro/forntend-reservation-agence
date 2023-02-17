@@ -7,7 +7,7 @@ import Header from "../../components/Header";
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate  } from 'react-router-dom';
 import './hotelForm.css'
 import Fab from '@mui/material/Fab';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -21,6 +21,7 @@ import moment from 'moment'
 import axios from 'axios';
 
 function EditHotel() {
+    const navigate = useNavigate();
     const dispatch =useDispatch();
     const {id} = useParams();
      const {data} = useSelector(state=>state.hotels)
@@ -97,11 +98,12 @@ dispatch(editHotels(values)).then((data)=>{
              `${data.payload.nom_hotel} a ete modifie avec succes`,
              'success'
            ) 
+          //  navigate("/admin/listHotel")
   }else{
        Swal.fire({
            icon: 'error',
            title: 'Oops...',
-           text: 'Something went wrong!',
+           text: "Quelque chose s'est mal passé!",
          })}
  })
               
