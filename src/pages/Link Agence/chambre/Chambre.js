@@ -50,13 +50,13 @@ const Chambre = () => {
        let time_diff = date1.getTime() - date2.getTime();
        const days_Diff = time_diff / (1000 * 3600 * 24);
        console.log("date",days_Diff);
-        values.montant=price;
+        values.montant=price*days_Diff;
         values.type=type
         values.nb_place=nbr
      
         const data2={
           nb_place:nbr,
-          monatnt_total:price,
+          monatnt_total:price*days_Diff,
           date_debut:values.date_debut,
           date_fin:values.date_fin,
           hotelId:values.hotelId,
