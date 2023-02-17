@@ -276,6 +276,7 @@ const Dashboard = () => {
                         data={[
                           {
                             label: 'Bus',
+
                             value: (parseInt(counttransportbus)/parseInt(counttransport))*100,
                           },
                           {
@@ -287,6 +288,7 @@ const Dashboard = () => {
                         colors={["#4cceac","#6870fa"]}
                         width="360"
                         height="300"
+                      
                       />
           </Box>
         </Grid>

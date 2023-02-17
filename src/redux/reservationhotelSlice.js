@@ -27,7 +27,21 @@ export const fetchreservationhotel = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
+    
          );
+         export const getnbrReservationhotel = createAsyncThunk(
+          'reservationhotel/getnbrReservationhotel',
+          async (id,thunkAPI) => {
+            const {rejectWithValue} = thunkAPI;
+              try{
+                const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/RCH/getnbRCH/${id}`)
+            const data = await res.json()
+            return data}
+            catch(error){
+              return rejectWithValue(error.message);
+            }
+          }
+             );
          export const deleteReservationhotel = createAsyncThunk(
           'reservationhotel/deleteReservationhotel',
           async (id,thunkAPI) => {
@@ -125,6 +139,7 @@ export const fetchreservationhotel = createAsyncThunk(
            state.status ="failed";
            state.error=action.payload;
          },
+         //
          [getuserleReservationhotel.fulfilled]:(state,action)=>{
           state.getAllData =action.payload;
           state.status ="success";
@@ -140,6 +155,23 @@ export const fetchreservationhotel = createAsyncThunk(
           state.status ="failed";
           state.error=action.payload;
         },
+        //
+        [getnbrReservationhotel.fulfilled]:(state,action)=>{
+          state.data =action.payload;
+          state.status ="success";
+      state.error =null;
+       },
+       [getnbrReservationhotel.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+       },
+       [getnbrReservationhotel.rejected]:(state,action)=>{
+      
+          state.status ="failed";
+          state.error=action.payload;
+        },
+        //
         [deleteReservationhotel.fulfilled]:(state,action)=>{
           state.getAllData =state.getAllData.filter((el)=> el.id !==action.payload)
           state.status ="success";

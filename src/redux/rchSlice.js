@@ -90,7 +90,7 @@ export const fetchRCH = createAsyncThunk(
          },
          // insert books
          [insertRCH.fulfilled]:(state,action)=>{
-            state.data.push(action.payload);
+            state.getAllData.push(action.payload);
             state.status ="success";
         state.error =null;
          },

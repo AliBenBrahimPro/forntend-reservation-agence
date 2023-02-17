@@ -57,7 +57,7 @@ const FCH = () => {
                               cin: "",
                               reservationtransId:null,
                               userId:localStorage.getItem('id')}) 
-                              navigate(`/agence`)
+                              navigate(`/agence/cch/${id}`)
                         }
                         else{
                             console.log(datarch)

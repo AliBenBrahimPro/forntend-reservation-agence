@@ -11,6 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { insertRCH } from '../../../redux/rchSlice';
 import { insertRCT } from '../../../redux/rctSlice';
+import { getSingleChambre } from '../../../redux/chambreSlice';
 const NCH = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
@@ -23,7 +24,7 @@ const NCH = () => {
     let navigate = useNavigate();
     useEffect(()=>{
         dispatch(getSingleClient(id))
-       
+        dispatch(getSingleChambre(tr))
            },[dispatch])
        
            useEffect(()=>{
@@ -31,9 +32,9 @@ const NCH = () => {
                 },[client])
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
     const handleFormSubmit = (values) => {
-        dispatch( insertRCT({reservationTarnsportId:tr, clientId:data.id})).then((datarct)=>{
-            if(datarct.type==="rct/insertRCT/fulfilled" ){
-                console.log(datarct)
+        dispatch( insertRCH({reservationHotelId:parseInt(tr), clientId:data.id,montant_total:chambre.data.montant})).then((datarch)=>{
+            if(datarch.type==="rch/insertRCH/fulfilled" ){
+                console.log(datarch)
                 Swal.fire(
                     'Success',
                     `le client a ajouter avec succes`,
@@ -48,6 +49,7 @@ const NCH = () => {
                       }) 
             }
          })
+  
        
         
     };
