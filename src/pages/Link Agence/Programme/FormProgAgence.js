@@ -17,6 +17,7 @@ import RCH from './RCH';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSingleProgramme } from '../../../redux/programmeSlice';
+import RCT from './RCT';
 const FormProgAgence = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -39,7 +40,7 @@ dispatch(getSingleProgramme(id))
         <Box m="20px">
           <Header title="Formulaire du programme" subtitle="Remplir les coordonnées des chambres" />
 
-    {status==="loading"?<CircularProgress/>: <RCH eventid={data.evenementId}  hotelsid={data.hotelId}  avionid={data.avionId} busid={data.busId}/>}
+    {status==="loading"?<CircularProgress/>:data.hotelId=== null?<RCT avionid={data.avionId} busid={data.busId} eventid={data.evenementId}/>: <RCH eventid={data.evenementId}  hotelsid={data.hotelId}  avionid={data.avionId} busid={data.busId}/>}
 
         </Box>
       );

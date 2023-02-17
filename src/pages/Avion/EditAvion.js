@@ -52,7 +52,7 @@ function EditAvion() {
 })
   return (
     <Box m="20px">
-    <Header title="Creer nouveau BUS" subtitle="Ajouter nouveau BUS" />
+    <Header title="Modifier Avion" subtitle="Editer coordonnées de l'avion" />
 
     <Formik onSubmit={handleFormSubmit} initialValues={data} enableReinitialize={true} validationSchema={checkoutSchema}>
       {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (

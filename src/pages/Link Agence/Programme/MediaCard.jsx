@@ -48,9 +48,7 @@ export default function MediaCard({title,busid,hotelId,evenementId,sub2,sub3,des
         <Typography gutterBottom variant="h4" component="div">
         {title}
         </Typography>
-        <Typography variant="h4" color="text.secondary">
-     {description}
-        </Typography>
+       
        
        {/* <Rating defaultValue={4}></Rating> */}
       

@@ -82,6 +82,20 @@ export const fetchReservationTrans = createAsyncThunk(
             }
           }
                );
+               export const getnbrReservationTrans = createAsyncThunk(
+                'reservationtrans/getnbrReservationTrans',
+                async (id,thunkAPI) => {
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/RCT/getnbRCT/${id}`)
+                  const data = await res.json()
+                  console.log(data)
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+                     );
                export const getuserleReservationTrans = createAsyncThunk(
                 'reservationtrans/getuserReservationTrans',
                 async (id,thunkAPI) => {
@@ -186,6 +200,7 @@ export const fetchReservationTrans = createAsyncThunk(
           state.status ="failed";
           state.error=action.payload;
         },
+        // getuser
         [getuserleReservationTrans.fulfilled]:(state,action)=>{
           state.getAllDatauser =action.payload;
           state.status ="success";
@@ -201,6 +216,23 @@ export const fetchReservationTrans = createAsyncThunk(
           state.status ="failed";
           state.error=action.payload;
         },
+        // get nbr
+        [getnbrReservationTrans.fulfilled]:(state,action)=>{
+          state.data =action.payload;
+          state.status ="success";
+          state.error =null;
+       },
+       [getnbrReservationTrans.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+       },
+       [getnbrReservationTrans.rejected]:(state,action)=>{
+      
+          state.status ="failed";
+          state.error=action.payload;
+        },
+
          // insert books
          [insertReservationTrans.fulfilled]:(state,action)=>{
             state.data.push(action.payload);

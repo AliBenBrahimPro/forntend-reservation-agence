@@ -45,7 +45,7 @@ function ReservationBus() {
                       confirmButtonText: 'Ajouter client'
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        navigate(`/agence/clientbus/${data.payload.id}`) 
+                        navigate(`/agence/ccb/${data.payload.id}`) 
                       }
                     })
                    

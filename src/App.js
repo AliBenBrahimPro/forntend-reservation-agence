@@ -82,6 +82,10 @@ import Stepers from "./pages/Link Agence/Programme/stepers";
 import RCH from "./pages/Link Agence/Programme/RCH";
 import RCT from "./pages/Link Agence/Programme/RCT";
 import RCE from "./pages/Link Agence/Programme/RCE";
+import CCB from "./pages/Link Agence/Bus/CCB";
+import ECB from "./pages/Link Agence/Bus/ECB";
+import NCB from "./pages/Link Agence/Bus/NCB";
+import FCB from "./pages/Link Agence/Bus/FCB";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -189,6 +193,10 @@ function LinkAgence() {
                 <Route path="/busForm" element={<BusForm />} />
                 <Route path="/busForm/:id" element={<EditBus />} />
                 <Route path="/listbus" element={<ListBus />} />
+                <Route path="/ccb/:id" element={<CCB />} />
+                <Route path="/ecb" element={<ECB />} />
+                <Route path="/ncb/:id" element={<NCB />} />
+                <Route path="/fcb/:id" element={<FCB />} />
                 {/* evenet */}
                 <Route path="/eventForm" element={<EventForm />} />
                 <Route path="/eventForm/:id" element={<EditEvent />} />

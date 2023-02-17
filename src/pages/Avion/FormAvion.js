@@ -62,7 +62,7 @@ function FormAvion() {
     })
     return (
         <Box m="20px">
-          <Header title="Creer nouveau BUS" subtitle="Ajouter nouveau BUS" />
+          <Header title="Creer nouveau Avion" subtitle="Ajouter nouveau Avion" />
     
           <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (

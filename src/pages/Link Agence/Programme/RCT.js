@@ -6,7 +6,7 @@ import Header from '../../../components/Header'
 import RCA from './RCA'
 import RCB from './RCB'
 
-function RCT() {
+function RCT({avionid,busid,eventid}) {
     const [transport,setTransport]= useState("1")
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const {a,b,e,n}=useParams()
