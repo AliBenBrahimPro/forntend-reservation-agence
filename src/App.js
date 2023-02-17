@@ -72,7 +72,6 @@ import NoClient from "./pages/Link Agence/components/NoClient";
 import ChooseClient from "./pages/Link Agence/components/ChooseClient";
 import ExistClient from "./pages/Link Agence/components/ExistClient";
 import ClientForm from "./pages/Link Agence/components/ClientForm";
-import NewClientHotel from "./pages/Link Agence/Hotel/NewClientHotel";
 import FormProgAgence from "./pages/Link Agence/Programme/FormProgAgence";
 import Ccp from "./pages/Link Agence/Programme/Ccp";
 import Ecp from "./pages/Link Agence/Programme/EcP";
@@ -90,6 +89,10 @@ import CCA from "./pages/Link Agence/Avion/CCA";
 import ECA from "./pages/Link Agence/Avion/ECA";
 import NCA from "./pages/Link Agence/Avion/NCB";
 import FCA from "./pages/Link Agence/Avion/FCA";
+import CCH from "./pages/Link Agence/Hotel/CCH";
+import ECH from "./pages/Link Agence/Hotel/ECH";
+import NCH from "./pages/Link Agence/Hotel/NCH";
+import FCH from "./pages/Link Agence/Hotel/FCH";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -192,7 +195,10 @@ function LinkAgence() {
                 <Route path="/listHotel" element={<ListHotel />} />
                 <Route path="/hoteldetails/:id" element={<HotelDetails />} />
                 <Route path="/chambre/:id" element={<Chambre />} />
-                <Route path="/newclienthotel/:id" element={<NewClientHotel />} />
+                <Route path="/cch/:id" element={<CCH />} />
+                <Route path="/ech/:id" element={<ECH />} />
+                <Route path="/nch/:id/:tr" element={<NCH />} />
+                <Route path="/fch/:id" element={<FCH />} />
                 {/* bus */}
                 <Route path="/busForm" element={<BusForm />} />
                 <Route path="/busForm/:id" element={<EditBus />} />

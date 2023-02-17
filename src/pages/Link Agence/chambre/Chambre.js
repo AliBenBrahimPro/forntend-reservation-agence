@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment/moment';
+import { getSingleUser } from '../../../redux/userSlice';
 
 const Chambre = () => {
   const iduser = localStorage.getItem('id');
@@ -67,7 +68,9 @@ const Chambre = () => {
        let e_mail_agence=localStorage.getItem('email_agence')
        let x= dispatch(insertReservationhotel(data2)).then(secc=>{
         // console.log(secc)
+
         if(secc.type==="reservationhotel/insertReservationhotel/fulfilled" ){
+          dispatch(getSingleUser(localStorage.getItem('id')))
 
           dispatch(insertChambre(values)).then(async(sec)=>{
             const email={
@@ -89,7 +92,8 @@ const Chambre = () => {
              date_fin:moment(values.date_fin).format('DD/MM/YYYY'),
         }
             if(sec.type==="chambre/insertChambre/fulfilled" ){
-             
+              dispatch(getSingleUser(localStorage.getItem('id')))
+
               Swal.fire(
               'Success',
               `${sec.payload.type} a ajouter avec succes`,
@@ -97,7 +101,7 @@ const Chambre = () => {
             ) 
             await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmail`,email)
             await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmailagence`,email_agence)
-            navigate(`/agence/chooseclient/${sec.payload.id}`)
+            navigate(`/agence/cch/${sec.payload.id}`)
           }
            
 

@@ -1,96 +1,64 @@
 import React, { useEffect } from 'react'
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, CircularProgress, TextField } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
 import Header from "../../../components/Header";
 import { fetchClient, insertClient,getSingleClient } from '../../../redux/clientSlice';
-import { insertRCH } from '../../../redux/rchSlice';
-import { getSingleChambre} from '../../../redux/chambreSlice';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
-
-const NewClientHotel = () => {
+import { insertRCH } from '../../../redux/rchSlice';
+import { insertRCT } from '../../../redux/rctSlice';
+const NCH = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
-    const {id}=useParams();
-   
+    const {id,tr}=useParams();
     const chambre = useSelector(state=>state.chambre)
-
+    const client = useSelector(state=>state.client)
+    const {error} = useSelector(state=>state.client)
+    const {status} = useSelector(state=>state.client)
+    const {getAllData,data} = useSelector(state=>state.client)
     let navigate = useNavigate();
-    useEffect(() => {
-    dispatch(getSingleChambre(id))
-    }, [])
-    useEffect(() => {
-        console.log(chambre.data.montant)
-        }, [chambre])
-    
-
+    useEffect(()=>{
+        dispatch(getSingleClient(id))
+       
+           },[dispatch])
+       
+           useEffect(()=>{
+       
+                },[client])
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
     const handleFormSubmit = (values) => {
-        console.log(values);
-        dispatch(insertClient(values)).then((data)=>{
-            if(data.type==="client/insertClient/fulfilled" ){
-              
-             Swal.fire(
-                       'Success',
-                       `${data.payload.full_name} a ajouter avec succes`,
-                       'success'
-                     ) 
-                     dispatch( insertRCH({reservationHotelId:id, montant_total:chambre.data.montant, clientId:data.payload.id})).then((datarch)=>{
-                        if(datarch.type==="rch/insertRCH/fulfilled" ){
-                            console.log(datarch)
-                            Swal.fire(
-                                'Success',
-                                `le client a ajouter avec succes`,
-                                'success'
-                              ) 
-                        }
-                        else{
-                            console.log(datarch)
-
-                            Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: "Quelque chose s'est mal passé!",
-                                  }) 
-                        }
-                     })
-            
+        dispatch( insertRCT({reservationTarnsportId:tr, clientId:data.id})).then((datarct)=>{
+            if(datarct.type==="rct/insertRCT/fulfilled" ){
+                console.log(datarct)
+                Swal.fire(
+                    'Success',
+                    `le client a ajouter avec succes`,
+                    'success'
+                  ) 
+                  navigate(`/agence/cch/${tr}`)
+            }else{
+                Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: "Quelque chose s'est mal passé!",
+                      }) 
             }
-            else{
-                 Swal.fire({
-                     icon: 'error',
-                     title: 'Oops...',
-                     text: "Quelque chose s'est mal passé!",
-                   })
-                }
-                   
-           })
-    
+         })
+       
         
-    
-        
-    };
-    const initialValues = {
-        full_name: "",
-        date_naissance: "",
-        e_mail: "",
-        numero_telephone: "",
-        montant_hotel: 0,
-        cin: "",
-        chambreId:null,
     };
 
 
 
     return (
         <Box m="20px">
-          <Header title="Formulaire du client" subtitle="Veuillez remplir le formulaire du client" />
+          <Header title="Coordonnées du client" subtitle="Verfier coordonnées du client" />
     
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues}>
+        { status==="loading"?<CircularProgress/>: <Formik onSubmit={handleFormSubmit} enableReinitialize={true} initialValues={data}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
               <form onSubmit={handleSubmit}>
                 <Box
@@ -102,6 +70,7 @@ const NewClientHotel = () => {
                   }}
                 >
                             <TextField
+                            disabled
                     fullWidth
                     variant="filled"
                     type="text"
@@ -115,6 +84,7 @@ const NewClientHotel = () => {
                     sx={{ gridColumn: "span 4" }}
                   />
                   <TextField
+                  disabled
                     fullWidth
                     variant="filled"
                     type="text"
@@ -128,6 +98,7 @@ const NewClientHotel = () => {
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
+                  disabled
                     fullWidth
                     variant="filled"
                     type="text"
@@ -141,19 +112,21 @@ const NewClientHotel = () => {
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
+                  disabled
                     fullWidth
                     variant="filled"
                     type="date"
                     label="Date de naissance"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.date_naissance}
+                    value={moment(values.date_naissance).format("YYYY-MM-DD") }
                     name="date_naissance"
                     error={!!touched.date_naissance && !!errors.date_naissance}
                     helperText={touched.date_naissance && errors.date_naissance}
                     sx={{ gridColumn: "span 4" }} 
                   />
                   <TextField
+                  disabled
                     fullWidth
                     variant="filled"
                     type="text"
@@ -176,9 +149,9 @@ const NewClientHotel = () => {
                 </Box>
               </form>
             )}
-          </Formik>
+          </Formik>}
         </Box>
       );
 }
 
-export default NewClientHotel
+export default NCH
