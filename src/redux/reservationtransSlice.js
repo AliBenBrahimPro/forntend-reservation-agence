@@ -123,7 +123,20 @@ export const fetchReservationTrans = createAsyncThunk(
                 }
               );
                
-
+              export const countResevationtransport= createAsyncThunk(
+                'reservationtrans/countTransport',
+                async (tokens,thunkAPI) => {
+                  console.log("token",tokens)
+                  const {rejectWithValue} = thunkAPI;
+                    try{
+                      const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_transport/countreservationtransport`)
+                  const data = await res.json()
+                  return data}
+                  catch(error){
+                    return rejectWithValue(error.message);
+                  }
+                }
+              )
 
          
   export const reservationtransSlice = createSlice({
@@ -134,6 +147,7 @@ export const fetchReservationTrans = createAsyncThunk(
         getAllDataclient:[],
         getAllDatauser:[],
         getonereservation:[],
+        counttransport:0,
         status:null,
         error:null,
     },
@@ -260,7 +274,21 @@ export const fetchReservationTrans = createAsyncThunk(
               error:action.payload
             };
           },
-          
+          [countResevationtransport.fulfilled]:(state,action)=>{
+            state.counttransport= action.payload.nb;
+            state.status ="success";
+            state.error =null;
+         },
+         [countResevationtransport.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+         },
+         [countResevationtransport.rejected]:(state,action)=>{
+        
+          state.status ="failed";
+          state.error=action.payload;
+          },
        
     }
 })

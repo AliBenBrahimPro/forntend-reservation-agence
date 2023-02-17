@@ -83,13 +83,27 @@ export const getuserleReservationevent = createAsyncThunk(
                       }
                     }
                   );
-                   
+                  export const countResevationevent= createAsyncThunk(
+                    'reservationEvent/countreservationevent',
+                    async (tokens,thunkAPI) => {
+                      console.log("token",tokens)
+                      const {rejectWithValue} = thunkAPI;
+                        try{
+                          const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_evenement/countreservationevent`)
+                      const data = await res.json()
+                      return data}
+                      catch(error){
+                        return rejectWithValue(error.message);
+                      }
+                    }
+                  )       
   export const reservationEventSlice = createSlice({
     name:'reservationEvent',
     initialState:{
         data:[],
         getAllData:[],
         getonereservationevent:[],
+        countreservationvent:0,
         status:null,
         error:null,
     },
@@ -180,7 +194,23 @@ export const getuserleReservationevent = createAsyncThunk(
             status:"rejected",
             error:action.payload
           };
-        },}
+        },
+        [countResevationevent.fulfilled]:(state,action)=>{
+          state.countreservationevent= action.payload.nb;
+          state.status ="success";
+          state.error =null;
+       },
+       [countResevationevent.pending]:(state)=>{
+        state.status ="loading";
+        state.error =null;
+
+       },
+       [countResevationevent.rejected]:(state,action)=>{
+      
+        state.status ="failed";
+        state.error=action.payload;
+        },
+      }
 })
 
 export default reservationEventSlice.reducer

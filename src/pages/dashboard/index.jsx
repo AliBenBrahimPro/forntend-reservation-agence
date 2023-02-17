@@ -28,6 +28,11 @@ import { countHotel } from '../../redux/hotelSlice';
 import { countBus } from '../../redux/busSlice';
 import { countEvent } from '../../redux/eventSlice';
 import { countUser } from '../../redux/userSlice';
+import { countProg } from '../../redux/programmeSlice';
+import { countResevationevent } from '../../redux/reservationeventSlice';
+import { countResevationhotel } from '../../redux/reservationhotelSlice';
+import { countResevationtransport } from '../../redux/reservationtransSlice';
+import { countResevationprogramme } from '../../redux/reservationprogrammeSlice';
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
@@ -48,8 +53,13 @@ const Dashboard = () => {
   const {countbus} = useSelector(state=>state.bus)
   const {countevent} = useSelector(state=>state.event)
   const {countuser} = useSelector(state=>state.user)
+  const {countprog} = useSelector(state=>state.programme)
+  const {counttransport} = useSelector(state=>state.reservationtrans)
+  const {countreservationhotel} = useSelector(state=>state.reservationhotel)
+  const {countreservationevent} = useSelector(state=>state.reservationEvent)
+  const {countreservationprogramme} = useSelector(state=>state.reservationprogramme)
   const reservationtitle=['Reservation Hotel','Reservation Transport','reservation Evenement','Reservation Programmes']
-  const data = [324, 45, 672,800];
+  const data = [countreservationhotel, counttransport, countreservationevent,countreservationprogramme];
   const options = { fillColor:'#6870fa', strokeColor: '#6870fa' };
   useEffect(()=>{
     dispatch(countAvion())
@@ -57,6 +67,11 @@ const Dashboard = () => {
     dispatch(countBus())
     dispatch(countEvent())
     dispatch(countUser())
+    dispatch(countProg())
+    dispatch(countResevationhotel())
+    dispatch(countResevationtransport())
+    dispatch(countResevationevent())
+    dispatch(countResevationprogramme())
         },[dispatch])
   return (
     <Box m="20px">
@@ -176,7 +191,7 @@ const Dashboard = () => {
             justifyContent="center"
           >
             <StatBox
-              title={countevent}
+              title={countprog}
               subtitle="Nombre des Programmes :"
               icon={
                 <ExploreIcon

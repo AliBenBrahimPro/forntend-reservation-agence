@@ -113,6 +113,7 @@ export const fetchProgramme = createAsyncThunk(
         data:[],
         getAllData:[],
         getAllDataprogramme:[],
+        countprog:0,
         status:null,
         error:null,
     },
@@ -207,6 +208,21 @@ export const fetchProgramme = createAsyncThunk(
               status:"rejected",
               error:action.payload
             };
+          },
+          [countProg.fulfilled]:(state,action)=>{
+            state.countprog= action.payload.nb;
+            state.status ="success";
+            state.error =null;
+         },
+         [countProg.pending]:(state)=>{
+          state.status ="loading";
+          state.error =null;
+
+         },
+         [countProg.rejected]:(state,action)=>{
+        
+          state.status ="failed";
+          state.error=action.payload;
           },
           
        

@@ -70,11 +70,26 @@ export const fetchreservationhotel = createAsyncThunk(
                    }
                    }
                  )
+                 export const countResevationhotel= createAsyncThunk(
+                  'reservationhotel/countHotel',
+                  async (tokens,thunkAPI) => {
+                    console.log("token",tokens)
+                    const {rejectWithValue} = thunkAPI;
+                      try{
+                        const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation_hotel/countreservationhotel`)
+                    const data = await res.json()
+                    return data}
+                    catch(error){
+                      return rejectWithValue(error.message);
+                    }
+                  }
+                )
   export const reservationhotelSlice = createSlice({
     name:'reservationhotel',
     initialState:{
         data:[],
         getAllData:[],
+        countreservationhotel:0,
         status:null,
         error:null,
     },
@@ -141,7 +156,23 @@ export const fetchreservationhotel = createAsyncThunk(
       
           state.status ="failed";
           state.error=action.payload;
-        },}
+        },
+        [countResevationhotel.fulfilled]:(state,action)=>{
+          state.countreservationhotel= action.payload.nb;
+          state.status ="success";
+          state.error =null;
+       },
+       [countResevationhotel.pending]:(state)=>{
+        state.status ="loading";
+        state.error =null;
+
+       },
+       [countResevationhotel.rejected]:(state,action)=>{
+      
+        state.status ="failed";
+        state.error=action.payload;
+        },
+      }
 })
 
 export default reservationhotelSlice.reducer
