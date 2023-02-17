@@ -29,12 +29,15 @@ useEffect(() => {
 dispatch(getSingleProgramme(id))
 }, [])
 
+
     const handleFormSubmit = (values) => {
         console.log(values);
 
     };
 
-
+    localStorage.setItem('date_debut',data.date_debut) 
+    localStorage.setItem('date_fin',data.date_fin) 
+ 
 
     return (
         <Box m="20px">

@@ -188,7 +188,7 @@ export const fetchreservationhotel = createAsyncThunk(
           state.error=action.payload;
         },
         [insertReservationhotel.fulfilled]:(state,action)=>{
-          state.data.push(action.payload);
+          state.getAllData.push(action.payload);
           state.status ="success";
           state.error =null;
        },

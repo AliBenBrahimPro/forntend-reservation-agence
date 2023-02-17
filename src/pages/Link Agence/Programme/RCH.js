@@ -50,7 +50,7 @@ const RCH = ({hotelsid,avionid,busid,eventid}) => {
         values.montant=price;
         values.type=type
         values.nb_place=nbr
-     
+        localStorage.setItem('price',price)
         const data2={
           nb_place:nbr,
           monatnt_total:price,
@@ -94,6 +94,7 @@ const RCH = ({hotelsid,avionid,busid,eventid}) => {
             ) 
             await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmail`,email)
             await axios.post(`${process.env.REACT_APP_BASE_URL}/api/mail/sendmailagence`,email_agence)
+            localStorage.setItem('reservationHotelId',sec.payload.id)
             navigate(`/agence/rctp/${avionid}/${busid}/${eventid}/${nbr}`)
           }
            

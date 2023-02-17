@@ -26,15 +26,19 @@ function RCE() {
     const handleFormSubmit = (values) => {
          console.log(values);
          values.monatnt_total=data.prix_evenement*n
+        
+         const price= parseFloat(localStorage.getItem('price'))+parseFloat(data.prix_evenement*n)
+         localStorage.setItem('price',price)
         dispatch(insertReservationEvent(values)).then((datarce)=>{
-            
+         
                    if(datarce.type==="reservationevent/insertReservationevent/fulfilled" ){
-             
+                 
                     Swal.fire(
                               'Success',
                               `réservation a affecter avec succes`,
                               'success'
                             ) 
+                            localStorage.setItem('reservationEvenementId',datarce.payload.id)
                             navigate(`/agence/ccp`) 
                   
                           
@@ -57,7 +61,7 @@ function RCE() {
 
     })
    let initialdata={
-      nb_place:"",
+      nb_place:n,
       monatnt_total:"",
       date_debut:data.date_debut,
       date_fin:data.date_fin,

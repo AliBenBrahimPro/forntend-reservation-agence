@@ -32,20 +32,25 @@ function RCB({id,nbr,event}) {
     const handleFormSubmit = (values) => {
          console.log(values);
          values.monatnt_total=data.prix_place*nbr
+         const price= parseFloat(localStorage.getItem('price'))+ parseFloat(data.prix_place*nbr)
+         localStorage.setItem('price',price)
         dispatch(insertReservationTrans(values)).then((data)=>{
-          
+         
             if(data.type==="reservationtrans/insertReservationTrans/fulfilled" ){
+      
                 Swal.fire(
                     'Success',
                     `reservation bus a ajouter avec succes`,
                     'success'
                   ) 
+                  localStorage.setItem('reservationTarnsportId',data.payload.id)
+                  
               dispatch(getSingleUser(localStorage.getItem('id')))
               navigate(`/agence/rcep/${event}/${nbr}`) 
                     
                    
             }else{
-              console.log(data)
+              
                  Swal.fire({
                      icon: 'error',
                      title: data.response,
@@ -64,7 +69,7 @@ function RCB({id,nbr,event}) {
 
     })
    let initialdata={
-      nb_place:"",
+      nb_place:nbr,
       monatnt_total:data.prix_place*nbr,
       type:"bus",
       date_debut:data.date_debut,
