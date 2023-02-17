@@ -64,6 +64,8 @@ import ListreservationHoteluser from "./pages/listereservationuser/listereservat
 import ListreservationTransportuser from "./pages/listereservationuser/listereservationtransport";
 import ListreservationEventuser from "./pages/listereservationuser/listereservationevent";
 import ClientReserveruser from "./pages/listereservationuser/clientreserver";
+import ClientReserveruserHotel from "./pages/listereservationuser/clientreserverhotel";
+import ClientReserveruserevent from "./pages/listereservationuser/clientreserverevent";
 import UpdateReservationBus from "./pages/updatereservation/updatereservationtrans";
 import UpdateReservationAvion from "./pages/updatereservation/updatereservationavion";
 import UpdateReservationevent from "./pages/updatereservation/updatereservationevent";
@@ -145,7 +147,8 @@ function LinkAdmin() {
                 <Route path="/listreservationtransport" element={<ListreservationTransport/>}/>
                 <Route path="/listreservationevenement" element={<ListreservationEvent/>}/>
                 <Route path="/listclientreservation/:id" element={<ClientReserver/>}/>
-
+                <Route path="/listuserclientreservationHotel/:id" element={<ClientReserveruserHotel/>}/>
+                <Route path="/listuserclientreservationevent/:id" element={<ClientReserveruserevent/>}/>
                 </Routes>
             </main>
           </div>
@@ -262,6 +265,8 @@ function LinkAgence() {
                 <Route path="/listuserreservationevenement" element={<ListreservationEventuser/>}/>
                 <Route path="/updatereservationevenement/:id" element={<UpdateReservationevent/>}/>
                 <Route path="/listuserclientreservation/:id" element={<ClientReserveruser/>}/>
+                <Route path="/listuserclientreservationHotel/:id" element={<ClientReserveruserHotel/>}/>
+                <Route path="/listuserclientreservationevent/:id" element={<ClientReserveruserevent/>}/>
                 
                 </Routes>
             </main>

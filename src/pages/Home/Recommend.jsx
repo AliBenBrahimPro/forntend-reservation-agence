@@ -51,7 +51,7 @@ const dispatch = useDispatch();
      top={10}
      
      style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :hotels.data.length===0? <Box display='flex' justifyContent='center'> "there is no data found"</Box>:
+    :hotels.data.length===0? <Box display='flex' justifyContent='center'> "il n'y a pas de données trouvées"</Box>:
    
       <div className="destinations">
         {data.map((destination) => {

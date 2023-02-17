@@ -170,7 +170,7 @@ dispatch(editHotels(values)).then((data)=>{
         top={10}
         
         style={{marginLeft: '50%'}} color="secondary" /></Box>
-       :hotels.data.length===0 ?  "there is no data found":
+       :hotels.data.length===0 ?  "il n'y a pas de données trouvées":
        <Box> 
           <Header title="Ajouter hotel" subtitle="Créer nouveau hotel" />
     

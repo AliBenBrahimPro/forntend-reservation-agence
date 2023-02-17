@@ -56,11 +56,12 @@ useEffect(()=>{
     <Box m="20px">
       {/* HEADER */}
 
-      {getAllDataprogramme.length>0 ? <div><Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+      {getAllDataprogramme.length>0 ? <div>
+        <Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }}>
        {
         getAllDataprogramme.slice(0,3).map(e=>
           <Grid  item xs={12} sm={4} md={4}>
-          <MediaCard busid={e.busId} evenementId={e.evenementId} hotelId={e.hotelId} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={`${process.env.REACT_APP_BASE_URL}/${e.image_programme}`} title={`${e.nom_programme}`}  onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
+          <MediaCard PLACE={`${e.point_depart} à ${e.point_arrive}`} busid={e.busId} evenementId={e.evenementId} hotelId={e.hotelId} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={`${process.env.REACT_APP_BASE_URL}/${e.image_programme}`} title={`${e.nom_programme}`}  onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
           </Grid>
         )
        }

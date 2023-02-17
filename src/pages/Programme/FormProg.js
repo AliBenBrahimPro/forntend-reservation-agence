@@ -40,6 +40,8 @@ function ProgrammeForm() {
         const formData = new FormData();
         formData.append('image_programme',values.image_programme)
         formData.append('nom_programme',values.nom_programme)
+        formData.append('point_depart',values.point_depart)
+        formData.append('point_arrive',values.point_arrive)
       if(values.hotelId !=0 )formData.append('hotelId',values.hotelId) 
       if( values.busId !=0 )formData.append('busId',values.busId)
       if(values.evenementId !=0 ) formData.append('evenementId',values.evenementId)
@@ -76,7 +78,9 @@ function ProgrammeForm() {
         evenementId:0,
         date_debut: "",
         date_fin: "",
-        image_programme:null
+        image_programme:null,
+        point_arrive:"",
+        point_depart:""
     };
     const checkoutSchema = yup.object().shape({
         nom_programme:yup.string().required("Required"),
@@ -213,7 +217,32 @@ function ProgrammeForm() {
                     sx={{ gridColumn: "span 4" }}
                   />
                
-              
+               <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="point de départ"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.point_depart}
+                    name="point_depart"
+                    error={!!touched.point_depart && !!errors.point_depart}
+                    helperText={touched.point_depart && errors.point_depart}
+                    sx={{ gridColumn: "span 4" }}
+                  />
+                   <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="point d'arrivée"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.point_arrive}
+                    name="point_arrive"
+                    error={!!touched.point_arrive && !!errors.point_arrive}
+                    helperText={touched.point_arrive && errors.point_arrive}
+                    sx={{ gridColumn: "span 4" }}
+                  />
                   <TextField
                     fullWidth
                     variant="filled"

@@ -7,27 +7,25 @@ import axios from 'axios';
 import Rating from '@mui/material/Rating';
 import Swal from 'sweetalert2'
 import { useDispatch,useSelector } from 'react-redux';
-import {fetchclientReservationTrans} from '../../redux/reservationtransSlice'
+import {fetchclientReservationEvent} from '../../redux/reservationeventSlice'
 import Header from "../../components/Header";
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-const ClientReserver = () => {
+const ClientReserveruserevent = () => {
     const {id} = useParams();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-    const reservationtransport = useSelector(state=>state.reservationtrans)
+    const reservationtransport = useSelector(state=>state.reservationhotel)
     
-    const {error} = useSelector(state=>state.reservationtrans)
-    const {status} = useSelector(state=>state.reservationtrans)
-    const {getAllDataclient} = useSelector(state=>state.reservationtrans)
-    console.log(getAllDataclient)
+    const {error} = useSelector(state=>state.reservationhotel)
+    const {status} = useSelector(state=>state.reservationhotel)
+    const {data} = useSelector(state=>state.reservationhotel)
     let navigate = useNavigate();
 const dispatch = useDispatch();
-console.log(getAllDataclient)
 
     useEffect(()=>{
-      dispatch(fetchclientReservationTrans(id))
+      dispatch(fetchclientReservationEvent(id))
      
          },[])
   const columns = [
@@ -58,7 +56,7 @@ console.log(getAllDataclient)
         top={10}
         
         style={{marginLeft: '50%'}} color="secondary" /></Box>
-       :reservationtransport.getAllData.length===0? "il n'y a pas de données trouvées":
+       :reservationtransport.data.length===0? "il n'y a pas de données trouvées":
        <Box> 
        <Box display="flex" justifyContent="space-between" alignItems="center">
  
@@ -99,7 +97,7 @@ console.log(getAllDataclient)
  }}
 >
  <DataGrid
-   rows={getAllDataclient}
+   rows={data}
    columns={columns}
    components={{ Toolbar: GridToolbar }}
  />
@@ -109,4 +107,4 @@ console.log(getAllDataclient)
   );
 };
 
-export default ClientReserver;
+export default ClientReserveruserevent;

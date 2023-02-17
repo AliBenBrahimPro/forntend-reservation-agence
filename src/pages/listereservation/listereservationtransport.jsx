@@ -86,7 +86,7 @@ console.log(getAllData)
         top={10}
         
         style={{marginLeft: '50%'}} color="secondary" /></Box>
-       :reservationtransport.getAllData.length===0? "there is no data found":
+       :reservationtransport.getAllData.length===0? "il n'y a pas de données trouvées":
        <Box> 
        <Box display="flex" justifyContent="space-between" alignItems="center">
  

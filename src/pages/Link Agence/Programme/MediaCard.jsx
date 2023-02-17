@@ -13,7 +13,7 @@ import { getSingleBus } from '../../../redux/busSlice'
 import { getSingleHotels } from '../../../redux/hotelSlice'
 import { getSingleEvent } from '../../../redux/eventSlice'
 
-export default function MediaCard({title,busid,hotelId,evenementId,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
+export default function MediaCard({PLACE,title,busid,hotelId,evenementId,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const cardcolor=colors.primary[400];
@@ -49,7 +49,9 @@ export default function MediaCard({title,busid,hotelId,evenementId,sub2,sub3,des
         {title}
         </Typography>
        
-       
+        <Typography gutterBottom variant="h4" component="div">
+        {PLACE}
+        </Typography>
        {/* <Rating defaultValue={4}></Rating> */}
       
       

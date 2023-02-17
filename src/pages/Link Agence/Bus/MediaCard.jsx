@@ -9,7 +9,7 @@ import { Box, Rating, useTheme } from '@mui/material';
 import { tokens } from "../../../theme";
 import { useNavigate } from 'react-router-dom';
 
-export default function MediaCard({title,subtile,sub2,sub3,description,btn,onebtn,twobtn,image,id,pd}) {
+export default function MediaCard({PLACE,title,subtile,sub2,sub3,description,btn,onebtn,twobtn,image,id,pd}) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const cardcolor=colors.primary[400];
@@ -29,6 +29,9 @@ export default function MediaCard({title,subtile,sub2,sub3,description,btn,onebt
       <CardContent>
         <Typography gutterBottom variant="h4" component="div">
         {title}
+        </Typography><br/>
+        <Typography gutterBottom variant="h4" component="div">
+        {PLACE}
         </Typography>
         <Typography  style={{display: 'inline-block'}} variant="h5" color="text.secondary">
           {pd}

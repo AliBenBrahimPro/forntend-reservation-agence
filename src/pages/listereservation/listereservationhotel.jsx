@@ -47,7 +47,7 @@ console.log(getAllData)
         <GridActionsCellItem
           icon={<RemoveRedEyeIcon />}
           label="tous les client"
-          onClick={() =>{navigate(`/admin/listclientreservation/${params.id}`)}}
+          onClick={() =>{navigate(`/admin/listuserclientreservationHotel/${params.id}`)}}
         />,
       ] 
     },
@@ -109,7 +109,7 @@ console.log(getAllData)
         top={10}
         
         style={{marginLeft: '50%'}} color="secondary" /></Box>
-       :reservationhotel.getAllData.length===0? "there is no data found":
+       :reservationhotel.getAllData.length===0? "il n'y a pas de données trouvées":
        <Box> 
        <Box display="flex" justifyContent="space-between" alignItems="center">
  

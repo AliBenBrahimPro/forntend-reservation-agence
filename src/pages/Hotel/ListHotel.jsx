@@ -167,7 +167,7 @@ onClick={() =>{navigate(`/admin/hotelform/${params.id}`)}}
         top={10}
         
         style={{marginLeft: '50%'}} color="secondary" /></Box>
-       :hotels.getAllData.length===0? "there is no data found":
+       :hotels.getAllData.length===0? "il n'y a pas de données trouvées":
        <Box> 
        <Box display="flex" justifyContent="space-between" alignItems="center">
  

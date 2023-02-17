@@ -32,7 +32,7 @@ function HotelDetails() {
      top={10}
      
      style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :data.length===0?<Alert severity="error">there is no data found</Alert> :
+    :data.length===0?<Alert severity="error">il n'y a pas de données trouvées</Alert> :
     <Box m="20px"  >
         <Header title={data.nom_hotel} subtitle={data.adresse}/>
         <div className='main-slide'>
