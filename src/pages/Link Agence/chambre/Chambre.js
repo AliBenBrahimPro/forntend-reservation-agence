@@ -44,7 +44,12 @@ const Chambre = () => {
             }, [hotels])
             // console.log("data",data.nom_hotel)
     const handleFormSubmit = (values) => {
-      // console.log("nom",data.nom_hotel);
+      console.log(values.date_debut,values.date_fin)
+        let date1= new Date(values.date_fin);
+       let date2 = new Date(values.date_debut)
+       let time_diff = date1.getTime() - date2.getTime();
+       const days_Diff = time_diff / (1000 * 3600 * 24);
+       console.log("date",days_Diff);
         values.montant=price;
         values.type=type
         values.nb_place=nbr
@@ -55,7 +60,8 @@ const Chambre = () => {
           date_debut:values.date_debut,
           date_fin:values.date_fin,
           hotelId:values.hotelId,
-          userId:iduser
+          userId:parseInt(iduser),
+          nb_nuit:days_Diff,
         }
        let  nom_agence=localStorage.getItem('nom_agence')
        let e_mail_agence=localStorage.getItem('email_agence')
@@ -72,7 +78,8 @@ const Chambre = () => {
               date_debut:moment(values.date_debut).format('DD/MM/YYYY'),
               date_fin:moment(values.date_fin).format('DD/MM/YYYY'),
               type:type,
-              enfant_gratuit:enfant
+              enfant_gratuit:enfant,
+              nb_nuit:days_Diff,
           }
           const email_agence={
             email:e_mail_agence,
@@ -365,11 +372,10 @@ console.log("test222",chambres,pensions)
        <TextField
               fullWidth
               variant="filled"
-              type="datetime-local"
+              type="date"
               label="Date début"
-             
               onChange={handleChange}
-              value={moment(values.date_debut).format("YYYY-MM-DD[T]HH:mm")}
+              value={moment(values.date_debut).format("YYYY-MM-DD")}
               name="date_debut"
               error={!!touched.date_debut && !!errors.date_debut}
               helperText={touched.date_debut && errors.date_debut}
@@ -378,11 +384,11 @@ console.log("test222",chambres,pensions)
             <TextField
               fullWidth
               variant="filled"
-              type="datetime-local"
+              type="date"
               label="Date fin"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={moment(values.date_fin).format("YYYY-MM-DD[T]HH:mm")}
+              value={moment(values.date_fin).format("YYYY-MM-DD")}
               name="date_fin"
               inputProps={{ min: values.date_debut}}
               error={!!touched.date_fin && !!errors.date_fin}
