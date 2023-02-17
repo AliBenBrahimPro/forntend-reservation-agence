@@ -1,21 +1,85 @@
-import React, { useEffect, useState } from 'react'
-import { Alert, Autocomplete, Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
-import { Formik } from "formik";
-import * as yup from 'yup';
-import { useMediaQuery } from "@mui/material";
-import Header from "../components/Header";
-import { fetchClient, insertClient,getSingleClient } from '../redux/clientSlice';
-import { getSingleReservationTrans } from '../redux/reservationtransSlice';
-import Swal from 'sweetalert2';
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { insertRCT } from '../redux/rctSlice';
+import React from "react";
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBIcon,
+  MDBTable,
+  MDBTableBody,
+  MDBTableHead,
+} from "mdb-react-ui-kit";
 
-const ClientBus = () => {
-    const isNonMobile = useMediaQuery("(min-width:600px)");
-    const dispatch =useDispatch();
+export default function Test() {
+  return (
+    <MDBContainer className="py-5 text-center">
+      <MDBTable
+        responsive
+        striped
+        className="text-successtable-border border-light"
+      >
+        <MDBTableHead className="border-light">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">
+              <strong>Demi pension</strong>
+            </th>
+            <th scope="col">
+              <strong>Pension Complete</strong>
+            </th>
+            <th scope="col">
+              <strong>All inclusive soft</strong>
+            </th>
+            <th scope="col">
+              <strong>All inclusive</strong>
+            </th>
+          </tr>
+        </MDBTableHead>
+        <MDBTableBody>
+          <tr>
+            <th scope="row">Chambre double</th>
+            <td>700 MB</td>
+            <td>1,5 GB</td>
+            <td>50 GB</td>
+            <td>up to 5T</td>
+          </tr>
+          <tr>
+            <th scope="row">Chambre single</th>
+            <td>
+              <MDBIcon fas icon="check" />
+            </td>
+            <td>
+              <MDBIcon fas icon="check" />
+            </td>
+            <td>
+              <MDBIcon fas icon="check" />
+            </td>
+            <td>
+              <MDBIcon fas icon="check" />
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Chambre triple</th>
+            <td>-</td>
+            <td>Optional</td>
+            <td>
+              <MDBIcon fas icon="check" />
+            </td>
+            <td>
+              <MDBIcon fas icon="check" />
+            </td>
+          </tr>
+         
+          <tr>
+            <th  scope="row">Chambre quadruple</th>
+            <td>-</td>
+            <td>-</td>
+            <td>
+              <MDBIcon fas icon="check" />
+            </td>
+            <td>
+              <MDBIcon fas icon="check" />
+            </td>
+          </tr>
+
 
     const {id} = useParams();
     const reservationtrans = useSelector(state=>state.reservationtrans)
