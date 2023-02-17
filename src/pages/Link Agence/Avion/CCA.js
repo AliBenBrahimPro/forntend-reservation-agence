@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../../components/Header';
 import { getnbrReservationTrans } from '../../../redux/reservationtransSlice';
 
-function CCB() {
+function CCA() {
     let navigate = useNavigate();
     const {id}= useParams();
     const dispatch =useDispatch();
@@ -33,11 +33,11 @@ function CCB() {
       minHeight: '50vh',
     }}
   >
-    <Button  sx={{marginRight:'150px',width:'150px'}} color='secondary' onClick={e=>navigate(`/agence/fcb/${id}`)}  variant="contained">Nouveau client</Button>
-    <Button sx={{width:'150px'}}color='secondary' onClick={e=>navigate(`/agence/ecb/${id}`)}  variant="contained">Exist client</Button>
+    <Button  sx={{marginRight:'150px',width:'150px'}} color='secondary' onClick={e=>navigate(`/agence/fca/${id}`)}  variant="contained">Nouveau client</Button>
+    <Button sx={{width:'150px'}}color='secondary' onClick={e=>navigate(`/agence/eca/${id}`)}  variant="contained">Exist client</Button>
   </Box>}
   </Box>
   )
 }
 
-export default CCB
+export default CCA

@@ -86,6 +86,10 @@ import CCB from "./pages/Link Agence/Bus/CCB";
 import ECB from "./pages/Link Agence/Bus/ECB";
 import NCB from "./pages/Link Agence/Bus/NCB";
 import FCB from "./pages/Link Agence/Bus/FCB";
+import CCA from "./pages/Link Agence/Avion/CCA";
+import ECA from "./pages/Link Agence/Avion/ECA";
+import NCA from "./pages/Link Agence/Avion/NCB";
+import FCA from "./pages/Link Agence/Avion/FCA";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -194,8 +198,8 @@ function LinkAgence() {
                 <Route path="/busForm/:id" element={<EditBus />} />
                 <Route path="/listbus" element={<ListBus />} />
                 <Route path="/ccb/:id" element={<CCB />} />
-                <Route path="/ecb" element={<ECB />} />
-                <Route path="/ncb/:id" element={<NCB />} />
+                <Route path="/ecb/:id" element={<ECB />} />
+                <Route path="/ncb/:id/:tr" element={<NCB />} />
                 <Route path="/fcb/:id" element={<FCB />} />
                 {/* evenet */}
                 <Route path="/eventForm" element={<EventForm />} />
@@ -205,6 +209,10 @@ function LinkAgence() {
                 <Route path="/avionForm" element={<FormAvion />} />
                 <Route path="/avionForm/:id" element={<EditAvion />} />
                 <Route path="/listavion" element={<ListAvion />} />
+                <Route path="/cca/:id" element={<CCA />} />
+                <Route path="/eca/:id" element={<ECA />} />
+                <Route path="/nca/:id/:tr" element={<NCA />} />
+                <Route path="/fca/:id" element={<FCA />} />
                 {/* programme */}
                 <Route path="/programmeForm" element={<ProgrammeForm />} />
                 <Route path="/programmeForm/:id" element={<EditProgramme />} />

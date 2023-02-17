@@ -11,7 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { insertRCH } from '../../../redux/rchSlice';
 import { insertRCT } from '../../../redux/rctSlice';
-const NCB = () => {
+const NCA = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const {id,tr}=useParams();
@@ -39,7 +39,7 @@ const NCB = () => {
                     `le client a ajouter avec succes`,
                     'success'
                   ) 
-                  navigate(`/agence/ccb/${tr}`)
+                  navigate(`/agence/cca/${tr}`)
             }else{
                 Swal.fire({
                         icon: 'error',
@@ -154,4 +154,4 @@ const NCB = () => {
       );
 }
 
-export default NCB
+export default NCA

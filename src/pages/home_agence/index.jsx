@@ -25,6 +25,7 @@ import avionimg from "../../assets/avion.jpg";
 import { fetchProgramme } from "../../redux/programmeSlice";
 import tozeur from "../../assets/tozeur.jpg";
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import { getSingleUser } from "../../redux/userSlice";
 
 const HomeAgence = () => {
   const tokenss=localStorage.getItem('tokens')
@@ -48,6 +49,7 @@ useEffect(()=>{
   dispatch(fetchHotels())
   dispatch(fetchEvent())
   dispatch(fetchProgramme())
+  dispatch(getSingleUser(localStorage.getItem('id')))
      },[dispatch])
      console.log(getAllDataAvion)
   return (

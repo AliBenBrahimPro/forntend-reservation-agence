@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import {fetchClient,deleteClient} from '../../../redux/clientSlice'
 
-function ECB() {
+function ECA() {
     const client = useSelector(state=>state.client)
     const {error} = useSelector(state=>state.client)
     const {status} = useSelector(state=>state.client)
@@ -48,11 +48,11 @@ function ECB() {
       
       </Select>
     </FormControl>}
-    <Button  variant='contained' color='secondary' onClick={e=>navigate(`/agence/ncb/${idc}/${id}`)}>Suivant</Button>
+    <Button  variant='contained' color='secondary' onClick={e=>navigate(`/agence/nca/${idc}/${id}`)}>Suivant</Button>
     </Box>}
    
     </Box>
   )
 }
 
-export default ECB
+export default ECA

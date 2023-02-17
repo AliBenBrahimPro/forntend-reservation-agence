@@ -12,6 +12,7 @@ import {  useNavigate, useParams } from 'react-router-dom';
 import { insertReservationTrans } from '../../../redux/reservationtransSlice';
 
 import axios from 'axios';
+import { getSingleUser } from '../../../redux/userSlice';
 function ReservationAvion() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
@@ -27,7 +28,8 @@ function ReservationAvion() {
          values.monatnt_total=data.prix_place_simple*values.nb_place
         dispatch(insertReservationTrans(values)).then((data)=>{
             if(data.type==="reservationtrans/insertReservationTrans/fulfilled" ){
-             
+              dispatch(getSingleUser(localStorage.getItem('id')))
+
                      Swal.fire({
                      
                       title: "Réservation a effecte avec succes",
@@ -39,7 +41,7 @@ function ReservationAvion() {
                       confirmButtonText: 'Ajouter client'
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        navigate(`/agence/clientavion/${data.payload.id}`) 
+                        navigate(`/agence/cca/${data.payload.id}`) 
                       }
                     })
                    

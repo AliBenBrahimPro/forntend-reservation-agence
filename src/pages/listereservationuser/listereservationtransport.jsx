@@ -19,7 +19,7 @@ const ListreservationTransportuser = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
     const reservationtransport = useSelector(state=>state.reservationtrans)
-    
+    const user = useSelector(state=>state.user)
     const {error} = useSelector(state=>state.reservationtrans)
     const {status} = useSelector(state=>state.reservationtrans)
     const {getAllDatauser} = useSelector(state=>state.reservationtrans)
@@ -27,12 +27,12 @@ const ListreservationTransportuser = () => {
 const dispatch = useDispatch();
     useEffect(()=>{
       dispatch(getuserleReservationTrans(id))
-     
+      dispatch(getSingleUser(localStorage.getItem('id')))
          },[dispatch])
      
          useEffect(()=>{
-     
-              },[reservationtransport])
+     console.log(user)
+              },[reservationtransport,user])
   const columns = [
     {
       field: 'actions',
@@ -72,6 +72,7 @@ const dispatch = useDispatch();
                   confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                   if (result.isConfirmed) {
+
                      dispatch(deleteReservationTrans(params.id))
                      dispatch(getSingleUser(localStorage.getItem('id')))
 
@@ -124,7 +125,7 @@ const dispatch = useDispatch();
        <Box display="flex" justifyContent="space-between" alignItems="center">
  
 
- <Header title="List des transport" subtitle="Bienvenue a ton liste des reservations des transport" />
+ <Header title="List des transport " subtitle="Bienvenue a ton liste des reservations des transport" />
 </Box>
 <Box
  m="8px 0 0 0"

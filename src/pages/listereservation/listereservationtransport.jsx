@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 const ListreservationTransport = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const user = useSelector(state=>state.user)
+
     const reservationtransport = useSelector(state=>state.reservationtrans)
     
     const {error} = useSelector(state=>state.reservationtrans)
@@ -30,7 +32,7 @@ console.log(getAllData)
      
          useEffect(()=>{
      
-              },[reservationtransport])
+              },[reservationtransport,user])
   const columns = [
     {
       field: 'actions',
@@ -89,7 +91,7 @@ console.log(getAllData)
        <Box display="flex" justifyContent="space-between" alignItems="center">
  
 
- <Header title="List des transport" subtitle="Bienvenue a ton liste des reservations des transport" />
+ <Header title="List des transport " subtitle="Bienvenue a ton liste des reservations des transport" />
 </Box>
 <Box
  m="8px 0 0 0"
