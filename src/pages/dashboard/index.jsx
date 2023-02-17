@@ -275,11 +275,11 @@ const Dashboard = () => {
                   <DonutChart
                         data={[
                           {
-                            label: 'Avion',
+                            label: 'Bus',
                             value: (parseInt(counttransportbus)/parseInt(counttransport))*100,
                           },
                           {
-                            label: 'Bus',
+                            label: 'Avion',
                             value: (parseInt(counttransportavion)/parseInt(counttransport))*100,
                           },
                         ]}
