@@ -11,6 +11,9 @@ import { fetchHotels } from '../../redux/hotelSlice';
 import { fetchAvion } from '../../redux/avionSlice';
 import { fetchEvent } from '../../redux/eventSlice';
 import { fetchBus } from '../../redux/busSlice';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import Fab from '@mui/material/Fab';
+import axios from 'axios';
 
 function ProgrammeForm() {
   const tokens=localStorage.getItem('tokens')
@@ -34,22 +37,26 @@ function ProgrammeForm() {
 
     const handleFormSubmit = (values) => {
         console.log(values);
-      //  values.evenementId ?null : values.evenementId=null
-        dispatch(insertProgramme(values)).then((data)=>{
-          if(data.type==="programme/insertProgramme/fulfilled" ){
-           Swal.fire(
-                     'Success',
-                     `${data.payload.nom_programme} a ajouter avec succes`,
-                     'success'
-                   ) 
-          }else{
-               Swal.fire({
-                   icon: 'error',
-                   title: 'Oops...',
-                   text: 'Something went wrong!',
-                 })}
-         })
-    };
+        const formData = new FormData();
+        formData.append('image_programme',values.image_programme)
+        formData.append('nom_programme',values.nom_programme)
+        formData.append('hotelId',values.hotelId)
+        formData.append('busId',values.busId)
+        formData.append('evenementId',values.evenementId)
+        formData.append('avionId',values.avionId)
+        formData.append('date_debut',values.date_debut)
+        formData.append('date_fin',values.date_fin)
+        const res= axios.post(`${process.env.REACT_APP_BASE_URL}/api/programme/addprogramme`,formData)
+        .then((res)=> res.status===200? Swal.fire(
+          'Success',
+          `${res.data.nom_programme} a ajouter avec succes`,
+          'success'
+        ) :  Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+        }))
+         }
     const initialValues = {
         nom_programme: "",
         hotelId: "",
@@ -58,6 +65,7 @@ function ProgrammeForm() {
         evenementId:null,
         date_debut: "",
         date_fin: "",
+        image_programme:null
     };
     const checkoutSchema = yup.object().shape({
         nom_programme:yup.string().required("Required"),
@@ -96,6 +104,22 @@ function ProgrammeForm() {
                     "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                   }}
                 >
+             <Box  sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
+             <input
+              style={{display: "none" }}
+              onBlur={handleBlur}
+              onChange={e=>setFieldValue("image_programme",e.target.files[0])}
+              name="image_programme"
+              accept="image/*"
+              id="contained-button-file"
+              type="file"
+            />
+            <label htmlFor="contained-button-file">
+              <Fab component="span" >
+                <AddPhotoAlternateIcon />
+              </Fab>
+            </label>
+            </Box>
 <FormControl sx={{ gridColumn: "span 2" }} fullWidth>
   <InputLabel id="demo-simple-select-label">Bus</InputLabel>
   <Select

@@ -52,7 +52,7 @@ function AllProg() {
                 getAllData.map(e=>
                 { 
                 return (<Grid  item xs={12} sm={4} md={4}>
-                    <MediaCard busid={e.busId} evenementId={e.evenementId} hotelId={e.hotelId} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={tozeur} title={`${e.nom_programme}`} subtile={`  ${e.capacite}`} onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
+                    <MediaCard busid={e.busId} evenementId={e.evenementId} hotelId={e.hotelId} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={`${process.env.REACT_APP_BASE_URL}/${e.image_programme}`} title={`${e.nom_programme}`} subtile={`  ${e.capacite}`} onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
                     </Grid>)})
             }
             
