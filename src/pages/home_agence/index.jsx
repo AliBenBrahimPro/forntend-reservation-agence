@@ -20,6 +20,10 @@ import { fetchEvent } from '../../redux/eventSlice'
 import { Alert, CircularProgress, Grid } from '@mui/material'
 import moment from 'moment'
 import MediaCard from '../Link Agence/Bus/MediaCard'
+import MediaCardHotel from '../Link Agence/Hotel/MediaCard'
+import MediaCardAvion from '../Link Agence/Avion/MediaCard'
+import MediaCardProg from '../Link Agence/Programme/MediaCard'
+import MediaCardEvent from '../Link Agence/Evenement/MediaCard'
 import busimg from "../../assets/bus.jpg";
 import avionimg from "../../assets/avion.jpg";
 import { fetchProgramme } from "../../redux/programmeSlice";
@@ -61,8 +65,8 @@ useEffect(()=>{
        {
         getAllDataprogramme.slice(0,3).map(e=>
           <Grid  item xs={12} sm={4} md={4}>
-          <MediaCard PLACE={`${e.point_depart} à ${e.point_arrive}`} busid={e.busId} evenementId={e.evenementId} hotelId={e.hotelId} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={`${process.env.REACT_APP_BASE_URL}/${e.image_programme}`} title={`${e.nom_programme}`}  onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
-          </Grid>
+                    <MediaCardProg PLACE={`${e.point_depart} à ${e.point_arrive}`} busid={e.busId} evenementId={e.evenementId} hotelId={e.hotelId} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={`${process.env.REACT_APP_BASE_URL}/${e.image_programme}`} title={`${e.nom_programme}`} subtile={`  ${e.capacite}`} onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
+                    </Grid>
         )
        }
       
@@ -86,7 +90,7 @@ useEffect(()=>{
        {
         getAllData.slice(0,3).map(e=>
           <Grid  item xs={12} sm={4} md={4}>
-                    <MediaCard pd={"Place disponible :"} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  title={`${e.point_depart} à ${e.point_arrive}`} image={busimg} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_place} btn='Réserver' description={e.desc}/>
+                    <MediaCard id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  title={`${e.point_depart} à ${e.point_arrive}`} image={busimg} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_place} btn='Réserver' description={e.desc}/>
                     </Grid>
         )
        }
@@ -111,8 +115,8 @@ useEffect(()=>{
      <><Grid container spacing={{ xs: 2, md: 4 }} columns={{ xs: 4, sm: 8, md: 12 }}>
        { getAllDataAvion.slice(0,3).map(e=>
           <Grid  item xs={12} sm={4} md={4}>
-                    <MediaCard pd={"Place disponible :"}  id={e.id} image={avionimg} title={`${e.point_depart} à ${e.point_arrive}`} sub3={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}   sub2={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_place_simple} btn='Réserver' description={e.nom_avion}/>
-                    </Grid>
+          <MediaCardAvion id={e.id} image={avionimg} title={`${e.point_depart} à ${e.point_arrive}`} sub3={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}   sub2={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_place_simple} btn='Réserver' description={e.nom_avion}/>
+          </Grid>
         )}
     </Grid>
    <Link to='/agence/allavion'><Button
@@ -135,8 +139,8 @@ useEffect(()=>{
        {
         getAllDataHotel.slice(0,3).map(e=>
           <Grid  item xs={12} sm={4} md={4}>
-                    <MediaCard pd={"Place disponible :"}  stars={e.nb_etoile} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={`${process.env.REACT_APP_BASE_URL}/${e.image_hotel[0]}`} title={`${e.nom_hotel}`} subtile={`  ${e.capacite}`} onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
-                    </Grid>
+          <MediaCardHotel stars={e.nb_etoile} id={e.id} sub3={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} sub2={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}  image={`${process.env.REACT_APP_BASE_URL}/${e.image_hotel[0]}`} title={`${e.nom_hotel}`} subtile={`  ${e.capacite-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_demi_pension} btn='Réserver' description={e.desc}/>
+          </Grid>
         )
        }
       
@@ -162,13 +166,13 @@ useEffect(()=>{
        {
         getAllDataEvent.slice(0,3).map(e=>
           <Grid  item xs={12} sm={4} md={4}>
-                    <MediaCard pd={"Place disponible :"}  id={e.id} image={`${process.env.REACT_APP_BASE_URL}/${e.image_evenement}`} title={`${e.nom_evenement}`} sub3={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}   sub2={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_evenement} btn='Réserver' description={e.description}/>
-                    </Grid>
+          <MediaCardEvent id={e.id} image={`${process.env.REACT_APP_BASE_URL}/${e.image_evenement}`} title={`${e.nom_evenement}`} sub3={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}   sub2={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_evenement} btn='Réserver' description={e.description}/>
+          </Grid>
         )
        }
       
     </Grid>
-   <Link to='/agence/allhotel'><Button
+   <Link to='/agence/allevent'><Button
             sx={{
               backgroundColor: colors.blueAccent[700],
               color: colors.grey[100],

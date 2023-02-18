@@ -10,7 +10,7 @@ import { tokens } from "../../../theme";
 import { json, useNavigate } from 'react-router-dom';
 import { height } from '@mui/system';
 
-export default function MediaCard({title,stars,subtile,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
+export default function MediaCardHotel({title,stars,subtile,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const cardcolor=colors.primary[400];

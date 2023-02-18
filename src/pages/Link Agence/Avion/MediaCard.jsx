@@ -9,7 +9,7 @@ import { Box, Rating, useTheme } from '@mui/material';
 import { tokens } from "../../../theme";
 import { json, useNavigate } from 'react-router-dom';
 
-export default function MediaCard({title,subtile,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
+export default function MediaCardAvion({title,subtile,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const cardcolor=colors.primary[400];

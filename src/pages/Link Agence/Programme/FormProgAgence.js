@@ -29,7 +29,7 @@ useEffect(() => {
 dispatch(getSingleProgramme(id))
 }, [])
 
-
+console.log("id programme test tahani",id)
     const handleFormSubmit = (values) => {
         console.log(values);
 
@@ -43,7 +43,8 @@ dispatch(getSingleProgramme(id))
         <Box m="20px">
           <Header title="Formulaire du programme" subtitle="Remplir les coordonnées des chambres" />
 
-    {status==="loading"?<CircularProgress/>:data.hotelId=== null?<RCT avionid={data.avionId} busid={data.busId} eventid={data.evenementId}/>: <RCH eventid={data.evenementId}  hotelsid={data.hotelId}  avionid={data.avionId} busid={data.busId}/>}
+    {status==="loading"?<CircularProgress/>:data.hotelId=== null?<RCT avionid={data.avionId} busid={data.busId} eventid={data.evenementId}/>:
+     <RCH eventid={data.evenementId}  hotelsid={data.hotelId}  avionid={data.avionId} busid={data.busId}/>}
 
         </Box>
       );

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../../components/Header'
 import { fetchAvion } from '../../../redux/avionSlice'
-import MediaCard from './MediaCard'
+import MediaCardAvion from './MediaCard'
 import avionimg from "../../../assets/avion.jpg";
 import moment from 'moment'
 
@@ -50,7 +50,7 @@ function AllAvion() {
                 getAllData.map(e=>
                 {
                 return (<Grid  item xs={12} sm={4} md={4}>
-                    <MediaCard id={e.id} image={avionimg} title={`${e.point_depart} à ${e.point_arrive}`} sub3={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}   sub2={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_place_simple} btn='Réserver' description={e.nom_avion}/>
+                    <MediaCardAvion id={e.id} image={avionimg} title={`${e.point_depart} à ${e.point_arrive}`} sub3={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}   sub2={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_place_simple} btn='Réserver' description={e.nom_avion}/>
                     </Grid>)})
             }
             

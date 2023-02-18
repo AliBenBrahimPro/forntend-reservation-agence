@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../../components/Header'
 import { fetchEvent } from '../../../redux/eventSlice'
-import MediaCard from './MediaCard'
+import MediaCardEvent from './MediaCard'
 import moment from 'moment'
 
 function AllEvent() {
@@ -47,7 +47,7 @@ function AllEvent() {
                 getAllData.map(e=>
                 {
                 return (<Grid  item xs={12} sm={4} md={4}>
-                    <MediaCard id={e.id} image={`${process.env.REACT_APP_BASE_URL}/${e.image_evenement}`} title={`${e.nom_evenement}`} sub3={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}   sub2={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_evenement} btn='Réserver' description={e.description}/>
+                    <MediaCardEvent id={e.id} image={`${process.env.REACT_APP_BASE_URL}/${e.image_evenement}`} title={`${e.nom_evenement}`} sub3={`${moment(e.date_debut).format('YYYY-MM-DD')} à ${moment(e.date_debut).format('hh:mm')}`}   sub2={`${moment(e.date_fin).format('YYYY-MM-DD')} à ${moment(e.date_fin).format('hh:mm')}`} subtile={`  ${e.nb_place-e.nb_place_reserver}`} onebtn='à partir de' twobtn={e.prix_evenement} btn='Réserver' description={e.description}/>
                     </Grid>)})
             }
             

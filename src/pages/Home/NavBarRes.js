@@ -30,10 +30,10 @@ const NavBar = () => {
             Sign Up
           </NavLink>
           {/* Second Nav */}
-          {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
+          {/* <NavBtnLink to='/sign-in'>S'identifier</NavBtnLink> */}
         </NavMenu>
         <NavBtn>
-          <NavBtnLink to='/signin'>Sign In</NavBtnLink>
+          <NavBtnLink to='/signin'>S'identifier</NavBtnLink>
         </NavBtn>
       </Nav>
     </>

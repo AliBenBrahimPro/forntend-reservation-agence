@@ -94,7 +94,7 @@ function ProgrammeForm() {
     })
     return (
         <Box m="20px">
-          <Header title="Creer nouveau BUS" subtitle="Ajouter nouveau BUS" />
+          <Header title="Creer nouveau Programme" subtitle="Ajouter nouveau Programme" />
           {/* { hotels.error!==null ?  <Alert severity="error">{hotels.error}</Alert>
     : 
     

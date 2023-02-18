@@ -13,7 +13,7 @@ import { getSingleBus } from '../../../redux/busSlice'
 import { getSingleHotels } from '../../../redux/hotelSlice'
 import { getSingleEvent } from '../../../redux/eventSlice'
 
-export default function MediaCard({PLACE,title,busid,hotelId,evenementId,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
+export default function MediaCardProg({PLACE,title,busid,hotelId,evenementId,sub2,sub3,description,btn,onebtn,twobtn,image,id}) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const cardcolor=colors.primary[400];
@@ -34,6 +34,7 @@ export default function MediaCard({PLACE,title,busid,hotelId,evenementId,sub2,su
    
        React.useEffect(()=>{
    console.log("event",event.data)
+   console.log("idhotel",hotelId)
             },[bus,hotels,event])
   return (
     <Card  sx={{ backgroundColor:cardcolor }}>
