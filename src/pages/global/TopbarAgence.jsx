@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useContext } from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import { useTheme, Box, IconButton, InputBase, TextField, Button } from "@mui/material";
@@ -13,7 +14,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useProSidebar } from "react-pro-sidebar";
 import {getSingleUser} from"../../redux/userSlice"
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const TopbarAgence = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -47,6 +50,7 @@ const TopbarAgence = () => {
             <DarkModeOutlinedIcon />
           )}
         </IconButton>
+
         <Box
           display="flex"
           backgroundColor={colors.primary[400]}
@@ -69,6 +73,12 @@ const TopbarAgence = () => {
           <Button disableTouchRipple color="error" variant="outlined" startIcon={<MonetizationOnIcon />}>Crédit : {credit}</Button>
           
         </Box>
+        <IconButton onClick={()=>{
+            localStorage.clear();
+            navigate('/login')
+        }}>
+          <LogoutIcon />
+        </IconButton>
         {broken && rtl && (
           <IconButton
             sx={{ margin: "0 6 0 2" }}
