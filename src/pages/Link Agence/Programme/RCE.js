@@ -11,6 +11,7 @@ import { getSingleEvent } from '../../../redux/eventSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { reservationeventSlice,insertReservationEvent } from '../../../redux/reservationevenementSlice';
 import axios from 'axios';
+import { insertResevationprogramme } from '../../../redux/reservationprogrammeSlice';
 function RCE() {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
@@ -39,7 +40,27 @@ function RCE() {
                               'success'
                             ) 
                             localStorage.setItem('reservationEvenementId',datarce.payload.id)
-                            navigate(`/agence/ccp`) 
+                            dispatch( insertResevationprogramme({
+                              montant_programme:localStorage.getItem('price'),
+                              reservationTarnsportId:localStorage.getItem('reservationTarnsportId'),
+                              reservationEvenementId:localStorage.getItem('reservationEvenementId'),
+                              reservationHotelId:localStorage.getItem('reservationHotelId'),
+                              date_debut:localStorage.getItem('date_debut'),
+                              date_fin:localStorage.getItem('date_fin'),
+                           })).then((datarct)=>{
+                              if(datarct.type==="reservationprogramme/insertResevationprogramme/fulfilled" ){
+                                localStorage.setItem('reservationid',datarct.payload.id)
+                                    localStorage.setItem('price',0)
+                                    navigate(`/agence/ccp`)
+                              }else{
+                                  Swal.fire({
+                                          icon: 'error',
+                                          title: 'Oops...',
+                                          text: "Quelque chose s'est mal passé!",
+                                        }) 
+                              }
+                           })
+                           
                   
                           
                    }else{

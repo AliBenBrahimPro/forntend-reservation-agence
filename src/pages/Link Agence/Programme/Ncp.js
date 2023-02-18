@@ -11,6 +11,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 import { insertRCH } from '../../../redux/rchSlice';
 import { insertResevationprogramme } from '../../../redux/reservationprogrammeSlice';
+import { insertRCP } from '../../../redux/rcpSlice';
 const Ncp = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
@@ -27,36 +28,29 @@ const Ncp = () => {
            },[dispatch])
        
            useEffect(()=>{
-       
+       console.log("client id :",data.id)
                 },[client])
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
     const handleFormSubmit = (values) => {
         console.log(values);
-        dispatch( insertResevationprogramme({
-          montant_programme:localStorage.getItem('price'),
-          reservationTarnsportId:localStorage.getItem('reservationTarnsportId'),
-          reservationEvenementId:localStorage.getItem('reservationEvenementId'),
-          reservationHotelId:localStorage.getItem('reservationHotelId'),
-          date_debut:localStorage.getItem('date_debut'),
-          date_fin:localStorage.getItem('date_fin'),
-       })).then((datarct)=>{
-          if(datarct.type==="reservationprogramme/insertResevationprogramme/fulfilled" ){
-              console.log(datarct)
-              Swal.fire(
-                  'Success',
-                  `le client a ajouter avec succes`,
-                  'success'
-                ) 
-                localStorage.setItem('price',0)
-                navigate(`/agence/ccp/${"tr"}`)
-          }else{
-              Swal.fire({
-                      icon: 'error',
-                      title: 'Oops...',
-                      text: "Quelque chose s'est mal passé!",
-                    }) 
-          }
-       })
+ dispatch(insertRCP(
+  {montant_total:localStorage.getItem('price'), clientId:data.id,reservationTarnsportId:localStorage.getItem('reservationTarnsportId'),reservationHotelId:localStorage.getItem('reservationHotelId'),programmeId:localStorage.getItem('programid'),reservationId:localStorage.getItem('reservationid')})).then((datarct)=>{
+  if(datarct.type==="rcp/insertRCP/fulfilled" ){
+      console.log(datarct)
+      Swal.fire(
+          'Success',
+          `le client a ajouter avec succes`,
+          'success'
+        ) 
+        navigate(`/agence/ccp`)
+  }else{
+      Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Quelque chose s'est mal passé!",
+            }) 
+  }
+})
      
         
     };

@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
+import { insertRCP } from '../../../redux/rcpSlice';
 
 const Fcp = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -29,46 +30,53 @@ const Fcp = () => {
     
 
     const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-    const handleFormSubmit = (values) => {
+    const handleFormSubmit = (values,{resetForm}) => {
         console.log(values);
-        // dispatch(insertClient(values)).then((data)=>{
-        //     if(data.type==="client/insertClient/fulfilled" ){
-              
-        //      Swal.fire(
-        //                'Success',
-        //                `${data.payload.full_name} a ajouter avec succes`,
-        //                'success'
-        //              ) 
-        //              dispatch( insertRCH({reservationHotelId:id, montant_total:chambre.data.montant, clientId:data.payload.id})).then((datarch)=>{
-        //                 if(datarch.type==="rch/insertRCH/fulfilled" ){
-        //                     console.log(datarch)
-        //                     Swal.fire(
-        //                         'Success',
-        //                         `le client a ajouter avec succes`,
-        //                         'success'
-        //                       ) 
-        //                 }
-        //                 else{
-        //                     console.log(datarch)
-
-        //                     Swal.fire({
-        //                             icon: 'error',
-        //                             title: 'Oops...',
-        //                             text: "Quelque chose s'est mal passé!",
-        //                           }) 
-        //                 }
-        //              })
+        dispatch(insertClient(values)).then((data)=>{
+          if(data.type==="client/insertClient/fulfilled" ){
             
-        //     }
-        //     else{
-        //          Swal.fire({
-        //              icon: 'error',
-        //              title: 'Oops...',
-        //              text: "Quelque chose s'est mal passé!",
-        //            })
-        //         }
-                   
-        //    })
+           Swal.fire(
+                     'Success',
+                     `${data.payload.full_name} a ajouter avec succes`,
+                     'success'
+                   ) 
+                   dispatch( insertRCP({montant_total:localStorage.getItem('price'), clientId:data.id,reservationTarnsportId:localStorage.getItem('reservationTarnsportId'),reservationEvenementId:localStorage.getItem("reservationEvenementId"),reservationHotelId:localStorage.getItem('reservationHotelId'),programmeId:localStorage.getItem('programid'),reservationId:localStorage.getItem('reservationid')})).then((datarct)=>{
+                      if(datarct.type==="rct/insertRCT/fulfilled" ){
+                          Swal.fire(
+                              'Success',
+                              `le client a ajouter avec succes`,
+                              'success'
+                            )
+                            resetForm({ full_name: "",
+                            date_naissance: "",
+                            e_mail: "",
+                            numero_telephone: "",
+                            montant_hotel: 0,
+                            cin: "",
+                            reservationtransId:null,
+                            userId:localStorage.getItem('id')}) 
+                            navigate(`/agence/ccp`)
+      
+
+                      }
+                      else{
+                          Swal.fire({
+                                  icon: 'error',
+                                  title: 'Oops...',
+                                  text: "Quelque chose s'est mal passé!",
+                                }) 
+                      }
+                   })
+          
+          }else{
+               Swal.fire({
+                   icon: 'error',
+                   title: 'Oops...',
+                   text: "Quelque chose s'est mal passé!",
+                 })
+              }
+                 
+         })
     
         
     

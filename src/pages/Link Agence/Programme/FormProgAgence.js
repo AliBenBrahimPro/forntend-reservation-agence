@@ -37,13 +37,13 @@ console.log("id programme test tahani",id)
 
     localStorage.setItem('date_debut',data.date_debut) 
     localStorage.setItem('date_fin',data.date_fin) 
- 
+    localStorage.setItem('programid',id) 
 
     return (
         <Box m="20px">
           <Header title="Formulaire du programme" subtitle="Remplir les coordonnées des chambres" />
 
-    {status==="loading"?<CircularProgress/>:data.hotelId=== null?<RCT avionid={data.avionId} busid={data.busId} eventid={data.evenementId}/>:
+    {status==="loading"?<CircularProgress/>:
      <RCH eventid={data.evenementId}  hotelsid={data.hotelId}  avionid={data.avionId} busid={data.busId}/>}
 
         </Box>

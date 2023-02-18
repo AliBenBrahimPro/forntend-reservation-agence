@@ -37,8 +37,10 @@ const RCH = ({hotelsid,avionid,busid,eventid}) => {
     const chambre = useSelector(state=>state.chambre)
     console.log("test test",hotelsid)
     useEffect(()=>{
-        
-        dispatch(getSingleHotels(hotelsid))
+        if(hotelsid !=undefined){
+          dispatch(getSingleHotels(hotelsid))
+        }
+       
             },[])
             useEffect(() => {
               setPrice(((data.prix_demi_pension * parseFloat(nbr))*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
