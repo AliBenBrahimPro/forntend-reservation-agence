@@ -49,7 +49,7 @@ const Topbar = () => {
         </IconButton>
         <IconButton onClick={()=>{
             localStorage.clear();
-            navigate('/login')
+            navigate('/')
         }}>
           <LogoutIcon />
         </IconButton>

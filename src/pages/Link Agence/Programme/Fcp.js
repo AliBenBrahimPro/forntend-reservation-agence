@@ -41,7 +41,7 @@ const Fcp = () => {
                      'success'
                    ) 
                    dispatch( insertRCP({montant_total:localStorage.getItem('price'), clientId:data.id,reservationTarnsportId:localStorage.getItem('reservationTarnsportId'),reservationEvenementId:localStorage.getItem("reservationEvenementId"),reservationHotelId:localStorage.getItem('reservationHotelId'),programmeId:localStorage.getItem('programid'),reservationId:localStorage.getItem('reservationid')})).then((datarct)=>{
-                      if(datarct.type==="rct/insertRCT/fulfilled" ){
+                      if(datarct.type==="rcp/insertRCP/fulfilled" ){
                           Swal.fire(
                               'Success',
                               `le client a ajouter avec succes`,

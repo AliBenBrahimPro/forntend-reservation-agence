@@ -75,7 +75,7 @@ const TopbarAgence = () => {
         </Box>
         <IconButton onClick={()=>{
             localStorage.clear();
-            navigate('/login')
+            navigate('/')
         }}>
           <LogoutIcon />
         </IconButton>

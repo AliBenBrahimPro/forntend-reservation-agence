@@ -1,25 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import logo from "../../assets/logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom/dist";
-
+import { useNavigate } from "react-router";
 export default function Navbar() {
-  const navigate =useNavigate();
   const [navbarState, setNavbarState] = useState(false);
-  const handleSubmit = (event) => {
-
-    navigate("/login")
-    
-  };
+  const navigate = useNavigate()
   return (
     <>
-      <Nav className="navhome">
-        <div className="brand">
+      <Nav  style={{margin:'10px'}}>
+        <div  className="brand">
           <div className="container">
-            DZ-TRANSFERT
+            <img src={logo} alt="" />
+            Travelo
           </div>
           <div className="toggle">
             {navbarState ? (
@@ -30,7 +24,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <ul>
+        <ul  style={{display:'flex',justifyContent:'center', alignContent:'center', alignItems:'center'}}>
           <li>
             <a href="#home">Home</a>
           </li>
@@ -44,9 +38,7 @@ export default function Navbar() {
             <a href="#testimonials">Testimonials</a>
           </li>
         </ul>
-        <Button onClick={handleSubmit} variant="contained" startIcon={<AccountCircleIcon />}>
-  Connecter
-</Button>
+        <button onClick={e=>navigate('/login')}>Connect</button>
       </Nav>
       <ResponsiveNav state={navbarState}>
         <ul>

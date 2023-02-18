@@ -40,8 +40,8 @@ const Chambre = () => {
         dispatch(getSingleHotels(id))
             },[])
             useEffect(() => {
-              setPrice(((data.prix_demi_pension * parseFloat(nbr))*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
-
+              setPrice(((data.prix_demi_pension * parseFloat(nbr))*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
+console.log('price',)
             }, [hotels])
             // console.log("data",data.nom_hotel)
     const handleFormSubmit = (values) => {

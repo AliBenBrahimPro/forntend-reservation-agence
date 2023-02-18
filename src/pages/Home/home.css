@@ -1,28 +1,19 @@
-
-.homecontainer{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  .homehtml {
+  html {
     scroll-behavior: smooth;
   }
   
-  .homebody {
+  body {
+    margin: 1rem 2rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
   }
-  #services{
-    padding: 1rem 2rem;
-
-  }
-  .content{
-   position: fixed;
-  }
-
-  
   
   ::-webkit-scrollbar {
     width: 0.6rem;
@@ -31,4 +22,3 @@
   ::-webkit-scrollbar-thumb {
     background-color: #4539e6;
   }
-  

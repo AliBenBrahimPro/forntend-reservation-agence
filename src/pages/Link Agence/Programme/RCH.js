@@ -38,12 +38,12 @@ const RCH = ({hotelsid,avionid,busid,eventid}) => {
     console.log("test test",hotelsid)
     useEffect(()=>{
         if(hotelsid !=undefined){
-          dispatch(getSingleHotels(hotelsid))
+          dispatch(getSingleHotels(id))
         }
        
             },[])
             useEffect(() => {
-              setPrice(((data.prix_demi_pension * parseFloat(nbr))*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              setPrice(((data.prix_demi_pension * parseFloat(nbr))*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
 
             }, [hotels])
 
@@ -160,77 +160,77 @@ console.log("test222",chambres,pensions)
             if(parseInt(e.target.value)===1)
              { 
               prix=parseFloat(data.prix_demi_pension)+parseFloat(data.frais_chambre_single)
-              setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
              }else if(parseInt(e.target.value)===2)
             { console.log("2") 
               prix=parseFloat(data.prix_demi_pension)
-              setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }else if(parseInt(e.target.value)===3)
              { console.log("3") 
               prix=parseFloat(data.prix_demi_pension)*(1-(data.porcentage_chambre_triple/100))
-              setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
              }
              else if(parseInt(e.target.value)===4){
               console.log("4") 
               prix=parseFloat(data.prix_demi_pension)*(1-(data.porcentage_chambre_quadruple/100))
-              setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+              setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
              }
           }else if(parseInt(pensions)===2)
           {
             if(parseInt(e.target.value)===1)
             {
              prix=parseFloat(data.prix_pension_complete)+parseFloat(data.frais_chambre_single)
-             setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }else if(parseInt(e.target.value)===2)
            {
              prix=parseFloat(data.prix_pension_complete)
-             setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
            }else if(parseInt(e.target.value)===3)
             {
              prix=parseFloat(data.prix_pension_complete)*(1-(data.porcentage_chambre_triple/100))
-             setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }
             else if(parseInt(e.target.value)===4){
              prix=parseFloat(data.prix_pension_complete)*(1-(data.porcentage_chambre_quadruple/100))
-             setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }
           }else if(parseInt(pensions)==3)
           {
             if(parseInt(e.target.value)===1)
             {
              prix=parseFloat(data.prix_all_inclusive_soft)+parseFloat(data.frais_chambre_single)
-             setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }else if(parseInt(e.target.value)===2)
            {
              prix=parseFloat(data.prix_all_inclusive_soft)
-             setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
            }else if(parseInt(e.target.value)===3)
             {
              prix=parseFloat(data.prix_all_inclusive_soft)*(1-(data.porcentage_chambre_triple/100))
-             setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }
             else if(parseInt(e.target.value)===4){
              prix=parseFloat(data.prix_all_inclusive_soft)*(1-(data.porcentage_chambre_quadruple/100))
-             setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }
           }else if(parseInt(pensions)===4)
           {
             if(parseInt(e.target.value)===1)
             {
              prix=parseFloat(data.prix_all_inclusive)+parseFloat(data.frais_chambre_single)
-             setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }else if(parseInt(e.target.value)===2)
            {
              prix=parseFloat(data.prix_all_inclusive)
-             setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
            }else if(parseInt(e.target.value)===3)
             {
              prix=parseFloat(data.prix_all_inclusive)*(1-(data.porcentage_chambre_triple/100))
-             setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }
             else if(parseInt(e.target.value)===4){
              prix=parseFloat(data.prix_all_inclusive)*(1-(data.porcentage_chambre_quadruple/100))
-             setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+             setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
             }
           }
             // setPrice(prix* parseFloat(nbr))
@@ -256,59 +256,59 @@ console.log("test222",chambres,pensions)
               if(parseInt(chambres)===1)
                {
                 prix=parseFloat(data.prix_demi_pension)+parseFloat(data.frais_chambre_single)
-                setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+                setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
                }else if(parseInt(chambres)===2)
               {   console.log("22") 
                 prix=parseFloat(data.prix_demi_pension)
-                setPrice(((prix*2)(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+                setPrice(((prix*2)(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }else if(parseInt(chambres)===3)
                {
                 prix=parseFloat(data.prix_demi_pension)*(1-(data.porcentage_chambre_triple/100))
-                setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+                setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
                }
                else if(parseInt(chambres)===4){
                 prix=parseFloat(data.prix_demi_pension)*(1-(data.porcentage_chambre_quadruple/100))
-                setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+                setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
                }
             }else if(parseInt(e.target.value)===2)
             {console.log("2",chambres) 
               if(parseInt(chambres)===1)
               {
                prix=parseFloat(data.prix_pension_complete)+parseFloat(data.frais_chambre_single)
-               setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }else if(parseInt(chambres)===2)
              {  console.log("22") 
                prix=parseFloat(data.prix_pension_complete)
               //  console.log(prix)
-               setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
              }else if(parseInt(chambres)===3)
               {
                prix=parseFloat(data.prix_pension_complete)*(1-(data.porcentage_chambre_triple/100))
-               setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }
               else if(parseInt(chambres)===4){
 
                prix=parseFloat(data.prix_pension_complete)*(1-(data.porcentage_chambre_quadruple/100))
-               setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }
             }else if(parseInt(e.target.value)===3)
             {console.log("3") 
               if(parseInt(chambres)===1)
               {
                prix=parseFloat(data.prix_all_inclusive_soft)+parseFloat(data.frais_chambre_single)
-               setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }else if(parseInt(chambres)===2)
              { console.log("22") 
                prix=parseFloat(data.prix_all_inclusive_soft)
-               setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
              }else if(parseInt(chambres)===3)
               {
                prix=parseFloat(data.prix_all_inclusive_soft)*(1-(data.porcentage_chambre_triple/100))
-               setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }
               else if(parseInt(chambres)===4){
                prix=parseFloat(data.prix_all_inclusive_soft)*(1-(data.porcentage_chambre_quadruple/100))
-               setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }
             }else if(parseInt(e.target.value)===4)
             {  console.log("4") 
@@ -316,20 +316,20 @@ console.log("test222",chambres,pensions)
               if(parseInt(chambres)===1)
               {
                prix=parseFloat(data.prix_all_inclusive)+parseFloat(data.frais_chambre_single)
-               setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*1)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }else if(parseInt(chambres)===2)
              { console.log("22") 
                prix=parseFloat(data.prix_all_inclusive)
-               setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*2)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
              }else if(parseInt(chambres)===3)
               {
                prix=parseFloat(data.prix_all_inclusive)*(1-(data.porcentage_chambre_triple/100))
-               setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*3)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }
               else if(parseInt(chambres)===4){
            
                prix=parseFloat(data.prix_all_inclusive)*(1-(data.porcentage_chambre_quadruple/100))
-               setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
+               setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
               }
             }
             // const prix=parseFloat( e.target.value)+ parseFloat(chambres??data.prix_demi_pension) 

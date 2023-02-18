@@ -1,33 +1,60 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Box,Alert, CircularProgress, useTheme } from "@mui/material";
-
-import info1 from "../../assets/hotel.jpg";
-import info2 from "../../assets/ali.png";
-import info3 from "../../assets/ali.png";
-import { useDispatch,useSelector } from 'react-redux';
-import {fetchHotels,deleteHotels} from '../../redux/hotelSlice'
-import Header from "../../components/Header";
-import { useNavigate } from 'react-router-dom';
-import { Button, Rating } from "@mui/material";
-import moment from 'moment'
+import Destination1 from "../../assets/Destination1.png";
+import Destination2 from "../../assets/Destination2.png";
+import Destination3 from "../../assets/Destination3.png";
+import Destination4 from "../../assets/Destination4.png";
+import Destination5 from "../../assets/Destination5.png";
+import Destination6 from "../../assets/Destination6.png";
+import info1 from "../../assets/info1.png";
+import info2 from "../../assets/info2.png";
+import info3 from "../../assets/info3.png";
 
 export default function Recommend() {
-  const hotels = useSelector(state=>state.hotels)
-  const {error} = useSelector(state=>state.hotels)
-  const {status} = useSelector(state=>state.hotels)
-  const {data} = useSelector(state=>state.hotels)
-  let navigate = useNavigate();
-
-const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(fetchHotels())
-   
-       },[dispatch])
-   
-       useEffect(()=>{
-   
-            },[hotels])
+  const data = [
+    {
+      image: Destination1,
+      title: "Singapore",
+      subTitle: "Singapore, officialy thr Republic of Singapore, is a",
+      cost: "38,800",
+      duration: "Approx 2 night trip",
+    },
+    {
+      image: Destination2,
+      title: "Thailand",
+      subTitle: "Thailand is a Southeast Asia country. It's known for",
+      cost: "54,200",
+      duration: "Approx 2 night trip",
+    },
+    {
+      image: Destination3,
+      title: "Paris",
+      subTitle: "Paris, France's capital, is a major European city and a",
+      cost: "45,500",
+      duration: "Approx 2 night trip",
+    },
+    {
+      image: Destination4,
+      title: "New Zealand",
+      subTitle: "New Zealand is an island country in the",
+      cost: "24,100",
+      duration: "Approx 1 night trip",
+    },
+    {
+      image: Destination5,
+      title: "Bora Bora",
+      subTitle: "Bora Bora is a small South Pacific island northwest of",
+      cost: "95,400",
+      duration: "Approx 2 night 2 day trip",
+    },
+    {
+      image: Destination6,
+      title: "London",
+      subTitle: "London, the capital of England and the United",
+      cost: "38,800",
+      duration: "Approx 3 night 2 day trip",
+    },
+  ];
 
   const packages = [
     "The Weekend Break",
@@ -40,45 +67,45 @@ const dispatch = useDispatch();
   return (
     <Section id="recommend">
       <div className="title">
-        <h2>Recommended Hotel</h2>
+        <h2>Recommended Destinations</h2>
       </div>
-      { error!==null ?  <Alert severity="error">{error}</Alert>
-    : 
-    
-    status ==="loading"? <Box style={{position: 'relative'}}>
-    <CircularProgress size={40}
-     left={-20}
-     top={10}
-     
-     style={{marginLeft: '50%'}} color="secondary" /></Box>
-    :hotels.data.length===0? <Box display='flex' justifyContent='center'> "il n'y a pas de données trouvées"</Box>:
-   
+      <div className="packages">
+        <ul>
+          {packages.map((pkg, index) => {
+            return (
+              <li
+                className={active === index + 1 ? "active" : ""}
+                onClick={() => setActive(index + 1)}
+              >
+                {pkg}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
       <div className="destinations">
         {data.map((destination) => {
           return (
             <div className="destination">
-              <img src={info1} alt="" />
-              <h3>{destination.nom_hotel}</h3>
-              <p>{destination.adresse}</p>
+              <img src={destination.image} alt="" />
+              <h3>{destination.title}</h3>
+              <p>{destination.subTitle}</p>
               <div className="info">
                 <div className="services">
-                <Rating
-          size="large"
-        defaultValue={destination.nb_etoile}
-        readOnly
-        />
-
+                  <img src={info1} alt="" />
+                  <img src={info2} alt="" />
+                  <img src={info3} alt="" />
                 </div>
-                <h4>A partir de {destination.prix_demi_pension} DT</h4>
+                <h4>{destination.cost}</h4>
               </div>
               <div className="distance">
-                <p>de <span> {moment(destination.date_debut).format('YYYY-MM-DD')} à <span>{moment(destination.date_fin).format('YYYY-MM-DD')}</span></span></p>
-                <Button variant="contained">Voir l'offre</Button>
+                <span>1000 Kms</span>
+                <span>{destination.duration}</span>
               </div>
             </div>
           );
         })}
-      </div>}
+      </div>
     </Section>
   );
 }
@@ -92,10 +119,20 @@ const Section = styled.section`
     display: flex;
     justify-content: center;
     margin: 2rem 0;
-
+    ul {
+      display: flex;
+      list-style-type: none;
+      width: max-content;
+      li {
+        padding: 1rem 2rem;
+        border-bottom: 0.1rem solid black;
+      }
+      .active {
+        border-bottom: 0.5rem solid #8338ec;
+      }
+    }
   }
   .destinations {
-    padding: 2rem 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
@@ -138,7 +175,7 @@ const Section = styled.section`
       }
     }
   }
-  @media screen and (min-width: 280px) and (max-width: 992px) {
+  @media screen and (min-width: 280px) and (max-width: 768px) {
     .packages {
       ul {
         li {

@@ -1,37 +1,39 @@
+import { CardContent,Typography, } from "@mui/material";
+import { height } from "@mui/system";
 import React from "react";
 import styled from "styled-components";
-import homeImage from "../../assets/algerie.jpg";
+import homeImage from "../../assets/hero.png";
+import TunisiaVideo from "../../assets/TunisiaVideo.mp4";
 export default function Hero() {
   return (
     <Section id="hero">
       <div className="background">
-        <img className="background" src={homeImage} alt="" />
+        {/* <img src={homeImage} alt="" /> */}
+        <video
+            autoPlay
+            loop
+            muted
+           style={{width:'100%'}}
+          >
+            <source
+              src="TunisiaVideo.mp4"
+              type="video/mp4"
+             
+            />
+          </video>
       </div>
-      <div className="content">
+      <div  className="content">
         <div className="title">
-          <h1>TRAVEL TO EXPLORE</h1>
+          <h1 >TRAVEL TO EXPLORE</h1>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
             natus, enim ipsam magnam odit deserunt itaque? Minima earum velit
             tenetur!
           </p>
         </div>
-        <div className="search">
-          <div className="container">
-            <label htmlFor="">Where you want to go</label>
-            <input type="text" placeholder="Search Your location" />
-          </div>
-          <div className="container">
-            <label htmlFor="">Check-in</label>
-            <input type="date" />
-          </div>
-          <div className="container">
-            <label htmlFor="">Check-out</label>
-            <input type="date" />
-          </div>
-          <button>Explore Now</button>
-        </div>
+        
       </div>
+      
     </Section>
   );
 }

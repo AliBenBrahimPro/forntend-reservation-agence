@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import avatarImage from "../../assets/algerie.jpg";
+import ali from "../../assets/ali.png";
 export default function Testimonials() {
   return (
     <Section id="testimonials">
@@ -14,7 +14,7 @@ export default function Testimonials() {
             asperiores eaque.
           </p>
           <div className="info">
-            <img src={avatarImage} alt="" />
+            <img src={ali} alt="" />
             <div className="details">
               <h4>Kishan Sheth</h4>
               <span>CEO - Shashaan Web Solutions</span>
@@ -27,7 +27,7 @@ export default function Testimonials() {
             asperiores eaque.
           </p>
           <div className="info">
-            <img src={avatarImage} alt="" />
+            <img src={ali} alt="" />
             <div className="details">
               <h4>Kishan Sheth</h4>
               <span>CEO - Shashaan Web Solutions</span>
@@ -40,7 +40,7 @@ export default function Testimonials() {
             asperiores eaque.
           </p>
           <div className="info">
-            <img src={avatarImage} alt="" />
+            <img src={ali} alt="" />
             <div className="details">
               <h4>Kishan Sheth</h4>
               <span>CEO - Shashaan Web Solutions</span>
@@ -91,7 +91,7 @@ const Section = styled.section`
       }
     }
   }
-  @media screen and (min-width: 280px) and (max-width: 992px) {
+  @media screen and (min-width: 280px) and (max-width: 768px) {
     .testimonials {
       flex-direction: column;
       margin: 0;
