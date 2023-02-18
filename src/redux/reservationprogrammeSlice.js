@@ -2,6 +2,21 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
+
+
+export const fetchreservationprogramme = createAsyncThunk(
+  'reservationprogramme/fetchreservationprohramme',
+  async (_,thunkAPI) => {
+    const {rejectWithValue} = thunkAPI;
+      try{
+        const res =await fetch(`${process.env.REACT_APP_BASE_URL}/api/reservation/getreservationprogramme`)
+    const data = await res.json()
+    return data}
+    catch(error){
+      return rejectWithValue(error.message);
+    }
+  }
+)
 export const countResevationprogramme= createAsyncThunk(
   'reservationprogramme/countreservationprogramme',
   async (tokens,thunkAPI) => {
@@ -49,6 +64,21 @@ export const insertResevationprogramme= createAsyncThunk(
         
     },
     extraReducers:{
+      [fetchreservationprogramme.fulfilled]:(state,action)=>{
+        state.data = action.payload;
+        state.status ="success";
+        state.error =null;
+     },
+     [fetchreservationprogramme.pending]:(state)=>{
+      state.status ="loading";
+      state.error =null;
+
+     },
+     [fetchreservationprogramme.rejected]:(state,action)=>{
+    
+      state.status ="failed";
+      state.error=action.payload;
+      },
            //login
            [countResevationprogramme.fulfilled]:(state,action)=>{
             state.countreservationprogramme = action.payload.nb;

@@ -326,7 +326,13 @@ const MyProSidebar = () => {
               setSelected={setSelected}
             />
 
-           
+            <Item
+              title="List Programme"
+              to="/admin/listreservationevenement"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </Box>
         </Menu>
       </Sidebar>

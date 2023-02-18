@@ -214,22 +214,29 @@ const MySideBarAgence = () => {
               Gestion de Réservation
             </Typography>
             <Item
-              title="List des reservations transport"
+              title="List transport"
               to="/agence/listuserreservationtransport"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="List des reservations hotel"
+              title="List hotel"
               to="/agence/listuserreservationhotel"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="List des reservations Evenement"
+              title="List Evenement"
               to="/agence/listuserreservationevenement"
+              icon={<FormatListBulletedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+             <Item
+              title="List Programme"
+              to="/agence/listreservationprogramme"
               icon={<FormatListBulletedIcon />}
               selected={selected}
               setSelected={setSelected}
