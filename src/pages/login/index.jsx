@@ -77,10 +77,11 @@ export default function Login() {
       navigate("/agence")
    
      }else{
+      console.log(data)
           Swal.fire({
               icon: 'error',
               title: 'Oops...',
-              text: "Quelque chose s'est mal passé!",
+              text: data.payload,
             })}}) }
     }
    

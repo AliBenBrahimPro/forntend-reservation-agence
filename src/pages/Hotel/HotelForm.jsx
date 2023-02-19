@@ -77,14 +77,26 @@ const [image,setImage]=useState();
       formData.append('prix_pension_complete',values.prix_pension_complete)
       formData.append('prix_all_inclusive',values.prix_all_inclusive)
       formData.append('prix_all_inclusive_soft',values.prix_all_inclusive_soft)
-      formData.append('enfant_gratuit',values.enfant_gratuit)
       formData.append('capacite',values.capacite)
       formData.append('commision',values.commision)
       formData.append('services_equipements',JSON.stringify(service))
       formData.append('date_debut',values.date_debut)
       formData.append('date_fin',values.date_fin)
     
+      
+      formData.append('type_promotion',values.type_promotion)
+      formData.append('capacite_chambre_single',values.capacite_chambre_single)
+      formData.append('capacite_chambre_triple',values.capacite_chambre_triple)
+      formData.append('capacite_chambre_double',values.capacite_chambre_double)
+      formData.append('capacite_chambre_quadriple',values.capacite_chambre_quadriple)
+      formData.append('prix_petit_dejeuner',values.prix_petit_dejeuner)
+      formData.append('bebe_gratuit',values.bebe_gratuit)
+      formData.append('reduction_enfant',values.reduction_enfant)
+      formData.append('date_debut_promotion',values.date_debut_promotion)
+      formData.append('date_fin_promotion',values.date_fin_promotion)
+    
 const x=formData
+console.log(values)
   const res =  await axios.post(`${process.env.REACT_APP_BASE_URL}/api/hotel/addhotel`,formData)
                if(res.status===200 ){
                 Swal.fire(
@@ -92,6 +104,19 @@ const x=formData
                           `${res.data.nom_hotel} a ajouter avec succes`,
                           'success'
                         ) 
+                        setClimatisation(false)
+                        setrestaurant(false)
+                        setcentreAffaires(false)
+                        setpiscine(false)
+                        settelevision(false)
+                        setboutiqueCadeaux(false)
+                        setchange(false)
+                        setbar(false)
+                        setplage(false)
+                        setcafe(false)
+                        setascenseur(false)
+                        settennis(false)
+                        setanimauxAutorises(false)
                         resetForm({ image_hotel:[],
                           nom_hotel: "",
                           e_mail:"",
@@ -108,9 +133,10 @@ const x=formData
                           prix_all_inclusive_soft:"",
                           enfant_gratuit:1,
                           commision:"",
-                          services_equipements:"",
+                          setImage:"",
                           date_debut:"",
                           date_fin:"",})
+
                }else{
                     Swal.fire({
                         icon: 'error',
@@ -145,7 +171,7 @@ const x=formData
         numero_telephone:"",
         adresse:"",
         nb_etoile:0,
-        capacite:"",
+        capacite:0,
         frais_chambre_single:"",
         porcentage_chambre_triple:"",
         porcentage_chambre_quadruple:"",
@@ -158,7 +184,19 @@ const x=formData
         services_equipements:"",
         date_debut:"",
         date_fin:"",
-    };
+        nb_place_reserver:0,
+        capacite_chambre_single:0,
+        capacite_chambre_double:0,
+        capacite_chambre_triple:0,
+        capacite_chambre_quadriple:0,
+        prix_petit_dejeuner:0,
+        type_promotion:1,
+        bebe_gratuit:"",
+        reduction_enfant:"",
+        date_debut_promotion:"",
+        date_fin_promotion:""
+
+};
     const checkoutSchema = yup.object().shape({
      
         nom_hotel:yup.string().required("Required"),
@@ -207,7 +245,7 @@ const x=formData
                   }}
                 >
                   <Box  sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
-                  <Typography variant='h4' color={colors.grey[200]}>Ajouter des photos</Typography>
+                  <Typography marginBottom={2} variant='h4' color={colors.grey[200]}>Ajouter des photos</Typography>
                   
                   <Box  sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
              <input
@@ -368,7 +406,7 @@ const x=formData
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Prix chambre single"
+                    label="Supplément chambre single"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.frais_chambre_single}
@@ -381,7 +419,7 @@ const x=formData
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Pourcentage chambre triple"
+                    label="Réduction 3éme lit en (%)"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.porcentage_chambre_triple}
@@ -394,13 +432,29 @@ const x=formData
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Pourcentage chambre quadruple"
+                    label="Réduction 4éme lit en (%)"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.porcentage_chambre_quadruple}
                     name="porcentage_chambre_quadruple"
                     error={!!touched.porcentage_chambre_quadruple && !!errors.porcentage_chambre_quadruple}
                     helpertext={touched.porcentage_chambre_quadruple && errors.porcentage_chambre_quadruple}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                        <TextField
+                    fullwidth
+                    variant="filled"
+                    type="number"
+                    label="Prix logement petit déjeuner"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.prix_petit_dejeuner}
+                    name="prix_petit_dejeuner"
+                    InputProps={{
+                      inputProps: { min: 0 }
+                    }}
+                    error={!!touched.prix_petit_dejeuner && !!errors.prix_petit_dejeuner}
+                    helpertext={touched.prix_petit_dejeuner && errors.prix_petit_dejeuner}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
@@ -433,7 +487,7 @@ const x=formData
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Prix all inclusive"
+                    label="Prix logement all inclusive"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.prix_all_inclusive}
@@ -446,7 +500,7 @@ const x=formData
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Prix all inclusive soft"
+                    label="Prix logement all inclusive soft"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.prix_all_inclusive_soft}
@@ -455,108 +509,122 @@ const x=formData
                     helpertext={touched.prix_all_inclusive_soft && errors.prix_all_inclusive_soft}
                     sx={{ gridColumn: "span 2" }}
                   />
-                  <TextField
-                    fullwidth
-                    variant="filled"
-                    type="text"
-                    label="petit déjeuner"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.commision}
-                    name="dejeuner"
-                    error={!!touched.commision && !!errors.commision}
-                    helpertext={touched.commision && errors.commision}
-                    sx={{ gridColumn: "span 2" }}
-                  />
-                  <TextField
-                    fullwidth
-                    variant="filled"
-                    type="text"
-                    label="Capacité"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.capacite}
-                    name="capacite"
-                    error={!!touched.capacite && !!errors.capacite}
-                    helpertext={touched.capacite && errors.capacite}
-                    sx={{ gridColumn: "span 4" }}
-                />
+            
+                 
                 
                 
 
                 <TextField
                     fullwidth
                     variant="filled"
-                    type="text"
+                    type="number"
                     label="Capacité chambre single"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.capacite}
-                    name="Capacité_chambre_single"
-                    error={!!touched.capacite && !!errors.capacite}
-                    helpertext={touched.capacite && errors.capacite}
+                    InputProps={{
+                      inputProps: { min: 0 }
+                    }}
+                    value={values.capacite_chambre_single==null?0:values.capacite_chambre_single}
+                    name="capacite_chambre_single"
+                    error={!!touched.capacite_chambre_single && !!errors.capacite_chambre_single}
+                    helpertext={touched.capacite_chambre_single && errors.capacite_chambre_single}
                     sx={{ gridColumn: "span 1" }}
                 />
                 <TextField
                     fullwidth
                     variant="filled"
-                    type="text"
+                    type="number"
                     label="Capacité chambre double"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.capacite}
+                    InputProps={{
+                      inputProps: { min: 0 }
+                    }}
+                    value={values.capacite_chambre_double??0}
                     name="capacite_chambre_double"
-                    error={!!touched.capacite && !!errors.capacite}
-                    helpertext={touched.capacite && errors.capacite}
+                    error={!!touched.capacite_chambre_double && !!errors.capacite_chambre_double}
+                    helpertext={touched.capacite_chambre_double && errors.capacite_chambre_double}
                     sx={{ gridColumn: "span 1" }}
                 />
                 <TextField
                     fullwidth
                     variant="filled"
-                    type="text"
+                    type="number"
                     label="Capacité chambre triple"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.capacite}
+                    InputProps={{
+                      inputProps: { min: 0 }
+                    }}
+                    value={values.capacite_chambre_triple??0}
                     name="capacite_chambre_triple"
-                    error={!!touched.capacite && !!errors.capacite}
-                    helpertext={touched.capacite && errors.capacite}
+                    error={!!touched.capacite_chambre_triple && !!errors.capacite_chambre_triple}
+                    helpertext={touched.capacite_chambre_triple && errors.capacite_chambre_triple}
                     sx={{ gridColumn: "span 1" }}
                 />
                 <TextField
                     fullwidth
                     variant="filled"
-                    type="text"
+                    type="number"
+                    
                     label="Capacité chambre quadruple"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.capacite}
-                    name="capacite_chambre_quadruple"
-                    error={!!touched.capacite && !!errors.capacite}
-                    helpertext={touched.capacite && errors.capacite}
+                    InputProps={{
+                      inputProps: { min: 0 }
+                    }}
+                    value={values.capacite_chambre_quadriple??0}
+                    name="capacite_chambre_quadriple"
+                    error={!!touched.capacite_chambre_quadriple && !!errors.capacite_chambre_quadriple}
+                    helpertext={touched.capacite_chambre_quadriple && errors.capacite_chambre_quadriple}
                     sx={{ gridColumn: "span 1" }}
                 />
-                <FormControl>
-                  <FormLabel id="demo-radio-buttons-group-label">Type Commission </FormLabel>
+                 <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
+                    label="Alotement"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    InputProps={{
+                      inputProps: { min: 0 }
+                    }}
+                    value={ parseInt(values.capacite_chambre_single==null ?0:values.capacite_chambre_single) +parseInt(values.capacite_chambre_double??0)+parseInt(values.capacite_chambre_triple??0)+parseInt(values.capacite_chambre_quadriple??0)}
+                    name="capacite"
+                    error={!!touched.capacite && !!errors.capacite}
+                    helpertext={touched.capacite && errors.capacite}
+                    sx={{ gridColumn: "span 4" }}
+                />
+                                <Box sx={{ display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center', gridColumn: "span 4" }}>
+
+                <FormControl sx={{ display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center', gridColumn: "span 4" }}>
+                  <Typography marginBottom={4} variant='h4' color={colors.grey[200]}>Type de promotion</Typography>
+
                   <RadioGroup
+                  row
                     aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue={1}
-                    name="typeCommission"
+                    defaultValue={values.type_promotion}
+                    name="type_promotion"
+                    
                     onChange={handleChange}
                   >
-                    <FormControlLabel value={1} control={<Radio  color='default' />} label="Commission en dt" />
-                    <FormControlLabel value={0} control={<Radio  color='default' />} label="Commission en pourcentage" />
+                    <FormControlLabel value={1} control={<Radio  color='default' />} label="Promotion en DT" />
+                    <FormControlLabel value={0} control={<Radio  color='default' />} label="Promotion en pourcentage (%)" />
                   </RadioGroup>
                 </FormControl>
+                </Box>
                 <TextField
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Commision"
+                    label="Promotion"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.commision}
                     name="commision"
+                    InputProps={{
+                      inputProps: { min: 0 }
+                    }}
                     error={!!touched.commision && !!errors.commision}
                     helpertext={touched.commision && errors.commision}
                     sx={{ gridColumn: "span 4" }}
@@ -565,57 +633,65 @@ const x=formData
                     fullwidth
                     variant="filled"
                     type="date"
-                    label="Date debut"
+                    label="Date debut promotion"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.date_debut}
-                    name="date_debut"
-                    error={!!touched.date_debut && !!errors.date_debut}
-                    helpertext={touched.date_debut && errors.date_debut}
+                    value={values.date_debut_promotion}
+                    name="date_debut_promotion"
+                    error={!!touched.date_debut_promotion && !!errors.date_debut_promotion}
+                    helpertext={touched.date_debut_promotion && errors.date_debut_promotion}
                     sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     fullwidth
                     variant="filled"
                     type="date"
-                    label="Date finPromotion"
+                    label="Date fin promotion"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     
-                    value={values.date_fin}
-                    inputProps={{ min: values.date_debut}}
-                    name="date_finPromotion"
-                    error={!!touched.date_fin && !!errors.date_fin}
-                    helpertext={touched.date_fin && errors.date_fin}
+                    value={values.date_fin_promotion}
+                    inputProps={{ min: values.date_debut_promotion}}
+                    name="date_fin_promotion"
+                    error={!!touched.date_fin_promotion && !!errors.date_fin_promotion}
+                    helpertext={touched.date_fin_promotion && errors.date_fin_promotion}
                   sx={{ gridColumn: "span 2" }}
                   
                 />
                 <TextField
                     fullwidth
                     variant="filled"
-                    type="text"
-                    label="Reduction enfant -5 ans et - 12ans"
+                    type="number"
+                    InputProps={{
+                      inputProps: { min: 0 }
+                    }}
+                    label="Reduction enfant -5 ans et - 12ans en (%)"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.capacite}
-                    name="Reductionenfant"
-                    error={!!touched.capacite && !!errors.capacite}
-                    helpertext={touched.capacite && errors.capacite}
+                    value={values.reduction_enfant}
+                    name="reduction_enfant"
+                    error={!!touched.reduction_enfant && !!errors.reduction_enfant}
+                    helpertext={touched.reduction_enfant && errors.reduction_enfant}
                     sx={{ gridColumn: "span 4" }}
                 />
+                <Box sx={{ display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center', gridColumn: "span 4" }}>
                    
-       <FormControl>
-  <FormLabel id="demo-radio-buttons-group-label">Enfant Gratuit -4 ans (bébé)</FormLabel>
+       <FormControl sx={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center', gridColumn: "span 4" }}>
+  <Typography marginBottom={4} variant='h4' color={colors.grey[200]}>Enfant Gratuit -4 ans (bébé)</Typography>
+
   <RadioGroup
+  row
     aria-labelledby="demo-radio-buttons-group-label"
     defaultValue={1}
-    name="enfant_gratuit"
+    name="bebe_gratuit"
     onChange={handleChange}
+    value={values.bebe_gratuit}
   >
     <FormControlLabel value={1} control={<Radio  color='default' />} label="Oui" />
     <FormControlLabel value={0} control={<Radio  color='default' />} label="Non" />
   </RadioGroup>
 </FormControl>
+</Box>
                    <Box margin={1} sx={{ gridColumn: "span 4" ,display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Services & équipements</Typography>
           
