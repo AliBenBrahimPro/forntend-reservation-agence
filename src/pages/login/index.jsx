@@ -171,6 +171,11 @@ export default function Login() {
                   Mot de passe oublié??
                 </Link>
               </Grid>
+              <Grid item xs style={{textAlign: "end"}}>
+                <Link href="/inscription" variant="body2">
+                Inscription
+                </Link>
+              </Grid>
             </Grid>
           </Box>
      </form>

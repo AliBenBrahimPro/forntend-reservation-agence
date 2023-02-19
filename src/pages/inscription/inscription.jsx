@@ -14,8 +14,7 @@ import Container from '@mui/material/Container';
 import {  ThemeProvider } from '@mui/material/styles';
 import { useTheme } from '@mui/material';
 import { useNavigate } from "react-router-dom/dist";
-import { login } from '../../redux/userSlice';
-import { loginadmin } from '../../redux/adminSlice';
+import {insertUser} from "./../../redux/userSlice"
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { Visibility,VisibilityOff} from '@mui/icons-material'
@@ -41,47 +40,35 @@ export default function Inscription() {
     const theme = useTheme();
     const navigate =useNavigate();
     const dispatch =useDispatch();
-  const handleSubmit = (event) => {
-    if(event.e_mail ==="dzagence.responsable@gmail.com"){
-        dispatch(loginadmin(event)).then((data)=>{
-          localStorage.setItem("tokens",data.payload.tokens)
-          if(data.type==="admin/loginuadmin/fulfilled" ){
-            Swal.fire(
-              'Success',
-              `Admin dzagence à connecté avec succes`,
-              'success'
-            ) 
-            navigate("/admin")
-         
-           }else{
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: "Quelque chose s'est mal passé!",
-                  })}})
-    }else{
-    dispatch(login(event)).then((data)=>{
-    if(data.type==="user/loginuser/fulfilled" ){
-      console.log(data.payload)
-      localStorage.setItem("id",data.payload.id)
-      localStorage.setItem("code_agence",data.payload.code_agence)
-      localStorage.setItem("nom_agence",data.payload.nom_agence)
-      localStorage.setItem("email_agence",data.payload.e_mail)
-      localStorage.setItem("tokens",data.payload.tokens)
-      localStorage.setItem("commision_hotel",data.payload.commition_hotel)
-      Swal.fire(
-        'Success',
-        `${data.payload.nom_agence} à connecté avec succes`,
-        'success'
-      ) 
-      navigate("/agence")
-   
-     }else{
-          Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: "Quelque chose s'est mal passé!",
-            })}}) }
+  const handleSubmit = (event,{resetForm}) => {
+      dispatch(insertUser(event)).then((data)=>{
+        if(data.type==="user/insertUser/fulfilled" ){
+         Swal.fire(
+                   'Success',
+                   `${data.payload.nom_agence} a ajouter avec succes`,
+                   'success'
+                 ) 
+
+                 resetForm({
+                  e_mail:"",
+                  code_agence:"",
+                  nom_agence:"",
+                  numero_telephone:"",
+                  adresse:"",
+                  cp_agence:"",
+                  password:"",
+                  solde:0,
+                  credit:0,
+                  commition_hotel:0
+                 }) 
+                     
+        }else{
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Oops...',
+                 text: "Quelque chose s'est mal passé!",
+               })}
+       })
     }
    
   const data={
@@ -91,15 +78,23 @@ export default function Inscription() {
     numero_telephone:"",
     adresse:"",
     cp_agence:"",
-    password:""
+    password:"",
+    solde:0,
+    credit:0,
+    commition_hotel:0
   }
   const checkoutSchema = yup.object().shape({
     e_mail:yup.string().email("Invalid email!").required("Required"),
+    code_agence:yup.string().required("Required"),
+    nom_agence:yup.string().required("Required"),
+    numero_telephone:yup.number().required("Required"),
+    adresse:yup.string().required("Required"),
+    cp_agence:yup.number().required("Required"),
     password:yup.string().required("Required"),
   })
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" style={{marginBottom:"100px"}}>
         <CssBaseline />
         <Box
           sx={{
@@ -137,7 +132,6 @@ export default function Inscription() {
             <TextField
                     margin="normal"
                     fullWidth
-                    variant="filled"
                     required
                     type="text"
                     label="Code Agence"
@@ -147,13 +141,11 @@ export default function Inscription() {
                     name="code_agence"
                     error={!!touched.code_agence && !!errors.code_agence}
                     helperText={touched.code_agence && errors.code_agence}
-                    sx={{ gridColumn: "span 2" }}
                   />
                   <TextField
                     margin="normal"
                     fullWidth
                     required
-                    variant="filled"
                     type="text"
                     label="Nom Agence"
                     onBlur={handleBlur}
@@ -168,7 +160,6 @@ export default function Inscription() {
                     margin="normal"
                     fullWidth
                     required
-                    variant="filled"
                     type="nulber"
                     label="numéro de téléphone"
                     onBlur={handleBlur}
@@ -183,7 +174,6 @@ export default function Inscription() {
                     margin="normal"
                     fullWidth
                     required
-                    variant="filled"
                     type="text"
                     label="Adresse"
                     onBlur={handleBlur}
@@ -198,7 +188,6 @@ export default function Inscription() {
                     margin="normal"
                     fullWidth
                     required
-                    variant="filled"
                     type="number"
                     label="Code postal"
                     onBlur={handleBlur}
@@ -246,10 +235,10 @@ export default function Inscription() {
               S'inscrire
             </Button>
 
-            <Grid container>
+            <Grid container >
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Mot de passe oublié??
+                <Link href="/login" variant="body2">
+                connexion
                 </Link>
               </Grid>
             </Grid>
