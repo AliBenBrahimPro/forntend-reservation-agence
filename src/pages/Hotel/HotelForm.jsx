@@ -191,7 +191,7 @@ console.log(values)
         capacite_chambre_quadriple:0,
         prix_petit_dejeuner:0,
         type_promotion:1,
-        bebe_gratuit:"",
+        bebe_gratuit:1,
         reduction_enfant:"",
         date_debut_promotion:"",
         date_fin_promotion:""

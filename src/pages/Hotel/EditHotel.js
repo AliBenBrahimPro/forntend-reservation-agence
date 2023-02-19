@@ -21,24 +21,24 @@ import moment from 'moment'
 import axios from 'axios';
 
 function EditHotel() {
-    const navigate = useNavigate();
-    const dispatch =useDispatch();
-    const {id} = useParams();
-     const {data} = useSelector(state=>state.hotels)
-     const hotels = useSelector(state=>state.hotels)
-     const [climatisation,setClimatisation]=useState(false);
-const [restaurant,setrestaurant]=useState(false);
-const [centreAffaires,setcentreAffaires]=useState(false);
-const [piscine,setpiscine]=useState(false);
-const [television,settelevision]=useState(false);
-const [boutiqueCadeaux,setboutiqueCadeaux]=useState(false);
-const [change,setchange]=useState(false);
-const [bar,setbar]=useState(false);
-const [plage,setplage]=useState(false);
-const [cafe,setcafe]=useState(false);
-const [ascenseur,setascenseur]=useState(false);
-const [tennis,settennis]=useState(false);
-const [animauxAutorises,setanimauxAutorises]=useState(false);
+const navigate = useNavigate();
+const dispatch =useDispatch();
+const {id} = useParams();
+const {data} = useSelector(state=>state.hotels)
+const hotels = useSelector(state=>state.hotels)
+const [climatisation,setClimatisation]=useState(data?.services_equipements?.climatisation);
+const [restaurant,setrestaurant]=useState(data?.services_equipements?.restaurant);
+const [centreAffaires,setcentreAffaires]=useState(data?.services_equipements?.centreAffaires);
+const [piscine,setpiscine]=useState(data?.services_equipements?.piscine);
+const [television,settelevision]=useState(data?.services_equipements?.television);
+const [boutiqueCadeaux,setboutiqueCadeaux]=useState(data?.services_equipements?.boutiqueCadeaux);
+const [change,setchange]=useState(data?.services_equipements?.change);
+const [bar,setbar]=useState(data?.services_equipements?.bar);
+const [plage,setplage]=useState(data?.services_equipements?.plage);
+const [cafe,setcafe]=useState(data?.services_equipements?.cafe);
+const [ascenseur,setascenseur]=useState(data?.services_equipements?.ascenseur);
+const [tennis,settennis]=useState(data?.services_equipements?.tennis);
+const [animauxAutorises,setanimauxAutorises]=useState(data?.services_equipements?.animauxAutorises);
 const [image,setImage]=useState([]);
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -47,69 +47,110 @@ const [image,setImage]=useState([]);
 dispatch(getSingleHotels(id))
     },[dispatch])
     useEffect(()=>{
-      setTimeout(() => {console.log(data.services_equipements.climatisation)}, 1000);
+      setTimeout(() => {
+           
+      }, 1000);
           },[hotels])
+
+        console.log(data)
           const handleFormSubmit =async (values,{resetForm}) => {
-  
+  console.log("test",values.services_equipements)
             const service={
-              "climatisation":climatisation,
-              "restaurant":restaurant,
-              "centreAffaires":centreAffaires,
-              "piscine":piscine,
-              "television":television,
-              "boutiqueCadeaux":boutiqueCadeaux,
-              "change":change,
-              "bar":bar,
-              "plage":plage,
-              "cafe":cafe,
-              "ascenseur":ascenseur,
-              "tennis":tennis,
-              "animauxAutorises":animauxAutorises
+              climatisation:climatisation,
+              restaurant:restaurant,
+              centreAffaires:centreAffaires,
+              piscine:piscine,
+              television:television,
+              boutiqueCadeaux:boutiqueCadeaux,
+              change:change,
+              bar:bar,
+              plage:plage,
+              cafe:cafe,
+              ascenseur:ascenseur,
+              tennis:tennis,
+              animauxAutorises:animauxAutorises
             }
-            values.services_equipements= service
+console.log("service",service)
+            //  values.services_equipements=service
       
             const formData = new FormData();
           console.log(values)
-            formData.append('image_hotel',data.image_hotel)
-            formData.append('nom_hotel',values.nom_hotel)
-            formData.append('numero_telephone',values.numero_telephone)
-            formData.append('e_mail',values.e_mail)
-            formData.append('adresse',values.adresse)
-            formData.append('nb_etoile',values.nb_etoile)
-            formData.append('prix_chambre_double',values.prix_chambre_double)
-            formData.append('frais_chambre_single',values.frais_chambre_single)
-            formData.append('porcentage_chambre_triple',values.porcentage_chambre_triple)
-            formData.append('porcentage_chambre_quadruple',values.porcentage_chambre_quadruple)
-            formData.append('prix_demi_pension',values.prix_demi_pension)
-            formData.append('prix_pension_complete',values.prix_pension_complete)
-            formData.append('prix_all_inclusive',values.prix_all_inclusive)
-            formData.append('prix_all_inclusive_soft',values.prix_all_inclusive_soft)
-            formData.append('capacite',values.capacite)
-            formData.append('commision',values.commision)
-            formData.append('services_equipements',JSON.stringify(service))
-            formData.append('date_debut',values.date_debut)
-            formData.append('date_fin',values.date_fin)
-            formData.append('type_promotion',values.type_promotion)
-            formData.append('capacite_chambre_single',values.capacite_chambre_single)
-            formData.append('capacite_chambre_triple',values.capacite_chambre_triple)
-            formData.append('capacite_chambre_double',values.capacite_chambre_double)
-            formData.append('capacite_chambre_quadriple',values.capacite_chambre_quadriple)
-            formData.append('prix_petit_dejeuner',values.prix_petit_dejeuner)
-            formData.append('bebe_gratuit',values.bebe_gratuit)
-            formData.append('reduction_enfant',values.reduction_enfant)
-            formData.append('date_debut_promotion',values.date_debut_promotion)
-            formData.append('date_fin_promotion',values.date_fin_promotion)
+            // formData.append('image_hotel',data.image_hotel)
+            // formData.append('nom_hotel',values.nom_hotel)
+            // formData.append('numero_telephone',values.numero_telephone)
+            // formData.append('e_mail',values.e_mail)
+            // formData.append('adresse',values.adresse)
+            // formData.append('nb_etoile',values.nb_etoile)
+            // formData.append('prix_chambre_double',values.prix_chambre_double)
+            // formData.append('frais_chambre_single',values.frais_chambre_single)
+            // formData.append('porcentage_chambre_triple',values.porcentage_chambre_triple)
+            // formData.append('porcentage_chambre_quadruple',values.porcentage_chambre_quadruple)
+            // formData.append('prix_demi_pension',values.prix_demi_pension)
+            // formData.append('prix_pension_complete',values.prix_pension_complete)
+            // formData.append('prix_all_inclusive',values.prix_all_inclusive)
+            // formData.append('prix_all_inclusive_soft',values.prix_all_inclusive_soft)
+            // formData.append('capacite',values.capacite)
+            // formData.append('commision',values.commision)
+            // formData.append('services_equipements',JSON.stringify(service))
+            // formData.append('date_debut',values.date_debut)
+            // formData.append('date_fin',values.date_fin)
+            // formData.append('type_promotion',values.type_promotion)
+            // formData.append('capacite_chambre_single',values.capacite_chambre_single)
+            // formData.append('capacite_chambre_triple',values.capacite_chambre_triple)
+            // formData.append('capacite_chambre_double',values.capacite_chambre_double)
+            // formData.append('capacite_chambre_quadriple',values.capacite_chambre_quadriple)
+            // formData.append('prix_petit_dejeuner',values.prix_petit_dejeuner)
+            // formData.append('bebe_gratuit',values.bebe_gratuit)
+            // formData.append('reduction_enfant',values.reduction_enfant)
+            // formData.append('date_debut_promotion',values.date_debut_promotion)
+            // formData.append('date_fin_promotion',values.date_fin_promotion)
           
-      const x=formData
-      console.log(values)
-        const res =  await axios.put(`${process.env.REACT_APP_BASE_URL}/api/hotel/updatehotel/${id}`,formData)
+      // const x=formData
+      // console.log(x)
+      const data={
+          nom_hotel: values.nom_hotel,
+          e_mail: values.e_mail,
+          numero_telephone: values.numero_telephone,
+          adresse: values.adresse,
+          nb_etoile: values.nb_etoile,
+          capacite: values.capacite,
+          capacite_chambre_single: values.capacite_chambre_single,
+          capacite_chambre_double: values.capacite_chambre_double,
+          capacite_chambre_triple: values.capacite_chambre_triple,
+          capacite_chambre_quadriple: values.capacite_chambre_quadriple,
+          nb_place_reserver: values.nb_place_reserver,
+          porcentage_chambre_triple: values.porcentage_chambre_triple,
+          porcentage_chambre_quadruple: values.porcentage_chambre_quadruple,
+          frais_chambre_single: values.frais_chambre_single,
+          prix_demi_pension: values.prix_demi_pension,
+          prix_pension_complete: values.prix_pension_complete,
+          prix_all_inclusive: values.prix_all_inclusive,
+          prix_all_inclusive_soft: values.prix_all_inclusive_soft,
+          prix_petit_dejeuner: values.prix_petit_dejeuner,
+          type_promotion: values.type_promotion,
+          bebe_gratuit: values.bebe_gratuit,
+          reduction_enfant: values.reduction_enfant,
+          commision: values.commision,
+          date_debut:values.date_debut ,
+          date_fin: values.date_fin,
+          date_debut_promotion: values.date_debut_promotion,
+          date_fin_promotion: values.date_fin_promotion,
+          services_equipements:service,
+          nb_place_reserver_single: values.nb_place_reserver_single,
+          nb_place_reserver_double: values.nb_place_reserver_double,
+          nb_place_reserver_triple: values.nb_place_reserver_triple,
+          nb_place_reserver_quadriple: values.nb_place_reserver_quadriple
+  }
+
+      // values.services_equipements=JSON.stringify(service)
+        const res =  await axios.put(`${process.env.REACT_APP_BASE_URL}/api/hotel/updatehotel/${id}`,data)
                      if(res.status===200 ){
                       Swal.fire(
                                 'Success',
                                 `${res.data.nom_hotel} a modifier avec succes`,
                                 'success'
                               ) 
-                             navigate(`/admin/listhotel`)
+                       navigate(`/admin/listhotel`)
       
                      }else{
                           Swal.fire({
