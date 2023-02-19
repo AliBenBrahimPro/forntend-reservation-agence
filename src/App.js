@@ -6,6 +6,7 @@ import { MyProSidebarAgence } from "./pages/global/sidebar/sidebarContextAgence"
 import TopbarAgence from "./pages/global/TopbarAgence";
 import Agence from "./pages/Agence/index"
 import Login from "./pages/login/index"
+import Inscription from "./pages/inscription/inscription"
 import Home from "./pages/Home/Home"
 import Dashboard from "./pages/dashboard";
 import Team from "./pages/team";
@@ -292,6 +293,7 @@ const App = () => {
               <Routes>
 <Route path="/" element={<Home/>}/>
     <Route path="/login" element={<Login/>}/>
+    <Route path="/Inscription" element={<Inscription/>}/>
     <Route path="/test" element={<Test/>}/>
     
   

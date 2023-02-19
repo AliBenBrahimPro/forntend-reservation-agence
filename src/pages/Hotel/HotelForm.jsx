@@ -333,7 +333,36 @@ const x=formData
                 alignItems:'center'  }}>
                   <Typography variant='h4' color={colors.grey[200]}>Dates & Tarifs</Typography>
           
-            </Box>
+                </Box>
+                
+                  <TextField
+                    fullwidth
+                    variant="filled"
+                    type="date"
+                    label="Date debut"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.date_debut}
+                    name="date_debut"
+                    error={!!touched.date_debut && !!errors.date_debut}
+                    helpertext={touched.date_debut && errors.date_debut}
+                    sx={{ gridColumn: "span 2" }}
+                  />
+                  <TextField
+                    fullwidth
+                    variant="filled"
+                    type="date"
+                    label="Date fin"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    
+                    value={values.date_fin}
+                    inputProps={{ min: values.date_debut}}
+                    name="date_fin"
+                    error={!!touched.date_fin && !!errors.date_fin}
+                    helpertext={touched.date_fin && errors.date_fin}
+                    sx={{ gridColumn: "span 2" }}
+                  />
 
                   <TextField
                     fullwidth
@@ -430,11 +459,11 @@ const x=formData
                     fullwidth
                     variant="filled"
                     type="text"
-                    label="Commision"
+                    label="petit déjeuner"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.commision}
-                    name="commision"
+                    name="dejeuner"
                     error={!!touched.commision && !!errors.commision}
                     helpertext={touched.commision && errors.commision}
                     sx={{ gridColumn: "span 2" }}
@@ -451,9 +480,88 @@ const x=formData
                     error={!!touched.capacite && !!errors.capacite}
                     helpertext={touched.capacite && errors.capacite}
                     sx={{ gridColumn: "span 4" }}
-                  />
-              
-                          <TextField
+                />
+                
+                
+
+                <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
+                    label="Capacité chambre single"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.capacite}
+                    name="Capacité_chambre_single"
+                    error={!!touched.capacite && !!errors.capacite}
+                    helpertext={touched.capacite && errors.capacite}
+                    sx={{ gridColumn: "span 1" }}
+                />
+                <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
+                    label="Capacité chambre double"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.capacite}
+                    name="capacite_chambre_double"
+                    error={!!touched.capacite && !!errors.capacite}
+                    helpertext={touched.capacite && errors.capacite}
+                    sx={{ gridColumn: "span 1" }}
+                />
+                <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
+                    label="Capacité chambre triple"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.capacite}
+                    name="capacite_chambre_triple"
+                    error={!!touched.capacite && !!errors.capacite}
+                    helpertext={touched.capacite && errors.capacite}
+                    sx={{ gridColumn: "span 1" }}
+                />
+                <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
+                    label="Capacité chambre quadruple"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.capacite}
+                    name="capacite_chambre_quadruple"
+                    error={!!touched.capacite && !!errors.capacite}
+                    helpertext={touched.capacite && errors.capacite}
+                    sx={{ gridColumn: "span 1" }}
+                />
+                <FormControl>
+                  <FormLabel id="demo-radio-buttons-group-label">Type Commission </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue={1}
+                    name="typeCommission"
+                    onChange={handleChange}
+                  >
+                    <FormControlLabel value={1} control={<Radio  color='default' />} label="Commission en dt" />
+                    <FormControlLabel value={0} control={<Radio  color='default' />} label="Commission en pourcentage" />
+                  </RadioGroup>
+                </FormControl>
+                <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
+                    label="Commision"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.commision}
+                    name="commision"
+                    error={!!touched.commision && !!errors.commision}
+                    helpertext={touched.commision && errors.commision}
+                    sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
                     fullwidth
                     variant="filled"
                     type="date"
@@ -470,19 +578,34 @@ const x=formData
                     fullwidth
                     variant="filled"
                     type="date"
-                    label="Date fin"
+                    label="Date finPromotion"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     
                     value={values.date_fin}
                     inputProps={{ min: values.date_debut}}
-                    name="date_fin"
+                    name="date_finPromotion"
                     error={!!touched.date_fin && !!errors.date_fin}
                     helpertext={touched.date_fin && errors.date_fin}
-                    sx={{ gridColumn: "span 2" }}
-                  />
+                  sx={{ gridColumn: "span 2" }}
+                  
+                />
+                <TextField
+                    fullwidth
+                    variant="filled"
+                    type="text"
+                    label="Reduction enfant -5 ans et - 12ans"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.capacite}
+                    name="Reductionenfant"
+                    error={!!touched.capacite && !!errors.capacite}
+                    helpertext={touched.capacite && errors.capacite}
+                    sx={{ gridColumn: "span 4" }}
+                />
+                   
        <FormControl>
-  <FormLabel id="demo-radio-buttons-group-label">Enfant Gratuit -2 ans (bébé)</FormLabel>
+  <FormLabel id="demo-radio-buttons-group-label">Enfant Gratuit -4 ans (bébé)</FormLabel>
   <RadioGroup
     aria-labelledby="demo-radio-buttons-group-label"
     defaultValue={1}
