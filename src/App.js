@@ -297,6 +297,7 @@ const App = () => {
     <Route path="/inscription" element={<Inscription/>}/>
     <Route path="/AjouterChambre" element={<AjouterChambre/>}/>
     <Route path="/test" element={<Test/>}/>
+    <Route path="/stepper" element={<Stepers/>}/>
     
   
     <Route path="/admin/*" element={ <LinkAdmin />} />

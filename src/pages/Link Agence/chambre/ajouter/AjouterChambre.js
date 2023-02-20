@@ -91,6 +91,14 @@ export default function AjouterChambre() {
                     <FormControlLabel value={3} control={<Radio color='default'/>} label="All Inclusive Soft" />
                     <FormControlLabel value={4} control={<Radio color='default'/>} label="All Inclusive" />   
                 </RadioGroup>
+                <FormLabel id="demo-row-radio-buttons-group-label"> Bebe gratuit -5ans</FormLabel>
+            <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group">
+                <FormControlLabel value="1" onClick={e =>test(1)}  control={<Radio />} label="Avec un bébé -5ans " />
+                <FormControlLabel value="0" onClick={e=>test(2)}  control={<Radio />} label="n'est pas un bébé -5ans" />
+                </RadioGroup>
             </FormControl>
             <br/>
             {
