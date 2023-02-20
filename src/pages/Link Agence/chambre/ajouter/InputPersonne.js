@@ -19,7 +19,7 @@ export default function InputPersonne(props) {
     
   return (
     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-standard-label">Personne{props.num }</InputLabel>
+          <InputLabel id="demo-simple-select-standard-label">Personne {props.num }</InputLabel>
             <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"

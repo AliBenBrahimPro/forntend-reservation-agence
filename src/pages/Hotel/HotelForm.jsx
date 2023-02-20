@@ -214,7 +214,7 @@ console.log(values)
         commision:yup.number().required("Required"),
         prix_all_inclusive_soft:yup.number().required("Required"),
         capacite:yup.number().required("Required"),
-    // enfant_gratuit:yup.number().required("Required"),
+        // enfant_gratuit:yup.number().required("Required"),
         // services_equipements:yup.bool(),
         date_debut:yup.date().required("Required"),
         date_fin:yup.date().required("Required"),
