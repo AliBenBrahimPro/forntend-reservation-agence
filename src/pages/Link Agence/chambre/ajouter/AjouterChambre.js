@@ -13,25 +13,26 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Header from "../../../../components/Header"
 import InputPersonne from './InputPersonne';
+import AffecterClient from './AffecterClient';
 
 export default function AjouterChambre() {
 
     const [typeChambre,setTypeChambre]=useState(1)
     const [nomTypeChambre,setnomTypeChambre]=useState("")
     const [personne,setPersonne]=useState([])
-    
+    const [listpersonne,setListPersonne]=useState([])
     
     
     const test = (e) => {
         
         var x = e
-        console.log("type x : "+typeof(x))
         if (x === 1) {
             setnomTypeChambre("Chambre single");
             setTypeChambre(1);
             setPersonne([
                 <InputPersonne key={1} num={1} />
             ]);
+            setListPersonne(["Adult"])
         }
         if (x === 2) {
             setnomTypeChambre("Chambre double");
@@ -40,6 +41,7 @@ export default function AjouterChambre() {
                 <InputPersonne key={1} num={1} />,
                 <InputPersonne key={2} num={2} />
             ]);
+            setListPersonne(["Adult","Enfant"])
         }
         if (x === 3) {
             setnomTypeChambre("Chambre triple");
@@ -49,6 +51,7 @@ export default function AjouterChambre() {
                 <InputPersonne key={2} num={2} />,
                 <InputPersonne key={3} num={3} />
             ]);
+            setListPersonne(["Adult","Enfant","Adult"])
         }
         if (x === 4) {
             setnomTypeChambre("Chambre quadruple");
@@ -59,6 +62,8 @@ export default function AjouterChambre() {
                 <InputPersonne key={3} num={3} />,
                 <InputPersonne key={4} num={4} />
             ]);
+            setListPersonne(["Adult","Enfant","Adult","Enfant"])
+            
         }
         
         
@@ -70,6 +75,8 @@ export default function AjouterChambre() {
     }
     
     return (
+        <div>
+
         <Box m="20px">
             <Header title="Ajouter chambre" subtitle="Ajouter chambre" />
             <FormControl>
@@ -110,6 +117,10 @@ export default function AjouterChambre() {
             </Box>
             
 
-      </Box>
+        </Box>
+        
+            <hr />
+            <AffecterClient title={nomTypeChambre} listeInput={listpersonne} />
+            </div>
   )
 }

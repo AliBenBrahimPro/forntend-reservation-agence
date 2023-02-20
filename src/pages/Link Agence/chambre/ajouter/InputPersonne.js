@@ -14,7 +14,7 @@ export default function InputPersonne(props) {
     
 
     const handleChange = (e) => {
-                setPerosnne(e.target.value);
+      setPerosnne(e.target.value);
     };
     
   return (
