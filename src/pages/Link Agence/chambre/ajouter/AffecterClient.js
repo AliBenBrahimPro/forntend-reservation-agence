@@ -100,7 +100,7 @@ export default function AffecterClient(props) {
                       
                       <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained" onClick={()=>clickfct()}>
-                    affecter client
+                    Terminer
                   </Button>
                 </Box>
                 
