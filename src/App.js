@@ -31,6 +31,7 @@ import ListEvent from "./pages/Event/ListEvent";
 import FormAvion from "./pages/Avion/FormAvion";
 import ListAvion from "./pages/Avion/ListAvion";
 import EditAvion from "./pages/Avion/EditAvion";
+import AjouterChambre from "./pages/Link Agence/chambre/ajouter/AjouterChambre"
 import ProgrammeForm from "./pages/Programme/FormProg";
 import ListProgramme from "./pages/Programme/ListProg";
 import EditProgramme from "./pages/Programme/EditProg";
@@ -294,6 +295,7 @@ const App = () => {
 <Route path="/" element={<Home/>}/>
     <Route path="/login" element={<Login/>}/>
     <Route path="/inscription" element={<Inscription/>}/>
+    <Route path="/AjouterChambre" element={<AjouterChambre/>}/>
     <Route path="/test" element={<Test/>}/>
     
   

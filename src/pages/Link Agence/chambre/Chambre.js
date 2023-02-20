@@ -141,7 +141,8 @@ console.log("test222",chambres,pensions)
         <Box m="20px">
           <Header title="Selecter chambres" subtitle="Selectionner chambres " />
           
-          { hotels.status === "loading"?<CircularProgress/>: <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
+        {hotels.status === "loading" ? <CircularProgress /> :
+          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
               <form onSubmit={handleSubmit}>
                 <Box
