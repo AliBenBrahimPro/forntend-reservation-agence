@@ -98,6 +98,7 @@ import CCH from "./pages/Link Agence/Hotel/CCH";
 import ECH from "./pages/Link Agence/Hotel/ECH";
 import NCH from "./pages/Link Agence/Hotel/NCH";
 import FCH from "./pages/Link Agence/Hotel/FCH";
+import Reervationhotel from "./pages/Link Agence/chambre/resevationhotel";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -297,6 +298,7 @@ const App = () => {
     <Route path="/inscription" element={<Inscription/>}/>
     <Route path="/AjouterChambre" element={<AjouterChambre/>}/>
     <Route path="/test" element={<Test/>}/>
+    <Route path="/stepper" element={<Reervationhotel/>}/>
     
   
     <Route path="/admin/*" element={ <LinkAdmin />} />

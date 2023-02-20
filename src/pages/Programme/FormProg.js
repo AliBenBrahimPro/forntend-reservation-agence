@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Alert, Autocomplete, Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Alert, Autocomplete, Box, Button, CircularProgress, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material'
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { useMediaQuery } from "@mui/material";
@@ -14,9 +14,12 @@ import { fetchBus } from '../../redux/busSlice';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Fab from '@mui/material/Fab';
 import axios from 'axios';
+import { useTheme } from '@mui/system';
+import { tokens } from "../../theme";
 
 function ProgrammeForm() {
-  const tokens=localStorage.getItem('tokens')
+  const tokensUser=localStorage.getItem('tokens')
+  const [isBus,setIsBus]=useState(1)
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const dispatch =useDispatch();
     const hotels = useSelector(state=>state.hotels)
@@ -25,7 +28,7 @@ function ProgrammeForm() {
     const bus = useSelector(state=>state.bus)
     useEffect(()=>{
         dispatch(fetchHotels())
-        dispatch(fetchAvion(tokens))
+        dispatch(fetchAvion(tokensUser))
         dispatch(fetchEvent())
         dispatch(fetchBus())
        
@@ -92,6 +95,13 @@ function ProgrammeForm() {
         date_fin:yup.date().required("Required"),
 
     })
+    const changeRadio = (e) => {
+      setIsBus(e)
+
+    }
+    
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
     return (
         <Box m="20px">
           <Header title="Creer nouveau Programme" subtitle="Ajouter nouveau Programme" />
@@ -119,6 +129,8 @@ function ProgrammeForm() {
                     "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                   }}
                 >
+                              <Typography variant='h4' color={colors.grey[200]}>Ajouter image</Typography>
+
              <Box  sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'center',flexDirection: 'column',alignItems:'center'  }}>
              <input
               style={{display: "none" }}
@@ -135,9 +147,27 @@ function ProgrammeForm() {
               </Fab>
             </label>
             </Box>
+            <Box  sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'center',alignItems:'center'  }}>
+
+            <FormControl sx={{ gridColumn: "span 4" , display:'flex',justifyContent:'space-between',flexDirection: 'column',alignItems:'center'  }}>
+    
+            <Typography variant='h4' color={colors.grey[200]}>Selectionner type de transport</Typography>
+      <RadioGroup
+        row
+        aria-labelledby="demo-row-radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        onChange={(e)=>{changeRadio(e.target.value);setFieldValue('busId',0);setFieldValue('avionId',0);}}
+        defaultValue={isBus}
+      >
+        <FormControlLabel value={1} control={<Radio color='default' />} label="Bus" />
+        <FormControlLabel value={0} control={<Radio color='default' />} label="Avion" />
+      </RadioGroup>
+    </FormControl>
+    </Box>
 <FormControl sx={{ gridColumn: "span 2" }} fullWidth>
   <InputLabel id="demo-simple-select-label">Bus</InputLabel>
   <Select
+    disabled={isBus==0}
     labelId="demo-simple-select-label"
     id="demo-simple-select"
     variant="filled"
@@ -155,6 +185,7 @@ function ProgrammeForm() {
 <FormControl sx={{ gridColumn: "span 2" }} fullWidth>
   <InputLabel id="demo-simple-select-label">Avion</InputLabel>
   <Select
+  disabled={isBus==1}
     labelId="demo-simple-select-label"
     id="demo-simple-select"
     variant="filled"
@@ -167,7 +198,7 @@ function ProgrammeForm() {
 
   </Select>
 </FormControl>
-<FormControl sx={{ gridColumn: "span 2" }} fullWidth>
+<FormControl sx={{ gridColumn: "span 4" }} fullWidth>
   <InputLabel id="demo-simple-select-label">Hotels</InputLabel>
   <Select
     labelId="demo-simple-select-label"
@@ -184,24 +215,7 @@ function ProgrammeForm() {
 
   </Select>
 </FormControl>
-<FormControl sx={{ gridColumn: "span 2" }} fullWidth>
-  <InputLabel id="demo-simple-select-label">Evenement</InputLabel>
-  <Select
-    labelId="demo-simple-select-label"
-    id="demo-simple-select"
-    value={values.evenementId}
-    variant="filled"
-    label="Evenement"
-    name='evenementId'
-    onChange={handleChange}
-    error={!!touched.evenementId && !!errors.evenementId}
-    helperText={touched.evenementId && errors.evenementId}
-    
-  >
-  {event.getAllData.map(e=><MenuItem value={e.id}>{e.nom_evenement}</MenuItem>)  }
-   
-  </Select>
-</FormControl>
+
 
                    <TextField
                     fullWidth

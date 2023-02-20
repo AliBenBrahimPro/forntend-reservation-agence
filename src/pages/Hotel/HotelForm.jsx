@@ -189,7 +189,7 @@ console.log(values)
         capacite_chambre_double:0,
         capacite_chambre_triple:0,
         capacite_chambre_quadriple:0,
-        prix_petit_dejeuner:0,
+        prix_petit_dejeuner:"",
         type_promotion:1,
         bebe_gratuit:1,
         reduction_enfant:"",
@@ -214,7 +214,7 @@ console.log(values)
         commision:yup.number().required("Required"),
         prix_all_inclusive_soft:yup.number().required("Required"),
         capacite:yup.number().required("Required"),
-    // enfant_gratuit:yup.number().required("Required"),
+        // enfant_gratuit:yup.number().required("Required"),
         // services_equipements:yup.bool(),
         date_debut:yup.date().required("Required"),
         date_fin:yup.date().required("Required"),
@@ -444,7 +444,7 @@ console.log(values)
                         <TextField
                     fullwidth
                     variant="filled"
-                    type="number"
+                    type="text"
                     label="Prix logement petit déjeuner"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -665,7 +665,7 @@ console.log(values)
                     InputProps={{
                       inputProps: { min: 0 }
                     }}
-                    label="Reduction enfant -5 ans et - 12ans en (%)"
+                    label="Reduction enfant 5 ans et - 12ans en (%)"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     value={values.reduction_enfant}
@@ -677,7 +677,7 @@ console.log(values)
                 <Box sx={{ display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center', gridColumn: "span 4" }}>
                    
        <FormControl sx={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center', gridColumn: "span 4" }}>
-  <Typography marginBottom={4} variant='h4' color={colors.grey[200]}>Enfant Gratuit -4 ans (bébé)</Typography>
+  <Typography marginBottom={4} variant='h4' color={colors.grey[200]}>Enfant Gratuit -5 ans (bébé)</Typography>
 
   <RadioGroup
   row

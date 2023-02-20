@@ -84,18 +84,27 @@ export default function AjouterChambre() {
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group">
-                <FormControlLabel value="1" onClick={e =>test(1)}  control={<Radio />} label="Chambre single" />
-                <FormControlLabel value="2" onClick={e=>test(2)}  control={<Radio />} label="Chambre double" />
-                <FormControlLabel value="3" onClick={e=>test(3)}  control={<Radio />} label="Chambre triple" />
-                <FormControlLabel value="4" onClick={e=>test(4)}  control={<Radio />} label="Chambre quadruple" />
+                <FormControlLabel value={1} onClick={e =>test(1)}  control={<Radio />} label="Chambre single" />
+                <FormControlLabel value={2} onClick={e=>test(2)}  control={<Radio />} label="Chambre double" />
+                <FormControlLabel value={3} onClick={e=>test(3)}  control={<Radio />} label="Chambre triple" />
+                <FormControlLabel value={4} onClick={e=>test(4)}  control={<Radio />} label="Chambre quadruple" />
                 </RadioGroup>
                 
                 <FormLabel id="demo-row-radio-buttons-group-label">Type logement</FormLabel>
-                <RadioGroup sx={{ gridColumn: "span 4" }} row name="prix_pension">
-                    <FormControlLabel  value={1} control={<Radio  color='default' />} label="Demi Pension " />
-                    <FormControlLabel value={2} control={<Radio  color='default'/>} label="Pension Complète" />
-                    <FormControlLabel value={3} control={<Radio color='default'/>} label="All Inclusive Soft" />
-                    <FormControlLabel value={4} control={<Radio color='default'/>} label="All Inclusive" />   
+                <RadioGroup sx={{ gridColumn: "span 4" }} row name="prix_pension"  >
+                    <FormControlLabel  value={1} control={<Radio  color='default' />} label="Petit déjeuner" />
+                    <FormControlLabel  value={2} control={<Radio  color='default' />} label="Demi Pension " />
+                    <FormControlLabel value={3} control={<Radio  color='default'/>} label="Pension Complète" />
+                    <FormControlLabel value={4} control={<Radio color='default'/>} label="All Inclusive Soft" />
+                    <FormControlLabel value={5} control={<Radio color='default'/>} label="All Inclusive" />   
+                </RadioGroup>
+                <FormLabel id="demo-row-radio-buttons-group-label"> Bebe gratuit -5ans</FormLabel>
+            <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group">
+                <FormControlLabel value={1}   control={<Radio />} label="Avec un bébé -5ans " />
+                <FormControlLabel value={0} control={<Radio />} label="n'est pas un bébé -5ans" />
                 </RadioGroup>
             </FormControl>
             <br/>
@@ -104,7 +113,7 @@ export default function AjouterChambre() {
             }
             
             
-            <Box display="flex" justifyContent="start" mt="20px">
+            {/* <Box display="flex" justifyContent="start" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
                     Prix automatique
                   </Button>
@@ -113,7 +122,7 @@ export default function AjouterChambre() {
                   <Button type="submit" color="secondary" variant="contained">
                     affecter client
                   </Button>
-            </Box>
+            </Box> */}
             
 
         </Box>
