@@ -12,6 +12,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Header from "../../../../components/Header"
+import ModalTerminer from "./ModalTerminer"
+
 
 export default function AffecterClient(props) {
     const [nomPrenom,setNomPrenom]=useState([])
@@ -98,11 +100,7 @@ export default function AffecterClient(props) {
                       }
                   </form>
                       
-                      <Box display="flex" justifyContent="end" mt="20px">
-                  <Button type="submit" color="secondary" variant="contained" onClick={()=>clickfct()}>
-                    Terminer
-                  </Button>
-                </Box>
+                      <ModalTerminer/>
                 
               
 
