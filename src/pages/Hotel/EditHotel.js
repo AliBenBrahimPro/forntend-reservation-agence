@@ -611,7 +611,7 @@ error={!!touched.nb_etoile && !!errors.nb_etoile}
               InputProps={{
                 inputProps: { min: 0 }
               }}
-              label="Reduction enfant -5 ans et - 12ans en (%)"
+              label="Reduction enfant 5 ans et - 12ans en (%)"
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.reduction_enfant}
@@ -623,7 +623,7 @@ error={!!touched.nb_etoile && !!errors.nb_etoile}
           <Box sx={{ display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center', gridColumn: "span 4" }}>
              
  <FormControl sx={{display:'flex',justifyContent:'center',alignContent:'center',alignItems:'center', gridColumn: "span 4" }}>
-<Typography marginBottom={4} variant='h4' color={colors.grey[200]}>Enfant Gratuit -4 ans (bébé)</Typography>
+<Typography marginBottom={4} variant='h4' color={colors.grey[200]}>Enfant Gratuit -5 ans (bébé)</Typography>
 
 <RadioGroup
 row
