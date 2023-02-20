@@ -24,7 +24,6 @@ export default function AjouterChambre() {
     
     
     const test = (e) => {
-        
         var x = e
         if (x === 1) {
             setnomTypeChambre("Chambre single");
