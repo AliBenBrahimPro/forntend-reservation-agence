@@ -99,6 +99,7 @@ import NCH from "./pages/Link Agence/Hotel/NCH";
 import FCH from "./pages/Link Agence/Hotel/FCH";
 import Test from "./pages/test";
 import GlobalVariable from "./pages/GlobalVariable";
+import StepperProg from "./pages/Link Agence/chambre/ajouter/StepperProg";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -241,7 +242,8 @@ function LinkAgence() {
                 <Route path="/rctp/:a/:b/:e/:n" element={<RCT />} />
                 <Route path="/rcep/:e/:n" element={<RCE />} />
                 <Route path="/ccp" element={<Ccp />} />
-
+                <Route path="/AjouterChambre" element={<AjouterChambre/>}/>
+                <Route path="/stepagence/:id" element={<StepperProg/>}/>
 
                 {/* agence */}
                 <Route path="/userForm" element={<UserForm />} />
@@ -296,7 +298,7 @@ const App = () => {
 <Route path="/" element={<Home/>}/>
     <Route path="/login" element={<Login/>}/>
     <Route path="/inscription" element={<Inscription/>}/>
-    <Route path="/AjouterChambre" element={<AjouterChambre/>}/>
+    
     <Route path="/test" element={<Test/>}/>
     <Route path="/global" element={<GlobalVariable/>}/>
     

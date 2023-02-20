@@ -78,17 +78,21 @@ export default function AjouterChambre() {
 
         <Box m="20px">
             <Header title="Ajouter chambre" subtitle="Ajouter chambre" />
+            
             <FormControl>
             <FormLabel id="demo-row-radio-buttons-group-label">Type chambre</FormLabel>
             <RadioGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group">
-                <FormControlLabel value={1} onClick={e =>test(1)}  control={<Radio />} label="Chambre single" />
-                <FormControlLabel value={2} onClick={e=>test(2)}  control={<Radio />} label="Chambre double" />
-                <FormControlLabel value={3} onClick={e=>test(3)}  control={<Radio />} label="Chambre triple" />
-                <FormControlLabel value={4} onClick={e=>test(4)}  control={<Radio />} label="Chambre quadruple" />
+                <FormControlLabel value={1} onClick={e =>test(1)}  control={<Radio color='default' />} label="Chambre single" />
+                <FormControlLabel value={2} onClick={e=>test(2)}  control={<Radio color='default'/>} label="Chambre double" />
+                <FormControlLabel value={3} onClick={e=>test(3)}  control={<Radio color='default'/>} label="Chambre triple" />
+                <FormControlLabel value={4} onClick={e=>test(4)}  control={<Radio color='default'/>} label="Chambre quadruple" />
                 </RadioGroup>
+                {
+                personne.map(e => e)
+            }
                 
                 <FormLabel id="demo-row-radio-buttons-group-label">Type logement</FormLabel>
                 <RadioGroup sx={{ gridColumn: "span 4" }} row name="prix_pension"  >
@@ -108,9 +112,7 @@ export default function AjouterChambre() {
                 </RadioGroup>
             </FormControl>
             <br/>
-            {
-                personne.map(e => e)
-            }
+          
             
             
             {/* <Box display="flex" justifyContent="start" mt="20px">

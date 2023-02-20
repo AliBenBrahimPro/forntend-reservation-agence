@@ -80,7 +80,7 @@ export default function MediaCardProg({PLACE,title,busid,hotelId,evenementId,sub
         </Typography>
         </Box>
     
-        <Button onClick={(e)=>navigate(`/agence/formprogagence/${id}`)} variant='outlined' color='secondary'>{btn}</Button>
+        <Button onClick={(e)=>navigate(`/agence/stepagence/${id}`)} variant='outlined' color='secondary'>{btn}</Button>
       </CardActions>
     </Card>
   );

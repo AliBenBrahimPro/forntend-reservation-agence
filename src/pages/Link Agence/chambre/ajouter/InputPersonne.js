@@ -19,13 +19,14 @@ export default function InputPersonne(props) {
     
   return (
     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-          <InputLabel id="demo-simple-select-standard-label">Personne {props.num }</InputLabel>
+          <InputLabel id="demo-simple-select-standard-label"> Personne {props.num }</InputLabel>
             <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
             value={nomPersonne}
             onChange={e=>handleChange(e)}
             label="Adulte"
+            variant='filled'
             >
             <MenuItem value="Adulte">Adulte</MenuItem>
             <MenuItem value="Enfant">Enfant</MenuItem>
