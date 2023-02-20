@@ -97,6 +97,8 @@ import CCH from "./pages/Link Agence/Hotel/CCH";
 import ECH from "./pages/Link Agence/Hotel/ECH";
 import NCH from "./pages/Link Agence/Hotel/NCH";
 import FCH from "./pages/Link Agence/Hotel/FCH";
+import Test from "./pages/test";
+import GlobalVariable from "./pages/GlobalVariable";
 
 function LinkAdmin() {
   const [theme, colorMode] = useMode();
@@ -296,6 +298,7 @@ const App = () => {
     <Route path="/inscription" element={<Inscription/>}/>
     <Route path="/AjouterChambre" element={<AjouterChambre/>}/>
     <Route path="/test" element={<Test/>}/>
+    <Route path="/global" element={<GlobalVariable/>}/>
     
   
     <Route path="/admin/*" element={ <LinkAdmin />} />
