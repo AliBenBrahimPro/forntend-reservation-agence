@@ -13,6 +13,8 @@ import reservationhotelSlice from './reservationhotelSlice'
 import reservationtransSlice from './reservationtransSlice'
 import reservationprogramme from './reservationprogrammeSlice'
 import userSlice from './userSlice'
+import  filterSlice from './globalSlice'
+
 export const store = configureStore({
     reducer:{
         hotels:hotelSlice,
@@ -28,7 +30,9 @@ export const store = configureStore({
         reservationEvent:reservationEventSlice,
         chambre:chambreSlice,
         admin:adminSlice,
-        reservationprogramme:reservationprogramme
+        reservationprogramme:reservationprogramme,
+        productFilter: filterSlice
+        
 
 
     },
