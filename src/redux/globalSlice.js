@@ -1,7 +1,8 @@
 import { createSlice} from '@reduxjs/toolkit'
 const initialState = {
 filter: 2,
-nbr: '',
+client: "",
+next:0,
 }
 export const filterSlice = createSlice({
 name: 'productFilter',
@@ -10,12 +11,17 @@ reducers: {
 setFilter: (state, action) => {
 state.filter= action.payload
 },
-setNbr: (state, action) => {
-    state.nbr= action.payload
-    }
+setClient: (state, action) => {
+    state.client= action.payload
+    },
+setNext: (state, action) => {
+        state.next= action.payload
+        }
+},
 
-,}
-})
+},
+)
 export const { setFilter} = filterSlice.actions
-export const { setNbr} = filterSlice.actions
+export const { setClient} = filterSlice.actions
+export const { setNext} = filterSlice.actions
 export default filterSlice.reducer 

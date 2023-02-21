@@ -18,7 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment/moment';
 import { getSingleUser } from '../../../redux/userSlice';
-import { setFilter } from '../../../redux/globalSlice';
+import { setClient, setFilter, setNext } from '../../../redux/globalSlice';
 
 const StepOne = () => {
   const iduser = localStorage.getItem('id');
@@ -32,26 +32,46 @@ const StepOne = () => {
     const [enfant,setEnfant]=useState(0)
     const [nbr,setNbr]=useState(2)
     const [pensions,setPensions]=useState(1)
-    const [type,setType]=useState("Chambre Double")
+    const [person1,setPerson1]=useState()
+    const [person2,setPerson2]=useState()
+    const [person3,setPerson3]=useState()
+    const [person4,setPerson4]=useState()
+    const [logement,setLogement]=useState("Demi pension")
+    const [type,setType]=useState(2)
     const {data} = useSelector(state=>state.hotels)
     const hotels = useSelector(state=>state.hotels)
     const chambre = useSelector(state=>state.chambre)
-    console.log(data)
+    const nextStep = useSelector((state) => state.productFilter.next);
+
     useEffect(()=>{
         dispatch(getSingleHotels(id))
             },[])
             useEffect(() => {
               setPrice(((data.prix_demi_pension * parseFloat(nbr))*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision??0)/100)))
-console.log('price',)
+
             }, [hotels])
             // console.log("data",data.nom_hotel)
+            
+   
+               console.log("person 1 : ",person1)
+               console.log("person 2 : ",person2)
+               console.log("person 3 : ",person3)
+               console.log("person 4 : ",person4)
+               const test =[person1,person2,person3,person4];
+               const noEmptyValues =   test.filter((value) => value != null);
+               console.log("test : ",noEmptyValues)
+
     const handleFormSubmit = (values) => {
-      console.log(values.date_debut,values.date_fin)
+
+values.type_personne=noEmptyValues;
+dispatch(setClient(noEmptyValues)) 
+values.type_logmenet=logement
+       dispatch(setNext(nextStep+1)) 
         let date1= new Date(values.date_fin);
        let date2 = new Date(values.date_debut)
        let time_diff = date1.getTime() - date2.getTime();
        const days_Diff = time_diff / (1000 * 3600 * 24);
-       console.log("date",days_Diff);
+
         values.montant=price*days_Diff;
         values.type=type
         values.nb_place=nbr
@@ -67,12 +87,13 @@ console.log('price',)
         }
        let  nom_1nce=localStorage.getItem('nom_1nce')
        let e_mail_1nce=localStorage.getItem('email_1nce')
+       console.log(values)
        let x= dispatch(insertReservationhotel(data2)).then(secc=>{
         // console.log(secc)
 
         if(secc.type==="reservationhotel/insertReservationhotel/fulfilled" ){
           dispatch(getSingleUser(localStorage.getItem('id')))
-
+         
           dispatch(insertChambre(values)).then(async(sec)=>{
             const email={
               email:e_mail_1nce,
@@ -128,22 +149,26 @@ console.log('price',)
           date_fin:data.date_fin,
           montant:"",
           hotelId:data.id,
-          date_debut:"",
-          date_fin:""
+          type_logmenet:"",
+          bebe:1,
+          type_personne:""
+          
+
     };
     const checkoutSchema = yup.object().shape({
-        
+  
+       
+
 
     })
+
  
-console.log("test222",chambres,pensions)
-// console.log(data.prix_all_inclusive)
     return (
         <Box m="20px">
           <Header title="Selecter chambres" subtitle="Selectionner chambres " />
           
         {hotels.status === "loading" ? <CircularProgress /> :
-          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema}>
+          <Formik onSubmit={handleFormSubmit} initialValues={initialValues} validationSchema={checkoutSchema} >
             {({ values, errors, touched, handleBlur, handleChange, handleSubmit,}) => (
               <form onSubmit={handleSubmit}>
                 <Box
@@ -159,7 +184,8 @@ console.log("test222",chambres,pensions)
       <RadioGroup
        sx={{ gridColumn: "span 4" }}
         row
-        onChange={e=>{setChambre(e.target.value);
+        onChange={e=>{setChambre(e.target.value); 
+            setPerson1(null);setPerson2(null);setPerson3(null);setPerson4(null)
           let prix=0;
           if(parseInt(pensions)==1)
           { 
@@ -239,25 +265,29 @@ console.log("test222",chambres,pensions)
              setPrice(((prix*4)*(1-(parseFloat(data.commision)/100)))*(1-(parseFloat(commision)/100)))
             }
           }
-            // setPrice(prix* parseFloat(nbr))
+            
           }}
         defaultValue={2}
       >
-        <FormControlLabel onClick={e=>{setType("Chambre Double"); setNbr(2);dispatch(setFilter(2))}} value={2} control={<Radio  color='default' />} label="Chambre Double" />
-        <FormControlLabel onClick={e=>{setType("Chambre Single");setNbr(1);dispatch(setFilter(1))}} control={<Radio color='default'/>} label="Chambre Single" />
-        <FormControlLabel onClick={e=>{setType("Chambre Triple");setNbr(3);dispatch(setFilter(3))}} value={3} control={<Radio color='default'/>} label="Chambre Triple" />
-        <FormControlLabel onClick={e=>{setType("Chambre Quadruple");setNbr(4);dispatch(setFilter(4))}} value={4} control={<Radio color='default'/>} label="Chambre Quadruple" />
+        <FormControlLabel onClick={e=>{setType(2); setNbr(2);dispatch(setFilter(2))}} value={2} control={<Radio  color='default' />} label="Chambre Double" />
+        <FormControlLabel onClick={e=>{setType(1);setNbr(1);dispatch(setFilter(1))}} value={1} control={<Radio color='default'/>} label="Chambre Single" />
+        <FormControlLabel onClick={e=>{setType(3);setNbr(3);dispatch(setFilter(3))}} value={3} control={<Radio color='default'/>} label="Chambre Triple" />
+        <FormControlLabel onClick={e=>{setType(4);setNbr(4);dispatch(setFilter(4))}} value={4} control={<Radio color='default'/>} label="Chambre Quadruple" />
       </RadioGroup>
     </FormControl>
-    {nbr===1?<FormControl sx={{ gridColumn: "span 2" }} fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+    {nbr===1? 
+    <FormControl sx={{ gridColumn: "span 2" }} fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 1</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
-    label="Persone"
-    onChange={handleChange}
+    label="Persone 1"
+    value={person1}
+    onChange={e=>setPerson1(e.target.value)}
     variant='filled'
+    error={!!touched.personOne && !!errors.personOne}
+    helperText={touched.personOne && errors.personOne}
+    sx={{ gridColumn: "span 4" }}
   >
     <MenuItem value={"Adulte"}>Adulte</MenuItem>
     <MenuItem value={"Enfant"}>Enfant</MenuItem>
@@ -271,119 +301,162 @@ console.log("test222",chambres,pensions)
                     "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                   }}
                 >
-<FormControl sx={{ gridColumn: "span 2" }} fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+<FormControl sx={{ gridColumn: "span 4" }} fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 1</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
+    value={person1}
+    error={!!touched.personOne && !!errors.personOne}
+    helperText={touched.personOne && errors.personOne}
+   
     label="Persone"
-    onChange={handleChange}
+    onChange={e=>setPerson1(e.target.value)}
     variant='filled'
   >
    <MenuItem value={"Adulte"}>Adulte</MenuItem>
     <MenuItem value={"Enfant"}>Enfant</MenuItem>
   </Select>
 </FormControl>
-<FormControl sx={{ gridColumn: "span 2" }}fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+<FormControl sx={{ gridColumn: "span 4" }}fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 2</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
+    error={!!touched.personTwo && !!errors.personTwo}
+    helperText={touched.personTwo && errors.personTwo}
+    value={person2}
     label="Persone"
-    onChange={handleChange}
+    onChange={e=>setPerson2(e.target.value)}
     variant='filled'
   >
  <MenuItem value={"Adulte"}>Adulte</MenuItem>
     <MenuItem value={"Enfant"}>Enfant</MenuItem>
   </Select>
-</FormControl></Box>:nbr===3?<Box><FormControl sx={{ gridColumn: "span 2" }}fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+</FormControl></Box>:nbr===3?
+<Box
+                  display="grid"
+                  gap="30px"
+                  gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                  sx={{
+                    "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                  }}
+                >
+    <FormControl sx={{ gridColumn: "span 4" }}fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 1</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
+    value={person1}
+    error={!!touched.personOne && !!errors.personOne}
+    helperText={touched.personOne && errors.personOne}
+    sx={{ gridColumn: "span 4" }}
     label="Persone"
-    onChange={handleChange}
+    onChange={e=>setPerson1(e.target.value)}
     variant='filled'
   >
 <MenuItem value={"Adulte"}>Adulte</MenuItem>
     <MenuItem value={"Enfant"}>Enfant</MenuItem>
   </Select>
-</FormControl><FormControl sx={{ gridColumn: "span 2" }}fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+</FormControl><FormControl sx={{ gridColumn: "span 4" }}fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 2</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
+    value={person2}
+    error={!!touched.personTwo && !!errors.personTwo}
+    helperText={touched.personTwo && errors.personTwo}
+    sx={{ gridColumn: "span 4" }}
     label="Persone"
-    onChange={handleChange}
+    onChange={e=>setPerson2(e.target.value)}
     variant='filled'
   >
 <MenuItem value={"Adulte"}>Adulte</MenuItem>
     <MenuItem value={"Enfant"}>Enfant</MenuItem>
   </Select>
-</FormControl><FormControl sx={{ gridColumn: "span 2" }} fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+</FormControl>
+<FormControl sx={{ gridColumn: "span 4" }} fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 3</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
+    value={person3}
+    error={!!touched.personThree && !!errors.personThree}
+    helperText={touched.personThree && errors.personThree}
+    sx={{ gridColumn: "span 4" }}
     label="Persone"
-    onChange={handleChange}
+    onChange={e=>setPerson3(e.target.value)}
     variant='filled'
   >
 <MenuItem value={"Adulte"}>Adulte</MenuItem>
     <MenuItem value={"Enfant"}>Enfant</MenuItem>
   </Select>
-</FormControl></Box>:nbr===4?<Box><FormControl sx={{ gridColumn: "span 2" }}fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+</FormControl></Box>:nbr===4?<Box
+                  display="grid"
+                  gap="30px"
+                  gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                  sx={{
+                    "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                  }}
+                ><FormControl sx={{ gridColumn: "span 4" }}fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 1</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
+    value={person1}
+    error={!!touched.personOne && !!errors.personOne}
+    helperText={touched.personOne && errors.personOne}
+    sx={{ gridColumn: "span 4" }}
     label="Persone"
-    onChange={handleChange}
+    onChange={e=>setPerson1(e.target.value)}
     variant='filled'
   >
     <MenuItem value={"Adulte"}>Adulte</MenuItem>
     <MenuItem value={"Enfant"}>Enfant</MenuItem>
   </Select>
-</FormControl><FormControl sx={{ gridColumn: "span 2" }} fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+</FormControl><FormControl sx={{ gridColumn: "span 4" }} fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 2</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
+    value={person2}
+    error={!!touched.personTwo && !!errors.personTwo}
+    helperText={touched.personTwo && errors.personTwo}
+    sx={{ gridColumn: "span 4" }}
     label="Persone"
-    onChange={handleChange}
+    onChange={e=>setPerson2(e.target.value)}
     variant='filled'
   >
 <MenuItem value={"Adulte"}>Adulte</MenuItem>
     <MenuItem value={"Enfant"}>Enfant</MenuItem>
   </Select>
-</FormControl><FormControl sx={{ gridColumn: "span 2" }} fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+</FormControl><FormControl sx={{ gridColumn: "span 4" }} fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 3</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
+    value={person3}
+    error={!!touched.personThree && !!errors.personThree}
+    helperText={touched.personThree && errors.personThree}
+    sx={{ gridColumn: "span 4" }}
     label="Persone"
-    onChange={handleChange}
+    onChange={e=>setPerson3(e.target.value)}
     variant='filled'
   >
  <MenuItem value={"Adulte"}>Adulte</MenuItem>
     <MenuItem value={"Enfant"}>Enfant</MenuItem>
   </Select>
-</FormControl><FormControl sx={{ gridColumn: "span 2" }} fullWidth>
-  <InputLabel id="demo-simple-select-label">Persone</InputLabel>
+</FormControl><FormControl sx={{ gridColumn: "span 4" }} fullWidth>
+  <InputLabel id="demo-simple-select-label">Persone 4</InputLabel>
   <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"
-    
+    value={person4}
+    error={!!touched.personFour && !!errors.personFour}
+    helperText={touched.personFour && errors.personFour}
+    sx={{ gridColumn: "span 4" }}
     label="Persone"
-    onChange={handleChange}
+    onChange={e=>setPerson4(e.target.value)}
     variant='filled'
   >
 <MenuItem value={"Adulte"}>Adulte</MenuItem>
@@ -396,7 +469,7 @@ console.log("test222",chambres,pensions)
        sx={{ gridColumn: "span 4" }}
         row
         name="prix_pension"
-        onChange={e=>{setPensions(e.target.value);
+        onChange={e=>{setPensions(e.target.value); 
           let prix=0;
             if(parseInt(e.target.value)==1)
             {  console.log("1") 
@@ -484,7 +557,7 @@ console.log("test222",chambres,pensions)
           }}
         defaultValue={1}
       >
-         <FormControlLabel   control={<Radio  color='default' />} label="Demi Pension " />
+         <FormControlLabel value={1}  control={<Radio  color='default' />} label="Demi Pension " />
         <FormControlLabel value={2} control={<Radio  color='default'/>} label="Pension Complète" />
         <FormControlLabel value={3} control={<Radio color='default'/>} label="All Inclusive Soft" />
         <FormControlLabel value={4} control={<Radio color='default'/>} label="All Inclusive" />
@@ -501,10 +574,24 @@ console.log("test222",chambres,pensions)
         <FormControlLabel  control={<Radio  color='default' />} label="Avec un bébé -2ans "  />
         <FormControlLabel value={0} control={<Radio  color='default' />} label="n'est pas un bébé -2ans "  />
       </RadioGroup></>:null}
+      <FormLabel id="demo-row-radio-buttons-group-label"> Bebe gratuit -5ans</FormLabel>
+            <RadioGroup
+                row
+                onChange={handleChange}
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                defaultValue={values.bebe}
+                name="bebe">
+                <FormControlLabel value={1}   control={<Radio color='default' />} label="Avec un bébé -5ans " />
+                <FormControlLabel value={0} control={<Radio color='default' />} label="n'est pas un bébé -5ans" />
+                </RadioGroup>
+     
     </FormControl>
-                
+    <Box display='flex' justifyContent='center' >
+
+</Box>
                   <TextField
                     fullWidth
+                    disabled
                     variant="filled"
                     type="text"
                     label="prix_total"
@@ -517,6 +604,7 @@ console.log("test222",chambres,pensions)
                     sx={{ gridColumn: "span 4" }}
                   />
        <TextField
+       disabled
               fullWidth
               variant="filled"
               type="date"
@@ -530,6 +618,7 @@ console.log("test222",chambres,pensions)
             />
             <TextField
               fullWidth
+              disabled
               variant="filled"
               type="date"
               label="Date fin"
@@ -544,8 +633,8 @@ console.log("test222",chambres,pensions)
             />
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">
-                  <Button type="submit" color="secondary" variant="contained">
-                    Réserver
+                  <Button  type="submit" color="secondary" variant="contained">
+                    Suivant
                   </Button>
                 </Box>
               </form>
