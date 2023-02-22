@@ -20,7 +20,7 @@ const steps = [
     content:<StepOne/>
   },
   {
-    title: 'Reservation Transport',
+    title: 'Remplir coordonnées du client',
     content: <StepTwo/>,
   },
 
